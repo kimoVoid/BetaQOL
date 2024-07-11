@@ -89,7 +89,7 @@ public class SkinService {
             try {
                 prof = new ProfileProvider().getProfile(name).get();
             } catch (Exception e) {
-                BetaQOL.INSTANCE.warn(String.format("Lookup for profile %s failed!", name));
+                BetaQOL.LOGGER.warn("Lookup for profile {} failed!", name);
                 return;
             }
 
