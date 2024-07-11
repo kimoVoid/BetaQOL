@@ -2,6 +2,10 @@ package me.kimovoid.betaqol.feature.keybind;
 
 import me.kimovoid.betaqol.BetaQOL;
 import net.minecraft.client.options.KeyBinding;
+import org.lwjgl.input.Keyboard;
+import org.spongepowered.asm.mixin.Unique;
+
+import java.util.Arrays;
 
 public class KeybindHandler {
 

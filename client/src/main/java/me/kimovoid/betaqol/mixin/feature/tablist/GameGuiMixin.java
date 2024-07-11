@@ -37,7 +37,7 @@ public abstract class GameGuiMixin extends GuiElement {
             return;
         }
 
-        if (Keyboard.isKeyDown(Keyboard.KEY_TAB)) {
+        if (Keyboard.isKeyDown(BetaQOL.INSTANCE.keybinds.getKeyByName("key.playerlist"))) {
             if (BetaQOL.INSTANCE.tabPlayers.isEmpty()) {
                 return;
             }
