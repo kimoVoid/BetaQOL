@@ -1,0 +1,35 @@
+betaqol=Beta QOL
+inventory=Inventory Tweaks
+mouse=Mouse Tweaks
+gameplay=Gameplay Tweaks
+
+# Root configs
+always_show_label=Always show label
+modern_F3=Modern F3 screen
+extended_F3=Extended F3 screen
+disable_F3_graph=Disable debug graph
+front_F5=Allow front perspective
+
+# Inventory configs
+dragging=Inventory drag
+drag_graphics=Inventory drag graphics
+prefer_shift_lmb=Prefer shift-left-click
+prefer_shift_rmb=Prefer shift-right-click
+drop_key_inv=Drop key in inventories
+drop_stack_key=CTRL key to drop stack
+hotkey_swap=Hotkey swapping
+
+# Mouse configs
+shift_click_any_lmb=Shift-left-click any items
+tweak_shift_lmb=Shift-left-click + drag items
+tweak_rmb=Shift-right-click + drag items
+lmb_pickup=Left-click pickup items
+scroll_tweaks=Scroll wheel tweaks
+scroll_invert_direction=Invert scroll direction
+
+# Gameplay configs
+mp_click_mining=Multiplayer click-mining
+death_screen_msg=Death screen message
+options.fov=FOV
+options.fov_max=Quake Pro
+options.fov_normal=Normal

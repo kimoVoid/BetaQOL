@@ -1,0 +1,29 @@
+{
+	"schemaVersion": 1,
+	"id": "betaqol",
+	"version": "${version}",
+	"name": "Beta QOL",
+	"description": "Various tweaks and fixes for b1.7.3 clients",
+	"authors": [
+		"kimoVoid"
+	],
+	"license": "MIT",
+	"icon": "assets/betaqol/icon.png",
+	"environment": "client",
+	"entrypoints": {
+		"init": [
+			"me.kimovoid.betaqol.BetaQOL"
+		],
+		"modmenu": [
+			"me.kimovoid.betaqol.config.ConfigModMenu"
+		]
+	},
+	"mixins": [
+		"betaqol.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.21",
+		"minecraft": "1.0.0-beta.7.3",
+		"osl-entrypoints": ">=0.4.0"
+	}
+}
