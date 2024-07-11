@@ -86,7 +86,7 @@ public abstract class GameGuiMixin extends GuiElement {
             fill(minWidth, height, maxWidth + 3, 18 + (9 * i), 553648127);
             tr.drawWithShadow(players.get(i), minWidth, height, 16777215);
 
-            mc.textureManager.bind(mc.textureManager.load("/tablist/icons.png"));
+            mc.textureManager.bind(mc.textureManager.load("/assets/betaqol/tablist/icons.png"));
 
             this.drawOffset += 100.0F;
             this.drawTexture(maxWidth - 8, height, 0, 176 + texShift * 8, 10, 8);

@@ -15,8 +15,8 @@ import java.util.concurrent.locks.ReentrantLock;
  * <a href="https://github.com/js6pak/mojangfix">View here</a>
  */
 public class SkinService {
-    public static final String STEVE_TEXTURE = "/mob/steve.png";
-    public static final String ALEX_TEXTURE = "/mob/alex.png";
+    public static final String STEVE_TEXTURE = "/assets/betaqol/mob/steve.png";
+    public static final String ALEX_TEXTURE = "/assets/betaqol/mob/alex.png";
 
     private static final SkinService INSTANCE = new SkinService();
 
