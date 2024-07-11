@@ -9,7 +9,6 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.ornithemc.osl.entrypoints.api.ModInitializer;
 import net.ornithemc.osl.networking.api.client.ClientPlayNetworking;
-import org.lwjgl.opengl.Display;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,9 +39,5 @@ public class BetaQOL implements ModInitializer {
 
 		/* Networking */
 		ClientPlayNetworking.registerListener("BetaQOL|PlayerInfo", PlayerInfoPayload::new, new PlayerInfoHandler());
-	}
-
-	public void mcInit() {
-		Display.setTitle("Minecraft Beta 1.7.3 (QOL)");
 	}
 }
