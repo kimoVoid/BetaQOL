@@ -1,9 +1,9 @@
 # Beta QOL Mod
 This is a quality of life mod for Beta 1.7.3 using Ornithe!
 <br>It aims to keep the game faithful to vanilla while also fixing some of the inconveniences that most people face when playing this version.
-___
-Check out the [OrnitheMC website](https://ornithemc.net/) to grab a copy of the installer! You can also make MultiMC/Prism Launcher instances.
-___
+<br>
+<br>Check out the [OrnitheMC website](https://ornithemc.net/) to grab a copy of the installer! You can also make MultiMC/Prism Launcher instances.
+<br>
 ### Current list of features/fixes
 - Fully configurable
   - [Mod Menu](https://modrinth.com/mod/modmenu-ornithe) support
