@@ -123,10 +123,10 @@ public class GameGuiMixin extends GuiElement {
         int m = (int)Math.floor(angle * 60.0F) - h * 60;
         int s = (int)Math.floor(angle * 3600.0F) - h * 3600 - m * 60;
         int f = (MathHelper.floor((double)(this.minecraft.player.yaw * 4.0f / 360.0f) + 0.5) & 3);
-        String facing = f == 0 ? "south (Towards positive Z)"
-                : f == 1 ? "west (Towards negative X)"
-                : f == 2 ? "north (Towards negative Z)"
-                : "east (Towards positive X)";
+        String facing = f == 0 ? "west (Towards positive Z)"
+                : f == 1 ? "north (Towards negative X)"
+                : f == 2 ? "east (Towards negative Z)"
+                : "south (Towards positive X)";
 
         this.renderText(String.format("XYZ: %s / %s / %s",
                 this.format(this.minecraft.player.x),
