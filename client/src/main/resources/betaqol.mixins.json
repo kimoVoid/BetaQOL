@@ -6,6 +6,7 @@
   "mixins": [
     "access.TextFieldWidgetAccessor",
     "feature.chat.ChatScreenMixin",
+    "feature.chat.SleepingChatScreenMixin",
     "feature.deathscreen.DeathScreenMixin",
     "feature.f3screen.GameGuiMixin",
     "feature.f3screen.MinecraftMixin",
