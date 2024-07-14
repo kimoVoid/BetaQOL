@@ -3,7 +3,7 @@ package me.kimovoid.betaqol;
 import me.kimovoid.betaqol.config.Config;
 import me.kimovoid.betaqol.feature.keybind.KeybindHandler;
 import me.kimovoid.betaqol.feature.keybind.ThoroughKeybindHandler;
-import me.kimovoid.betaqol.feature.networking.PlayerInfoHandler;
+import me.kimovoid.betaqol.feature.networking.PlayerInfoListener;
 import me.kimovoid.betaqol.feature.networking.PlayerInfoPayload;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
@@ -38,6 +38,6 @@ public class BetaQOL implements ModInitializer {
 		}
 
 		/* Networking */
-		ClientPlayNetworking.registerListener("BetaQOL|PlayerInfo", PlayerInfoPayload::new, new PlayerInfoHandler());
+		ClientPlayNetworking.registerListener("BetaQOL|PlayerInfo", PlayerInfoPayload::new, new PlayerInfoListener());
 	}
 }

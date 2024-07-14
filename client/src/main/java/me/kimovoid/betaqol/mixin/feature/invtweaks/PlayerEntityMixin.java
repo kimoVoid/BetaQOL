@@ -1,6 +1,7 @@
 package me.kimovoid.betaqol.mixin.feature.invtweaks;
 
 import me.kimovoid.betaqol.BetaQOL;
+import net.minecraft.client.entity.living.player.LocalPlayerEntity;
 import net.minecraft.entity.living.player.PlayerEntity;
 import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
@@ -13,8 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * All credits to telvarost and everyone involved in that project.
  * <a href="https://github.com/telvarost/InventoryTweaks-StationAPI">View here</a>
  */
-@Mixin(PlayerEntity.class)
-public class InputPlayerEntityMixin {
+@Mixin({LocalPlayerEntity.class, PlayerEntity.class})
+public class PlayerEntityMixin {
 
     @Inject(method = "dropItem()V", at = @At("HEAD"), cancellable = true)
     private void inventoryTweaks_dropSelectedItem(CallbackInfo ci) {

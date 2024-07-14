@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.network.handler.ClientNetworkHandler;
 import net.ornithemc.osl.networking.api.client.ClientPlayNetworking;
 
-public class PlayerInfoHandler implements ClientPlayNetworking.PayloadListener<PlayerInfoPayload> {
+public class PlayerInfoListener implements ClientPlayNetworking.PayloadListener<PlayerInfoPayload> {
 
     @Override
     public boolean handle(Minecraft minecraft, ClientNetworkHandler handler, PlayerInfoPayload payload) {

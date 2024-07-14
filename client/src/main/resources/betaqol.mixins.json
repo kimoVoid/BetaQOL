@@ -15,7 +15,7 @@
     "feature.fovslider.GameOptionsMixin",
     "feature.fovslider.GameRendererMixin",
     "feature.fovslider.OptionsScreenMixin",
-    "feature.invtweaks.InputPlayerEntityMixin",
+    "feature.invtweaks.PlayerEntityMixin",
     "feature.invtweaks.InventoryMenuScreenMixin",
     "feature.keybinding.GameOptionsMixin",
     "feature.keybinding.MinecraftMixin",
