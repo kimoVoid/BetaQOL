@@ -39,3 +39,9 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
 - Tablist backport
   - Uses custom server-to-client packets, not required by vanilla clients
   - Server builds with this will be available soon!
+- Updated multiplayer screen
+  - Ported from [MojangFix](https://modrinth.com/mod/mojangfix)
+  - Ability to save servers
+  - IP address can be hidden
+  - Pinging will be added eventually™️
+- Crash slab fix
