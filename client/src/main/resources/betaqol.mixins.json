@@ -34,6 +34,7 @@
     "fixes.connection.Connection$3Mixin",
     "fixes.connection.Connection$4Mixin",
     "fixes.connection.ConnectionMixin",
+    "fixes.crashslab.SlabItemMixin",
     "fixes.entityjitter.EntityMixin",
     "fixes.haspaidcheck.MinecraftMixin",
     "fixes.mouseposition.MouseMixin",
