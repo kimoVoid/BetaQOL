@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
-import static me.kimovoid.betaqol.feature.chat.ChatScreenVariables.*;
+import static me.kimovoid.betaqol.feature.gui.chat.ChatScreenVariables.*;
 
 /**
  * This is a port of MojangFix for Babric.

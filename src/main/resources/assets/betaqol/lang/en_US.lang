@@ -33,3 +33,26 @@ death_screen_msg=Death screen message
 options.fov=FOV
 options.fov_max=Quake Pro
 options.fov_normal=Normal
+
+# Multiplayer GUI
+multiplayer.hidden=Hidden
+
+multiplayer.title=Play Multiplayer
+multiplayer.edit=Edit
+multiplayer.delete=Delete
+multiplayer.join=Join Server
+multiplayer.connect=Connect
+multiplayer.directConnect=Direct Connect
+multiplayer.addServer=Add Server
+multiplayer.refresh=Refresh
+multiplayer.cancel=Cancel
+
+multiplayer.deleteConfirm=Are you sure you want to remove this server?
+
+multiplayer.editServerInfo=Edit Server Info
+multiplayer.serverName=Server Name
+multiplayer.serverAddress=Server Address
+multiplayer.showIp=Show address:
+multiplayer.badPing=(no connection)
+multiplayer.pingTime=ms
+multiplayer.polling=Polling...

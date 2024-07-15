@@ -1,4 +1,4 @@
-package me.kimovoid.betaqol.feature.chat;
+package me.kimovoid.betaqol.feature.gui.chat;
 
 import net.minecraft.client.gui.widget.TextFieldWidget;
 
