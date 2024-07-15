@@ -57,3 +57,9 @@ multiplayer.ping=Ping:
 multiplayer.badPing=(no connection)
 multiplayer.pingTime=ms
 multiplayer.polling=Polling...
+
+# Crash slab renamed
+tile.doubleSlab.stone.name=Smooth Stone Slab
+tile.doubleSlab.wood.name=Double Wood Slab
+tile.doubleSlab.sand.name=Double Sandstone Slab
+tile.doubleSlab.cobble.name=Double Cobblestone Slab

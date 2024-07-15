@@ -10,7 +10,6 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
   - Uses AxolotlClient config UI
 - Auth fix (use current auth server)
 - Skin/cape patch & 1.8 layers backport (ported from [MojangFix](https://modrinth.com/mod/mojangfix))
-- Cape patch
 - Resources patch (betacraft proxy)
 - Mouse position fix on fullscreen
 - Quit button re-added
