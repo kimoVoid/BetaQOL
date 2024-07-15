@@ -16,12 +16,14 @@ public class ServerData {
     private String name;
     private String ip;
     private boolean showIp;
+    private boolean ping;
 
     public NbtCompound save() {
         NbtCompound nbt = new NbtCompound();
         nbt.putString("name", name);
         nbt.putString("ip", ip);
         nbt.putBoolean("showIp", showIp);
+        nbt.putBoolean("ping", ping);
         return nbt;
     }
 
@@ -29,12 +31,14 @@ public class ServerData {
         this.name = nbt.getString("name");
         this.ip = nbt.getString("ip");
         this.showIp = nbt.getBoolean("showIp");
+        this.ping = nbt.getBoolean("ping");
     }
 
-    public ServerData(String name, String ip, boolean showIp) {
+    public ServerData(String name, String ip, boolean showIp, boolean ping) {
         this.name = name;
         this.ip = ip;
         this.showIp = showIp;
+        this.ping = ping;
     }
 
     public static NbtList save(List<ServerData> servers) {
@@ -65,6 +69,10 @@ public class ServerData {
         return this.showIp;
     }
 
+    public boolean isPing() {
+        return this.ping;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -75,5 +83,9 @@ public class ServerData {
 
     public void setShowIp(boolean b) {
         this.showIp = b;
+    }
+
+    public void setPing(boolean b) {
+        this.ping = b;
     }
 }

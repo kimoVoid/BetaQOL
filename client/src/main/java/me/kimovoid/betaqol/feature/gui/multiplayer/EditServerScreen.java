@@ -19,7 +19,9 @@ public class EditServerScreen extends Screen {
     private TextFieldWidget nameTextField;
     private TextFieldWidget ipTextField;
     private ButtonWidget showIpButton;
+    private ButtonWidget pingButton;
     private boolean showIp = true;
+    private boolean ping = false;
 
     public EditServerScreen(MultiplayerScreen parent, ServerData server) {
         this.parent = parent;
@@ -36,10 +38,15 @@ public class EditServerScreen extends Screen {
         LanguageManager translations = LanguageManager.getInstance();
         if (this.server != null) {
             this.showIp = this.server.isShowIp();
+            this.ping = this.server.isPing();
         }
-        this.buttons.add(this.showIpButton = new CallbackButtonWidget(this.width / 2 - 100, this.height / 4 + 96 + 12, translations.translate("multiplayer.showIp") + (this.showIp ? " ON" : " OFF"), button -> {
+        this.buttons.add(this.showIpButton = new CallbackButtonWidget(this.width / 2 - 100, this.height / 4 + 96 + 12, 98, 20, translations.translate("multiplayer.showIp") + (this.showIp ? " ON" : " OFF"), button -> {
             this.showIp = !this.showIp;
             this.showIpButton.message = translations.translate("multiplayer.showIp") + (this.showIp ? " ON" : " OFF");
+        }));
+        this.buttons.add(this.pingButton = new CallbackButtonWidget(this.width / 2 + 2, this.height / 4 + 96 + 12, 98, 20, translations.translate("multiplayer.ping") + (this.ping ? " ON" : " OFF"), button -> {
+            this.ping = !this.ping;
+            this.pingButton.message = translations.translate("multiplayer.ping") + (this.ping ? " ON" : " OFF");
         }));
         this.buttons.add(this.button = new CallbackButtonWidget(this.width / 2 - 100, this.height / 4 + 120 + 12, this.server == null ? translations.translate("multiplayer.addServer") : translations.translate("multiplayer.edit"), button -> {
             if (this.server != null) {
@@ -47,7 +54,7 @@ public class EditServerScreen extends Screen {
                 this.server.setIp(this.ipTextField.getText());
                 this.server.setShowIp(this.showIp);
             } else {
-                this.parent.getServersList().add(new ServerData(this.nameTextField.getText(), this.ipTextField.getText(), this.showIp));
+                this.parent.getServersList().add(new ServerData(this.nameTextField.getText(), this.ipTextField.getText(), this.showIp, this.ping));
             }
 
             this.parent.saveServers();

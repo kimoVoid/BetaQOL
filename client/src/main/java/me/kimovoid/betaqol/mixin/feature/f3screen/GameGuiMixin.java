@@ -147,6 +147,7 @@ public class GameGuiMixin extends GuiElement {
                 this.minecraft.player.chunkX,
                 this.minecraft.player.chunkZ
         ), 2, 164 + shift, 9);
+        this.renderText("Speed: " + BetaQOL.mc.player.input.movementForward, 2, 174 + shift, 9);
     }
 
     @Unique
