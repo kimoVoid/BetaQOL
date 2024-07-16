@@ -239,7 +239,7 @@ public class MultiplayerScreen extends Screen {
                 // empty catch block
             }
 
-            server.description = "§7" + motd;
+            server.description = "§7" + translateColor(motd);
             server.onlinePlayers = players >= 0 && maxPlayers > 0 ? "§7" + players + "§8/§7" + maxPlayers : "§8???";
         } finally {
             try {
@@ -264,5 +264,16 @@ public class MultiplayerScreen extends Screen {
         } catch (Exception exception) {
             return i;
         }
+    }
+
+    private String translateColor(String text) {
+        char[] b = text.toCharArray();
+        for (int i = 0; i < b.length - 1; i++) {
+            if (b[i] == '&' && "0123456789AaBbCcDdEeFfKkLlMmNnOoRr".indexOf(b[i+1]) > -1) {
+                b[i] = '§';
+                b[i+1] = Character.toLowerCase(b[i+1]);
+            }
+        }
+        return new String(b);
     }
 }

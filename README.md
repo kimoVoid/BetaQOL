@@ -46,4 +46,5 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
     - Needs a server-side mod
     - Uses BetaTweaks/mcb1.8-1.6 format
     - Pinging can be turned off if found problematic
+    - Server MOTD can translate colors with the '&' format
 - Crash slab fix
