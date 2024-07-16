@@ -2,6 +2,7 @@ package me.kimovoid.betaqol.feature.gui.multiplayer;
 
 import me.kimovoid.betaqol.feature.gui.CallbackButtonWidget;
 import me.kimovoid.betaqol.feature.gui.CallbackConfirmScreen;
+import net.minecraft.SharedConstants;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.TitleScreen;
@@ -10,8 +11,12 @@ import net.minecraft.client.render.TextRenderer;
 import net.minecraft.locale.LanguageManager;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtIo;
+import net.minecraft.network.packet.Packet;
 
 import java.io.*;
+import java.net.InetSocketAddress;
+import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +37,10 @@ public class MultiplayerScreen extends Screen {
     private ButtonWidget buttonEdit;
     private ButtonWidget buttonConnect;
     private ButtonWidget buttonDelete;
+
+    public String tooltipText = null;
+    public Object lock = new Object();
+    public int serverCount = 0;
 
     public MultiplayerScreen() {
         this(new TitleScreen());
@@ -84,7 +93,7 @@ public class MultiplayerScreen extends Screen {
             LanguageManager translate = LanguageManager.getInstance();
             this.minecraft.openScreen(new CallbackConfirmScreen(this,
                     translationStorage.translate("multiplayer.deleteConfirm"),
-                    "'" + this.selectedServer.getName() + "' " + translate.translate("selectWorld.deleteWarning"),
+                    "'" + this.selectedServer.name + "' " + translate.translate("selectWorld.deleteWarning"),
                     translate.translate("selectWorld.deleteButton"),
                     translate.translate("gui.cancel"),
                     (result) -> {
@@ -95,7 +104,10 @@ public class MultiplayerScreen extends Screen {
                         this.minecraft.openScreen(this);
                     }));
         }));
-        this.buttons.add(new CallbackButtonWidget(this.width / 2 + 4, this.height - 28, 150, 20, translationStorage.translate("gui.cancel"), button -> {
+        this.buttons.add(new CallbackButtonWidget(this.width / 2 + 4, this.height - 28, 70, 20, translationStorage.translate("multiplayer.refresh"), button -> {
+            this.minecraft.openScreen(new MultiplayerScreen(this.parent));
+        }));
+        this.buttons.add(new CallbackButtonWidget(this.width / 2 + 80, this.height - 28, 75, 20, translationStorage.translate("gui.cancel"), button -> {
             this.minecraft.openScreen(this.parent);
         }));
         this.buttonConnect.active = false;
@@ -125,7 +137,7 @@ public class MultiplayerScreen extends Screen {
         this.minecraft.openScreen(null);
         if (!this.joining) {
             this.joining = true;
-            DirectConnectScreen.connect(this.minecraft, server.getIp());
+            DirectConnectScreen.connect(this.minecraft, server.ip);
         }
     }
 
@@ -151,9 +163,24 @@ public class MultiplayerScreen extends Screen {
 
     @Override
     public void render(int mouseX, int mouseY, float delta) {
+        this.tooltipText = null;
         this.serverListWidget.render(mouseX, mouseY, delta);
         this.drawCenteredString(this.textRenderer, this.title, this.width / 2, 20, 16777215);
         super.render(mouseX, mouseY, delta);
+        if (this.tooltipText != null) {
+            this.drawTooltip(this.tooltipText, mouseX, mouseY);
+        }
+    }
+
+    protected void drawTooltip(String string, int i, int j) {
+        if (string == null) {
+            return;
+        }
+        int n = i + 12;
+        int n2 = j - 12;
+        int n3 = this.textRenderer.getWidth(string);
+        this.fillGradient(n - 3, n2 - 3, n + n3 + 3, n2 + 8 + 3, -1073741824, -1073741824);
+        this.textRenderer.drawWithShadow(string, n, n2, -1);
     }
 
     public Minecraft getMinecraft() {
@@ -166,5 +193,71 @@ public class MultiplayerScreen extends Screen {
 
     public ServerData getSelectedServer() {
         return this.selectedServer;
+    }
+
+    public void pingServer(ServerData server) throws IOException {
+        String string = server.ip;
+        String[] stringArray = string.split(":");
+        if (stringArray.length > 2) {
+            stringArray = new String[]{string};
+        }
+        String address = stringArray[0];
+        int n2 = stringArray.length > 1 ? this.getPort(stringArray[1], 25565) : 25565;
+        FilterInputStream filterInputStream = null;
+        FilterOutputStream filterOutputStream = null;
+        Socket sock = new Socket();
+        try {
+            sock.setSoTimeout(3000);
+            sock.setTcpNoDelay(true);
+            sock.setTrafficClass(18);
+            sock.connect(new InetSocketAddress(address, n2), 3000);
+            filterInputStream = new DataInputStream(sock.getInputStream());
+            filterOutputStream = new DataOutputStream(sock.getOutputStream());
+            filterOutputStream.write(254);
+            if (filterInputStream.read() != 255) {
+                throw new IOException("Bad message");
+            }
+            String resp = Packet.readString((DataInputStream)filterInputStream, 64);
+            char[] cArray = resp.toCharArray();
+            for (int i = 0; i < cArray.length; i++) {
+                if (cArray[i] == '§' || SharedConstants.VALID_CHAT_CHARACTERS.indexOf(cArray[i]) >= 0) continue;
+                cArray[i] = 63;
+            }
+            String motd = new String(cArray);
+            stringArray = motd.split("§");
+            motd = stringArray[0];
+            int players = -1;
+            int maxPlayers = -1;
+            try {
+                players = Integer.parseInt(stringArray[1]);
+                maxPlayers = Integer.parseInt(stringArray[2]);
+            } catch (Exception exception) {
+                // empty catch block
+            }
+            server.description = "§7" + motd;
+            server.onlinePlayers = players >= 0 && maxPlayers > 0 ? "§7" + players + "§8/§7" + maxPlayers : "§8???";
+        } finally {
+            try {
+                if (filterInputStream != null) {
+                    filterInputStream.close();
+                }
+            } catch (Throwable ignored) {}
+            try {
+                if (filterOutputStream != null) {
+                    filterOutputStream.close();
+                }
+            } catch (Throwable ignored) {}
+            try {
+                (sock).close();
+            } catch (Throwable ignored) {}
+        }
+    }
+
+    private int getPort(String string, int i) {
+        try {
+            return Integer.parseInt(string.trim());
+        } catch (Exception exception) {
+            return i;
+        }
     }
 }

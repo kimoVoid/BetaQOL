@@ -37,8 +37,8 @@ public class EditServerScreen extends Screen {
         Keyboard.enableRepeatEvents(true);
         LanguageManager translations = LanguageManager.getInstance();
         if (this.server != null) {
-            this.showIp = this.server.isShowIp();
-            this.ping = this.server.isPing();
+            this.showIp = this.server.showIp;
+            this.ping = this.server.canPing;
         }
         this.buttons.add(this.showIpButton = new CallbackButtonWidget(this.width / 2 - 100, this.height / 4 + 96 + 12, 98, 20, translations.translate("multiplayer.showIp") + (this.showIp ? " ON" : " OFF"), button -> {
             this.showIp = !this.showIp;
@@ -50,9 +50,10 @@ public class EditServerScreen extends Screen {
         }));
         this.buttons.add(this.button = new CallbackButtonWidget(this.width / 2 - 100, this.height / 4 + 120 + 12, this.server == null ? translations.translate("multiplayer.addServer") : translations.translate("multiplayer.edit"), button -> {
             if (this.server != null) {
-                this.server.setName(this.nameTextField.getText());
-                this.server.setIp(this.ipTextField.getText());
-                this.server.setShowIp(this.showIp);
+                this.server.name = this.nameTextField.getText();
+                this.server.ip = this.ipTextField.getText();
+                this.server.showIp = this.showIp;
+                this.server.canPing = this.ping;
             } else {
                 this.parent.getServersList().add(new ServerData(this.nameTextField.getText(), this.ipTextField.getText(), this.showIp, this.ping));
             }
@@ -64,9 +65,9 @@ public class EditServerScreen extends Screen {
             this.minecraft.openScreen(this.parent);
         }));
 
-        this.nameTextField = new TextFieldWidget(this, this.textRenderer, this.width / 2 - 100, 60, 200, 20, this.server == null ? "" : this.server.getName());
+        this.nameTextField = new TextFieldWidget(this, this.textRenderer, this.width / 2 - 100, 60, 200, 20, this.server == null ? "" : this.server.name);
         this.nameTextField.setMaxLength(32);
-        this.ipTextField = new TextFieldWidget(this, this.textRenderer, this.width / 2 - 100, 106, 200, 20, this.server == null ? "" : this.server.getIp());
+        this.ipTextField = new TextFieldWidget(this, this.textRenderer, this.width / 2 - 100, 106, 200, 20, this.server == null ? "" : this.server.ip);
         this.ipTextField.setMaxLength(32);
         this.updateButton();
     }

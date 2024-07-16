@@ -54,9 +54,6 @@ multiplayer.serverName=Server Name
 multiplayer.serverAddress=Server Address
 multiplayer.showIp=Show IP:
 multiplayer.ping=Ping:
-multiplayer.badPing=(no connection)
-multiplayer.pingTime=ms
-multiplayer.polling=Polling...
 
 # Crash slab renamed
 tile.doubleSlab.stone.name=Smooth Stone Slab
