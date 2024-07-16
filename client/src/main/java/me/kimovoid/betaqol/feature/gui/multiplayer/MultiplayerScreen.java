@@ -107,7 +107,7 @@ public class MultiplayerScreen extends Screen {
         this.buttons.add(new CallbackButtonWidget(this.width / 2 + 4, this.height - 28, 70, 20, translationStorage.translate("multiplayer.refresh"), button -> {
             this.minecraft.openScreen(new MultiplayerScreen(this.parent));
         }));
-        this.buttons.add(new CallbackButtonWidget(this.width / 2 + 80, this.height - 28, 75, 20, translationStorage.translate("gui.cancel"), button -> {
+        this.buttons.add(new CallbackButtonWidget(this.width / 2 + 84, this.height - 28, 70, 20, translationStorage.translate("gui.cancel"), button -> {
             this.minecraft.openScreen(this.parent);
         }));
         this.buttonConnect.active = false;
@@ -202,30 +202,34 @@ public class MultiplayerScreen extends Screen {
             stringArray = new String[]{string};
         }
         String address = stringArray[0];
-        int n2 = stringArray.length > 1 ? this.getPort(stringArray[1], 25565) : 25565;
+        int port = stringArray.length > 1 ? this.getPort(stringArray[1], 25565) : 25565;
         FilterInputStream filterInputStream = null;
         FilterOutputStream filterOutputStream = null;
         Socket sock = new Socket();
+
         try {
             sock.setSoTimeout(3000);
             sock.setTcpNoDelay(true);
             sock.setTrafficClass(18);
-            sock.connect(new InetSocketAddress(address, n2), 3000);
+            sock.connect(new InetSocketAddress(address, port), 3000);
             filterInputStream = new DataInputStream(sock.getInputStream());
             filterOutputStream = new DataOutputStream(sock.getOutputStream());
             filterOutputStream.write(254);
             if (filterInputStream.read() != 255) {
                 throw new IOException("Bad message");
             }
+
             String resp = Packet.readString((DataInputStream)filterInputStream, 64);
             char[] cArray = resp.toCharArray();
             for (int i = 0; i < cArray.length; i++) {
                 if (cArray[i] == '§' || SharedConstants.VALID_CHAT_CHARACTERS.indexOf(cArray[i]) >= 0) continue;
                 cArray[i] = 63;
             }
+
             String motd = new String(cArray);
             stringArray = motd.split("§");
             motd = stringArray[0];
+
             int players = -1;
             int maxPlayers = -1;
             try {
@@ -234,6 +238,7 @@ public class MultiplayerScreen extends Screen {
             } catch (Exception exception) {
                 // empty catch block
             }
+
             server.description = "§7" + motd;
             server.onlinePlayers = players >= 0 && maxPlayers > 0 ? "§7" + players + "§8/§7" + maxPlayers : "§8???";
         } finally {

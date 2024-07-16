@@ -18,8 +18,6 @@ public class EditServerScreen extends Screen {
     private final MultiplayerScreen parent;
     private TextFieldWidget nameTextField;
     private TextFieldWidget ipTextField;
-    private ButtonWidget showIpButton;
-    private ButtonWidget pingButton;
     private boolean showIp = true;
     private boolean ping = false;
 
@@ -40,13 +38,13 @@ public class EditServerScreen extends Screen {
             this.showIp = this.server.showIp;
             this.ping = this.server.canPing;
         }
-        this.buttons.add(this.showIpButton = new CallbackButtonWidget(this.width / 2 - 100, this.height / 4 + 96 + 12, 98, 20, translations.translate("multiplayer.showIp") + (this.showIp ? " ON" : " OFF"), button -> {
+        this.buttons.add(new CallbackButtonWidget(this.width / 2 - 100, 140, 98, 20, translations.translate("multiplayer.showIp") + (this.showIp ? " ON" : " OFF"), button -> {
             this.showIp = !this.showIp;
-            this.showIpButton.message = translations.translate("multiplayer.showIp") + (this.showIp ? " ON" : " OFF");
+            button.message = translations.translate("multiplayer.showIp") + (this.showIp ? " ON" : " OFF");
         }));
-        this.buttons.add(this.pingButton = new CallbackButtonWidget(this.width / 2 + 2, this.height / 4 + 96 + 12, 98, 20, translations.translate("multiplayer.ping") + (this.ping ? " ON" : " OFF"), button -> {
+        this.buttons.add(new CallbackButtonWidget(this.width / 2 + 2, 140, 98, 20, translations.translate("multiplayer.ping") + (this.ping ? " ON" : " OFF"), button -> {
             this.ping = !this.ping;
-            this.pingButton.message = translations.translate("multiplayer.ping") + (this.ping ? " ON" : " OFF");
+            button.message = translations.translate("multiplayer.ping") + (this.ping ? " ON" : " OFF");
         }));
         this.buttons.add(this.button = new CallbackButtonWidget(this.width / 2 - 100, this.height / 4 + 120 + 12, this.server == null ? translations.translate("multiplayer.addServer") : translations.translate("multiplayer.edit"), button -> {
             if (this.server != null) {
@@ -73,7 +71,7 @@ public class EditServerScreen extends Screen {
     }
 
     private void updateButton() {
-        this.button.active = this.nameTextField.getText().trim().length() > 0 && this.ipTextField.getText().trim().length() > 0;
+        this.button.active = !this.nameTextField.getText().trim().isEmpty() && !this.ipTextField.getText().trim().isEmpty();
     }
 
     public void removed() {
@@ -88,7 +86,6 @@ public class EditServerScreen extends Screen {
         if (character == Keyboard.KEY_RETURN) {
             this.buttonClicked(this.button);
         }
-
     }
 
     protected void mouseClicked(int mouseX, int mouseY, int varbutton) {
@@ -100,11 +97,17 @@ public class EditServerScreen extends Screen {
     public void render(int mouseX, int mouseY, float delta) {
         this.renderBackground();
         LanguageManager translations = LanguageManager.getInstance();
+
         this.drawCenteredString(this.textRenderer, (this.server == null ? translations.translate("multiplayer.addServer") : translations.translate("multiplayer.editServerInfo")), this.width / 2, 20, 16777215);
         this.drawString(this.textRenderer, translations.translate("multiplayer.serverName"), this.width / 2 - 100, 47, 10526880);
         this.drawString(this.textRenderer, translations.translate("multiplayer.serverAddress"), this.width / 2 - 100, 94, 10526880);
         this.nameTextField.render();
         this.ipTextField.render();
+
+        if (this.ping) {
+            drawCenteredString(this.minecraft.textRenderer, translations.translate("multiplayer.pingWarning"), this.width / 2, 170, 0x808080);
+        }
+
         super.render(mouseX, mouseY, delta);
     }
 }
