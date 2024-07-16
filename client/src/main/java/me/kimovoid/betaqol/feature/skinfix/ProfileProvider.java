@@ -3,6 +3,7 @@ package me.kimovoid.betaqol.feature.skinfix;
 import com.github.steveice10.mc.auth.data.GameProfile;
 import com.github.steveice10.mc.auth.exception.request.RequestException;
 import com.github.steveice10.mc.auth.util.HTTP;
+import me.kimovoid.betaqol.BetaQOL;
 
 import java.net.Proxy;
 import java.net.URI;
@@ -14,8 +15,11 @@ public class ProfileProvider {
     public Future<PlayerProfile> getProfile(String username) {
         try {
             UUIDResponse uuidresponse = HTTP.makeRequest(Proxy.NO_PROXY, URI.create("https://api.minetools.eu/uuid/" + username), null, UUIDResponse.class);
-            Response mtresponse = HTTP.makeRequest(Proxy.NO_PROXY, URI.create("https://api.minetools.eu/profile/" + uuidresponse.id), null, Response.class);
+            if (uuidresponse.id == null) { // failsafe, use mojang api
+                uuidresponse = HTTP.makeRequest(Proxy.NO_PROXY, URI.create("https://api.mojang.com/users/profiles/minecraft/" + username), null, UUIDResponse.class);
+            }
 
+            Response mtresponse = HTTP.makeRequest(Proxy.NO_PROXY, URI.create("https://api.minetools.eu/profile/" + uuidresponse.id), null, Response.class);
             GameProfile.TextureModel model = GameProfile.TextureModel.NORMAL;
             try {
                 if (mtresponse.decoded.textures.SKIN.metadata.model.equals("slim")) {
