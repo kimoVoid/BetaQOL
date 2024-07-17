@@ -9,7 +9,7 @@
 	],
 	"license": "MIT",
 	"icon": "assets/betaqol/icon.png",
-	"environment": "client",
+	"environment": "*",
 	"entrypoints": {
 		"init": [
 			"me.kimovoid.betaqol.BetaQOL"

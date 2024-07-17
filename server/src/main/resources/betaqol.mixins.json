@@ -1,0 +1,30 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.kimovoid.betaqol.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "CommandHandlerMixin",
+    "Connection$3Mixin",
+    "Connection$4Mixin",
+    "ConnectionMixin",
+    "InteractionManagerMixin",
+    "ListenThreadMixin",
+    "MinecraftServerMixin",
+    "ServerLoginNetworkHandler$1Mixin",
+    "ServerLoginNetworkHandlerMixin",
+    "ServerPlayerEntityMixin",
+    "ServerPlayNetworkHandlerMixin",
+    "WorldMixin",
+    "access.ConnectionAccessor",
+    "access.InteractionManagerAccessor",
+    "access.ListenThreadAccessor",
+    "access.MinecraftServerAccessor",
+    "access.NetworkHandlerAccessor",
+    "access.PacketInvoker",
+    "access.WorldAccessor"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+	}
+}

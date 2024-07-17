@@ -74,17 +74,11 @@ def configure(project) {
 		exceptions project.ploceus.raven('1')
 		signatures project.ploceus.sparrow('1')
 
-		implementation 'org.slf4j:slf4j-api:1.7.25'
-
 		modImplementation "net.fabricmc:fabric-loader:${project.rootProject.loader_version}"
-		include(implementation("com.github.GeyserMC:MCAuthLib:d9d773e5d50327c33898c65cd545a4f6ef3ba1b5"))
-		modImplementation "com.terraformersmc:modmenu:0.2.1+mcb1.7.3"
-
-		modImplementation files('libs/thorough-keybindings-1.2.0+b1.4-b1.7.jar')
 
 		project.ploceus.addCommonLibraries();
-		project.ploceus.dependOsl(project.osl_version, 'client')
-		project.ploceus.dependOslModule('core', '0.6.0', 'client')
+		project.ploceus.dependOsl(project.osl_version, project.environment)
+		project.ploceus.dependOslModule('core', '0.6.0', project.environment)
 	}
 
 	project.sourceSets {

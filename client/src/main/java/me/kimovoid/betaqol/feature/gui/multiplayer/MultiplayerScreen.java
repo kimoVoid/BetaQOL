@@ -77,18 +77,14 @@ public class MultiplayerScreen extends Screen {
 
     public void initButtons() {
         LanguageManager translationStorage = LanguageManager.getInstance();
-        this.buttons.add(this.buttonConnect = new CallbackButtonWidget(this.width / 2 - 150 - 4, this.height - 52, 100, 20, translationStorage.translate("multiplayer.connect"), button -> {
-            this.joinServer(this.selectedServer);
-        }));
-        this.buttons.add(new CallbackButtonWidget(this.width / 2 - 50, this.height - 52, 100, 20, translationStorage.translate("multiplayer.directConnect"), button -> {
-            this.minecraft.openScreen(new DirectConnectScreen(this));
-        }));
-        this.buttons.add(new CallbackButtonWidget(this.width / 2 + 50 + 4, this.height - 52, 100, 20, translationStorage.translate("multiplayer.addServer"), button -> {
-            this.minecraft.openScreen(new EditServerScreen(this, null));
-        }));
-        this.buttons.add(this.buttonEdit = new CallbackButtonWidget(this.width / 2 - 154, this.height - 28, 70, 20, translationStorage.translate("multiplayer.edit"), button -> {
-            this.minecraft.openScreen(new EditServerScreen(this, this.selectedServer));
-        }));
+        this.buttons.add(this.buttonConnect = new CallbackButtonWidget(this.width / 2 - 150 - 4, this.height - 52, 100, 20, translationStorage.translate("multiplayer.connect"),
+                button -> this.joinServer(this.selectedServer)));
+        this.buttons.add(new CallbackButtonWidget(this.width / 2 - 50, this.height - 52, 100, 20, translationStorage.translate("multiplayer.directConnect"),
+                button -> this.minecraft.openScreen(new DirectConnectScreen(this))));
+        this.buttons.add(new CallbackButtonWidget(this.width / 2 + 50 + 4, this.height - 52, 100, 20, translationStorage.translate("multiplayer.addServer"),
+                button -> this.minecraft.openScreen(new EditServerScreen(this, null))));
+        this.buttons.add(this.buttonEdit = new CallbackButtonWidget(this.width / 2 - 154, this.height - 28, 70, 20, translationStorage.translate("multiplayer.edit"),
+                button -> this.minecraft.openScreen(new EditServerScreen(this, this.selectedServer))));
         this.buttons.add(this.buttonDelete = new CallbackButtonWidget(this.width / 2 - 74, this.height - 28, 70, 20, translationStorage.translate("selectWorld.delete"), button -> {
             LanguageManager translate = LanguageManager.getInstance();
             this.minecraft.openScreen(new CallbackConfirmScreen(this,
@@ -104,12 +100,10 @@ public class MultiplayerScreen extends Screen {
                         this.minecraft.openScreen(this);
                     }));
         }));
-        this.buttons.add(new CallbackButtonWidget(this.width / 2 + 4, this.height - 28, 70, 20, translationStorage.translate("multiplayer.refresh"), button -> {
-            this.minecraft.openScreen(new MultiplayerScreen(this.parent));
-        }));
-        this.buttons.add(new CallbackButtonWidget(this.width / 2 + 84, this.height - 28, 70, 20, translationStorage.translate("gui.cancel"), button -> {
-            this.minecraft.openScreen(this.parent);
-        }));
+        this.buttons.add(new CallbackButtonWidget(this.width / 2 + 4, this.height - 28, 70, 20, translationStorage.translate("multiplayer.refresh"),
+                button -> this.minecraft.openScreen(new MultiplayerScreen(this.parent))));
+        this.buttons.add(new CallbackButtonWidget(this.width / 2 + 84, this.height - 28, 70, 20, translationStorage.translate("gui.cancel"),
+                button -> this.minecraft.openScreen(this.parent)));
         this.buttonConnect.active = false;
         this.buttonEdit.active = false;
         this.buttonDelete.active = false;
