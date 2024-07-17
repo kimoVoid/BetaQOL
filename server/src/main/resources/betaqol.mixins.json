@@ -17,7 +17,6 @@
     "ServerPlayNetworkHandlerMixin",
     "WorldMixin",
     "access.ConnectionAccessor",
-    "access.InteractionManagerAccessor",
     "access.ListenThreadAccessor",
     "access.MinecraftServerAccessor",
     "access.NetworkHandlerAccessor",

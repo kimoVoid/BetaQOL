@@ -28,7 +28,7 @@ public class CommandHandlerMixin {
 		CommandSource source = pendingCommand.source;
 
 		String commandName = cmd.toLowerCase().split(" ", 2)[0];
-		if (BetaQOL.INSTANCE.commandsByName.containsKey(commandName)) {
+		if (BetaQOL.commandsByName.containsKey(commandName)) {
 			runCommand(source, cmd);
 			ci.cancel();
 		}
@@ -38,7 +38,7 @@ public class CommandHandlerMixin {
 	private void runCommand(CommandSource source, String cmd) {
 		String commandName = cmd.toLowerCase().split(" ", 2)[0];
 		String[] args = cmd.contains(" ") ? cmd.split(" ", 2)[1].split(" ") : new String[]{};
-		ICommand command = BetaQOL.INSTANCE.commandsByName.get(commandName);
+		ICommand command = BetaQOL.commandsByName.get(commandName);
 
 		try {
 			command.run(source, args);

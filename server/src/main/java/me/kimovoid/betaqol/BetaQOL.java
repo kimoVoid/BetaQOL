@@ -28,8 +28,8 @@ public class BetaQOL implements ModInitializer {
 	public RconServer rcon;
 	public String mcVersion = "UNKNOWN";
 
-	public final Map<String, ICommand> commandsByName = new HashMap<>();
-	public List<String> opCommands = new ArrayList<>();
+	public static final Map<String, ICommand> commandsByName = new HashMap<>();
+	public static List<String> opCommands = new ArrayList<>();
 	public List<String> instantBreak = new ArrayList<>();
 
 	@Override
@@ -37,7 +37,7 @@ public class BetaQOL implements ModInitializer {
 		INSTANCE = this;
 		this.fixLogger();
 		LOGGER.info("Hello from BetaQOL! :)");
-		this.registerCommands();
+		registerCommands();
 	}
 
 	public static void sendPlayerInfo(String username, boolean online, int ping) {
@@ -61,7 +61,7 @@ public class BetaQOL implements ModInitializer {
 		context.updateLoggers();
 	}
 
-	public void registerCommands() {
+	public static void registerCommands() {
 		registerCommand(new TellrawCommand());
 		registerCommand(new StatusCommand());
 		registerCommand(new ToggledownfallCommand());
@@ -74,8 +74,8 @@ public class BetaQOL implements ModInitializer {
 		registerCommand(new PingCommand());
 	}
 
-	public void registerCommand(ICommand command) {
-		this.commandsByName.put(command.getName(), command);
-		if (command.requiresOp()) this.opCommands.add(command.getName());
+	public static void registerCommand(ICommand command) {
+		commandsByName.put(command.getName(), command);
+		if (command.requiresOp()) opCommands.add(command.getName());
 	}
 }

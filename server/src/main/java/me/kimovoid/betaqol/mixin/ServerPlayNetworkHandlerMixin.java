@@ -47,8 +47,8 @@ public abstract class ServerPlayNetworkHandlerMixin implements CommandSource, IS
 	@Inject(method = "runCommand", at = @At("HEAD"), cancellable = true)
 	private void onCommand(String cmd, CallbackInfo ci) {
 		String commandName = cmd.toLowerCase().substring(1).split(" ", 2)[0];
-		if (BetaQOL.INSTANCE.commandsByName.containsKey(commandName)
-				&& !BetaQOL.INSTANCE.opCommands.contains(commandName)
+		if (BetaQOL.commandsByName.containsKey(commandName)
+				&& !BetaQOL.opCommands.contains(commandName)
 				&& !this.server.playerManager.isOp(this.player.name)) {
 			server.addCommand(cmd.substring(1), this);
 			LogManager.getLogManager().getLogger("Minecraft").info(this.player.name + " issued server command: " + cmd.substring(1));
