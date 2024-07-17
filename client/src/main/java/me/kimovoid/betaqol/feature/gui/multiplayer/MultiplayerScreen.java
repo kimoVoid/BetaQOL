@@ -1,5 +1,6 @@
 package me.kimovoid.betaqol.feature.gui.multiplayer;
 
+import me.kimovoid.betaqol.BetaQOL;
 import me.kimovoid.betaqol.feature.gui.CallbackButtonWidget;
 import me.kimovoid.betaqol.feature.gui.CallbackConfirmScreen;
 import net.minecraft.SharedConstants;
@@ -16,7 +17,7 @@ import net.minecraft.network.packet.Packet;
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
-import java.net.SocketException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,16 +64,15 @@ public class MultiplayerScreen extends Screen {
         try {
             File serversFile = new File(Minecraft.getRunDirectory(), "servers.dat");
             if (serversFile.exists()) {
-                NbtCompound nbt = NbtIo.read(new DataInputStream(new FileInputStream(serversFile)));
+                NbtCompound nbt = NbtIo.read(new DataInputStream(Files.newInputStream(serversFile.toPath())));
                 this.serversList = ServerData.load(nbt.getList("servers"));
             } else {
                 this.serversList = new ArrayList<>();
                 this.saveServers();
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            BetaQOL.LOGGER.error("Unable to load servers.dat file!");
         }
-
     }
 
     public void initButtons() {
@@ -150,11 +150,10 @@ public class MultiplayerScreen extends Screen {
         try {
             NbtCompound compound = new NbtCompound();
             compound.put("servers", ServerData.save(serversList));
-            NbtIo.write(compound, new DataOutputStream(new FileOutputStream(new File(Minecraft.getRunDirectory(), "servers.dat"))));
+            NbtIo.write(compound, new DataOutputStream(Files.newOutputStream(new File(Minecraft.getRunDirectory(), "servers.dat").toPath())));
         } catch (IOException e) {
-            e.printStackTrace();
+            BetaQOL.LOGGER.error("Unable to save servers.dat file!");
         }
-
     }
 
     public List<ServerData> getServersList() {
@@ -202,8 +201,8 @@ public class MultiplayerScreen extends Screen {
             stringArray = new String[]{string};
         }
         String address = stringArray[0];
-        int port = stringArray.length > 1 ? this.getPort(stringArray[1], 25565) : 25565;
-        FilterInputStream filterInputStream = null;
+        int port = stringArray.length > 1 ? this.getPort(stringArray[1]) : 25565;
+        DataInputStream filterInputStream = null;
         FilterOutputStream filterOutputStream = null;
         Socket sock = new Socket();
 
@@ -219,7 +218,7 @@ public class MultiplayerScreen extends Screen {
                 throw new IOException("Bad message");
             }
 
-            String resp = Packet.readString((DataInputStream)filterInputStream, 64);
+            String resp = Packet.readString(filterInputStream, 64);
             char[] cArray = resp.toCharArray();
             for (int i = 0; i < cArray.length; i++) {
                 if (cArray[i] == '§' || SharedConstants.VALID_CHAT_CHARACTERS.indexOf(cArray[i]) >= 0) continue;
@@ -258,11 +257,11 @@ public class MultiplayerScreen extends Screen {
         }
     }
 
-    private int getPort(String string, int i) {
+    private int getPort(String string) {
         try {
             return Integer.parseInt(string.trim());
         } catch (Exception exception) {
-            return i;
+            return 25565;
         }
     }
 

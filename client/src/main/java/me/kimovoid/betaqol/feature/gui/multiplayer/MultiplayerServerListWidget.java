@@ -81,12 +81,12 @@ public class MultiplayerServerListWidget extends ListWidget {
                     server.onlinePlayers = "";
                     parent.serverCount++;
                     new Thread(() -> {
+                        long currTime = System.nanoTime();
                         try {
                             server.description = "§8Polling...";
-                            long currTime = System.nanoTime();
                             parent.pingServer(server);
                             long afterTime = System.nanoTime();
-                            server.ping = (afterTime - currTime) / 1000000L;
+                            server.ping = ((afterTime - currTime) / 1000000L) / 2L;
                         } catch (UnknownHostException unknownHostException) {
                             server.ping = -1L;
                             server.description = "§4Can't resolve hostname";
@@ -94,8 +94,9 @@ public class MultiplayerServerListWidget extends ListWidget {
                             server.ping = -1L;
                             server.description = "§4Can't reach server";
                         } catch (IOException iOException) {
-                            server.ping = -1L;
-                            server.description = "§4Communication error";
+                            server.description = "§7Server online!";
+                            long afterTime = System.nanoTime();
+                            server.ping = ((afterTime - currTime) / 1000000L) / 2L;
                         } catch (Exception exception) {
                             server.ping = -1L;
                             server.description = "ERROR: " + exception.getClass();
@@ -110,7 +111,9 @@ public class MultiplayerServerListWidget extends ListWidget {
             }
 
             this.parent.drawString(this.parent.getFontRenderer(), server.description, x + 2, y + 12, 0x808080);
-            this.parent.drawString(this.parent.getFontRenderer(), server.onlinePlayers, x + 215 - this.parent.getFontRenderer().getWidth(server.onlinePlayers), y + 12, 0x808080);
+            if (!server.description.equals("§7Server online!")) {
+                this.parent.drawString(this.parent.getFontRenderer(), server.onlinePlayers, x + 215 - this.parent.getFontRenderer().getWidth(server.onlinePlayers), y + 12, 0x808080);
+            }
 
             GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
             BetaQOL.mc.textureManager.bind(BetaQOL.mc.textureManager.load("/assets/betaqol/tablist/icons.png"));
