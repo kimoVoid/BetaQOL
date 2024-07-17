@@ -62,7 +62,6 @@ public class ListenThreadMixin implements IListenThread {
 
     @Override
     public void close(Socket socket) {
-        System.out.println("removing " + socket.getInetAddress().toString());
         InetAddress inetAddress = socket.getInetAddress();
         addresses.remove(inetAddress);
     }
