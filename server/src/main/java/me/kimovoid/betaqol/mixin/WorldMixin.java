@@ -1,17 +1,17 @@
 package me.kimovoid.betaqol.mixin;
 
+import me.kimovoid.betaqol.BetaQOL;
 import net.minecraft.entity.living.player.PlayerEntity;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldData;
 import net.minecraft.world.dimension.Dimension;
 import net.minecraft.world.storage.WorldStorage;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,38 +23,27 @@ public class WorldMixin {
 	private boolean allPlayersSleeping;
 
 	@Shadow
-	public List players;
-
-	@Shadow
-	public boolean isMultiplayer;
+	public List<PlayerEntity> players;
 
 	@Shadow
 	protected WorldData data;
 
+	@Final
 	@Shadow
 	public Dimension dimension;
 
-	public void updateSleepingPlayers() {
-		this.allPlayersSleeping = !this.players.isEmpty();
-
-		for (Object player : this.players) {
-			PlayerEntity var2 = (PlayerEntity) player;
-			if (var2.isSleptEnough()) {
-				this.allPlayersSleeping = true;
-				break;
+	@Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;canSkipNight()Z"))
+	public boolean doOnePlayerSleep(World instance) {
+		if (BetaQOL.server.properties.getBoolean("one-player-sleep", false)) {
+			for (PlayerEntity pl : this.players) {
+				if (pl.isSleptEnough()) {
+					return true;
+				}
 			}
+			return false;
 		}
-	}
 
-	@Inject(method = "canSkipNight()Z", at = @At("RETURN"), cancellable = true)
-	public boolean canSkipNightInject(CallbackInfoReturnable<Boolean> cir) {
-		for (Object playerEntity : this.players) {
-			PlayerEntity pl = (PlayerEntity) playerEntity;
-			if (pl.isSleptEnough()) {
-				return true;
-			}
-		}
-		return false;
+		return instance.canSkipNight();
 	}
 
 	@ModifyArg(
@@ -64,7 +53,11 @@ public class WorldMixin {
 					target = "Lnet/minecraft/world/NaturalSpawner;m_2442438(Lnet/minecraft/world/World;Ljava/util/List;)Z"
 			), index = 1
 	)
-	private List injected(List<? extends PlayerEntity> oldList) {
+	private List<PlayerEntity> injected(List<PlayerEntity> oldList) {
+		if (!BetaQOL.server.properties.getBoolean("one-player-sleep", false)) {
+			return oldList;
+		}
+
 		List<PlayerEntity> newList = new ArrayList<PlayerEntity>();
 		for (PlayerEntity obj : oldList) {
 			if ((obj).isSleeping()) newList.add(obj);
@@ -83,8 +76,7 @@ public class WorldMixin {
 		this.allPlayersSleeping = false;
 		boolean onlyBedBot = true;
 
-		for (Object player : w.players) {
-			PlayerEntity p = (PlayerEntity) player;
+		for (PlayerEntity p : w.players) {
 			if (p.isSleeping()) {
 				if (!p.name.equalsIgnoreCase("bedbot")) onlyBedBot = false;
 				p.wakeUp(false, false, true);
@@ -106,7 +98,7 @@ public class WorldMixin {
 					target = "Lnet/minecraft/world/storage/WorldStorage;saveData(Lnet/minecraft/world/WorldData;Ljava/util/List;)V"
 			)
 	)
-	private void fixSave(WorldStorage storage, WorldData data, List players) {
+	private void fixSave(WorldStorage storage, WorldData data, List<PlayerEntity> players) {
 		if (this.dimension.id == 0) storage.saveData(data, players);
 	}
 }

@@ -75,7 +75,9 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
   - You can enable/disable remote console in the server.properties!
 - Basic death messages
 - Show coordinates on death
+  - Can be enabled in server.properties with `death-coordinates=true` 
 - Allows one-player sleep
+  - Can be enabled in server.properties with `one-player-sleep=true`
   - Doesn't remove nightmares feature for the players who sleep
 - Fixes weather timer bugs
   - Rain timer would reset when players sleep, even if it isn't raining

@@ -37,10 +37,12 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity implements IS
 		BetaQOL.server.playerManager.sendPacket(new ChatMessagePacket(msg));
 		BetaQOL.server.sendMessage(msg);
 
-		BetaQOL.server.playerManager.sendMessageToPlayer(
-				this.name,
-				String.format("Death coordinates: %.1f, %.1f, %.1f", this.x, this.y, this.z)
-		);
+		if (BetaQOL.server.properties.getBoolean("death-coordinates", false)) {
+			BetaQOL.server.playerManager.sendMessageToPlayer(
+					this.name,
+					String.format("Death coordinates: %.1f, %.1f, %.1f", this.x, this.y, this.z)
+			);
+		}
 	}
 
 	public int getPing() {
