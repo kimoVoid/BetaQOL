@@ -51,11 +51,11 @@ public class StatusCommand extends Command {
 		return (new BigDecimal(value)).setScale(places, RoundingMode.HALF_UP).doubleValue();
 	}
 
-	public double average(long[] s) {
-		long var1 = 0L;
-        for (long var6 : s) {
-            var1 += var6;
+	public double average(long[] times) {
+		long avg = 0L;
+        for (long time : times) {
+			avg += time;
         }
-		return (double)var1 / (double)s.length;
+		return (double)avg / (double)times.length;
 	}
 }
