@@ -47,6 +47,7 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
     - Pinging can be turned off if found problematic
     - Server MOTD can translate colors with the '&' format
 - Crash slab fix
+- Texture packs button in-game
 
 ## Server features/fixes
 - Auth fix (online-mode support)

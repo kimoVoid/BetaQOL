@@ -114,6 +114,11 @@ public class Config {
             false
     );
 
+    public final BooleanOption texturePackButton = new BooleanOption(
+            "texture_pack_button",
+            true
+    );
+
     public Config init() {
         OptionCategory root = OptionCategory.create("betaqol");
         OptionCategory inventory = OptionCategory.create("inventory");
@@ -142,7 +147,8 @@ public class Config {
                 invertScrollCursorSlotDirection);
 
         gameplay.add(deathScreenMsg,
-                enableMpClickMining);
+                enableMpClickMining,
+                texturePackButton);
 
         inventory.add(mouse);
         root.add(inventory);

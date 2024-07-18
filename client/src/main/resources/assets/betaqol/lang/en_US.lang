@@ -30,9 +30,11 @@ scroll_invert_direction=Invert scroll direction
 # Gameplay configs
 mp_click_mining=Multiplayer click-mining
 death_screen_msg=Death screen message
+texture_pack_button=In-game texture packs button
 options.fov=FOV
 options.fov_max=Quake Pro
 options.fov_normal=Normal
+options.texturePacks=Texture Packs...
 
 # Multiplayer GUI
 multiplayer.hidden=Hidden

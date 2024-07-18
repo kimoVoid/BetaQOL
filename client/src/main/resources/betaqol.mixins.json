@@ -29,6 +29,7 @@
     "feature.multiplayer.TitleScreenMixin",
     "feature.tablist.GameGuiMixin",
     "feature.tablist.MultiplayerWorldMixin",
+    "feature.tpbutton.OptionsScreenMixin",
     "fixes.auth.ClientNetworkHandlerMixin",
     "fixes.auth.SessionMixin",
     "fixes.connection.Connection$3Mixin",
