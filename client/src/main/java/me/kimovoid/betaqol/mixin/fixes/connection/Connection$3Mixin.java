@@ -9,6 +9,6 @@ public class Connection$3Mixin {
 
     @ModifyConstant(method = "run", constant = @Constant(longValue = 100L))
     public long decreasePacketDelay(long constant) {
-        return 1L;
+        return 0L;
     }
 }

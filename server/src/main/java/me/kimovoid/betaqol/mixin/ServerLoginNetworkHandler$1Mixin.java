@@ -13,7 +13,7 @@ public class ServerLoginNetworkHandler$1Mixin {
 	@ModifyVariable(method = "run()V", at = @At(value = "STORE"), ordinal = 0)
 	public URL modify(URL url) {
 		try {
-			return new URL(url.toString().replace("http://www.minecraft.net/game/checkserver.jsp?user=", "http://session.minecraft.net/game/checkserver.jsp?user="));
+			return new URL(url.toString().replace("http://www.minecraft.net", "https://session.minecraft.net"));
 		} catch (MalformedURLException ex) {
 			return url;
 		}

@@ -66,12 +66,12 @@ public abstract class ServerPlayNetworkHandlerMixin implements CommandSource, IS
 			this.initialPlayerInfo = true;
 		}
 
-		if (this.lastPlayerInfoPacket >= 1000) {
+		if (this.lastPlayerInfoPacket >= 200) {
 			BetaQOL.sendPlayerInfo(this.player.name, true, ((IServerPlayerEntity)this.player).getPing());
 			this.lastPlayerInfoPacket = 0;
 		}
 
-		if (this.currentTick >= 100) {
+		if (this.currentTick >= 20) {
 			this.currentTick = 0;
 			if (!this.receivedKeepAlive) {
 				return;

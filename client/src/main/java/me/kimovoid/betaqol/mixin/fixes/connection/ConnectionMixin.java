@@ -27,12 +27,11 @@ public abstract class ConnectionMixin {
     }
 
     @Redirect(method = "read", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"))
-    private boolean instantReadPing(List queue, Object p) {
+    private boolean instantReadPing(List<Packet> queue, Object p) {
         if (p instanceof PingHostPacket) {
             this.send(new PingHostPacket());
             return true;
         }
-        queue.add(p);
-        return true;
+        return queue.add((Packet)p);
     }
 }
