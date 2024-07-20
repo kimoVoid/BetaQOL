@@ -37,7 +37,7 @@ public class SetBlockCommand extends Command {
 			try {
 				blockId = Integer.parseInt(args[3]);
 			} catch (NumberFormatException e) {
-				blockId = nameToBlockId(args[1]);
+				blockId = nameToBlockId(args[3]);
 			}
 
 			if (blockId == -1) {
