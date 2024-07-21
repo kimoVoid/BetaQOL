@@ -8,6 +8,7 @@ import net.minecraft.inventory.slot.InventorySlot;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
+import org.lwjgl.opengl.GL11;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -748,10 +749,10 @@ public abstract class InventoryMenuScreenMixin extends Screen {
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/inventory/menu/InventoryMenuScreen;fillGradient(IIIIII)V", ordinal = 0))
     private void inventoryTweaks_fillGradient(InventoryMenuScreen instance, int startX, int startY, int endX, int endY, int colorStart, int colorEnd) {
-        if (BetaQOL.CONFIG.dragGraphics.get()) {
-            if (colorStart != colorEnd) throw new AssertionError();
-            int color = drawingHoveredSlot ? 0x20ffffff : colorStart;
-            this.fillGradient(startX, startY, endX, endY, color, color);
+        if (BetaQOL.CONFIG.dragGraphics.get() && this.drawingHoveredSlot) {
+            GL11.glEnable(2896);
+            GL11.glEnable(2929);
+            this.fillGradient(startX, startY, endX, endY, -2130706433, -2130706433);
         } else {
             this.fillGradient(startX, startY, endX, endY, colorStart, colorEnd);
         }
