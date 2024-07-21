@@ -29,7 +29,7 @@ public class MinecraftMixin {
         }
 
         KeybindHandler keybinding = BetaQOL.INSTANCE.keybinds;
-        if (Keyboard.getEventKey() == keybinding.getKeyByName("key.debug.chunkBorders")
+        if (Keyboard.getEventKey() == keybinding.getKeyFromCode(Keyboard.KEY_G)
                 && (Keyboard.isKeyDown(keybinding.getKeyFromCode(Keyboard.KEY_F3)))) {
             BetaQOL.INSTANCE.getChunkBorderRenderer().toggleVisibility();
         }
