@@ -750,9 +750,7 @@ public abstract class InventoryMenuScreenMixin extends Screen {
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/inventory/menu/InventoryMenuScreen;fillGradient(IIIIII)V", ordinal = 0))
     private void inventoryTweaks_fillGradient(InventoryMenuScreen instance, int startX, int startY, int endX, int endY, int colorStart, int colorEnd) {
         if (BetaQOL.CONFIG.dragGraphics.get() && this.drawingHoveredSlot) {
-            GL11.glEnable(2896);
-            GL11.glEnable(2929);
-            this.fillGradient(startX, startY, endX, endY, -2130706433, -2130706433);
+            this.fillGradient(startX, startY, endX, endY, 0x20ffffff, 0x20ffffff);
         } else {
             this.fillGradient(startX, startY, endX, endY, colorStart, colorEnd);
         }
