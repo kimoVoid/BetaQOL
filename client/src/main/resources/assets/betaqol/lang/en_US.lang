@@ -9,6 +9,7 @@ modern_F3=Modern F3 screen
 extended_F3=Extended F3 screen
 disable_F3_graph=Disable debug graph
 front_F5=Allow front perspective
+clipboard_screenshots=Screenshots to clipboard
 
 # Inventory configs
 dragging=Inventory drag
@@ -63,3 +64,6 @@ tile.doubleSlab.stone.name=Smooth Stone Slab
 tile.doubleSlab.wood.name=Double Wood Slab
 tile.doubleSlab.sand.name=Double Sandstone Slab
 tile.doubleSlab.cobble.name=Double Cobblestone Slab
+
+# Keybinding
+key.debug.chunkBorders=Chunk Borders

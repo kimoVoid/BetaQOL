@@ -140,7 +140,7 @@ public abstract class InventoryMenuScreenMixin extends Screen {
         }
     }
 
-    @Inject(method = "mouseReleased", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "mouseReleased", at = @At("RETURN"))
     private void inventoryTweaks_mouseReleasedOrSlotChanged(int mouseX, int mouseY, int button, CallbackInfo ci) {
         slot = this.getHoveredSlot(mouseX, mouseY);
 
@@ -152,8 +152,8 @@ public abstract class InventoryMenuScreenMixin extends Screen {
             if (!minecraft.isMultiplayer()) {
                 int currentWheelDegrees = Mouse.getDWheel();
                 if ((0 != currentWheelDegrees)
-                        && (isLeftClickDragStarted == false)
-                        && (isRightClickDragStarted == false)
+                        && (!isLeftClickDragStarted)
+                        && (!isRightClickDragStarted)
                 ) {
                     inventoryTweaks_handleScrollWheel(currentWheelDegrees);
                 }
@@ -161,12 +161,11 @@ public abstract class InventoryMenuScreenMixin extends Screen {
         }
 
         /* Right-click + Drag logic = distribute one item from held items to each slot */
-        if (  ( button == -1 )
+        if ( (button == -1)
                 && ( Mouse.isButtonDown(1) )
-                && ( isLeftClickDragStarted == false )
-                && ( isLeftClickDragMouseTweaksStarted == false )
-                && ( rightClickPersistentStack != null )
-        ) {
+                && (!isLeftClickDragStarted)
+                && (!isLeftClickDragMouseTweaksStarted)
+                && (rightClickPersistentStack != null)) {
             ItemStack slotItemToExamine = slot.getStack();
 
             /* Do nothing if slot item does not match held item or if the slot is full */
@@ -196,7 +195,7 @@ public abstract class InventoryMenuScreenMixin extends Screen {
         /* Left-click + Drag logic = evenly distribute held items over slots */
         if (  ( button == -1 )
                 && ( Mouse.isButtonDown(0) )
-                && ( isRightClickDragStarted == false )
+                && (!isRightClickDragStarted)
         ) {
             if (isLeftClickDragMouseTweaksStarted) {
                 inventoryTweaks_handleLeftClickDragMouseTweaks();
@@ -246,19 +245,6 @@ public abstract class InventoryMenuScreenMixin extends Screen {
             if (transferAllowed) {
                 inventoryTweaks_scrollCursorSlotTransfer(numberOfTurns, cursorStackAmount, slotStackAmount, itemBeingTransfered);
             }
-//			if (isShiftKeyDown) {
-//				if (BetaQOL.CONFIG.ScrollWheelBetaQOL.CONFIG.shiftScrollWheelBehavior) {
-//					inventoryTweaks_scrollInventoryTransfer(numberOfTurns, cursorStackAmount, slotStackAmount, itemBeingTransfered);
-//				} else {
-//					inventoryTweaks_scrollCursorSlotTransfer(numberOfTurns, cursorStackAmount, slotStackAmount, itemBeingTransfered);
-//				}
-//			} else {
-//				if (BetaQOL.CONFIG.ScrollWheelBetaQOL.CONFIG.scrollWheelBehavior) {
-//					inventoryTweaks_scrollCursorSlotTransfer(numberOfTurns, cursorStackAmount, slotStackAmount, itemBeingTransfered);
-//				} else {
-//					inventoryTweaks_scrollInventoryTransfer(numberOfTurns, cursorStackAmount, slotStackAmount, itemBeingTransfered);
-//				}
-//			}
         }
     }
 
@@ -298,66 +284,6 @@ public abstract class InventoryMenuScreenMixin extends Screen {
         }
     }
 
-//	@Unique private void inventoryTweaks_scrollInventoryTransfer(float numTurns, int cursorAmount, int slotAmount, ItemStack transferItem) {
-//		int itemsLeftToAdd = 0;
-//
-//		if (BetaQOL.CONFIG.ScrollWheelBetaQOL.CONFIG.invertScrollInventoryDirection) {
-//			numTurns *= -1;
-//		}
-//
-//		if (minecraft.player.container == minecraft.player.playerContainer) {
-//			System.out.println("Only one container exists");
-//		}
-//
-//		if (0 > numTurns) {
-//			/* Transfer items out of slot */
-//			if (0 != slotAmount) {
-//				for (int containerIndex = 0; containerIndex < minecraft.player.menu.slots.lastIndexOf(Slot) - 1; containerIndex++) {
-//					Slot curSlot = (Slot)minecraft.player.playerMenu.slots.get(containerIndex);
-////					ItemStack curSlotItem = curSlot.getItem();
-////					int curSlotAmount = (null != curSlotItem) ? curSlotItem.count : 0;
-////
-////					if (  (null == curSlotItem)
-////					   || (  (curSlotItem.matchesItem(transferItem))
-////					      && (curSlotAmount != transferItem.getMaxSize())
-////					      )
-////					) {
-////						while (  (itemsLeftToAdd < abs(numTurns))
-////						      && (curSlotAmount != transferItem.getMaxSize())
-////					    ) {
-////							if (0 == (slotAmount - 1)) {
-////								slot.setStack(null);
-////							} else {
-////								slot.setStack(new ItemStack(transferItem.itemId, (slotAmount - 1), transferItem.getDamage()));
-////							}
-////
-////							curSlot.setStack(new ItemStack(transferItem.itemId, (curSlotAmount + 1), transferItem.getDamage()));
-////
-////							curSlotItem = curSlot.getItem();
-////							curSlotAmount = (null != curSlotItem) ? curSlotItem.count : 0;
-////							itemsLeftToAdd++;
-////						}
-////
-////						if (itemsLeftToAdd == numTurns) {
-////							return;
-////						}
-////					}
-//				}
-//			}
-//		} else {
-//			/* Transfer items into slot */
-//			boolean itemExistsInContainer = true;
-//			if (itemExistsInContainer) {
-////				for (int turnIndex = 0; turnIndex < abs(numTurns); turnIndex++) {
-////				}
-//				System.out.println("Scroll up");
-//				Slot slotToModify = (Slot)minecraft.player.menu.slots.get(0);
-//
-//				slotToModify.setStack(new ItemStack(transferItem.itemId, 7, transferItem.getDamage()));
-//			}
-//		}
-//	}
-
     @Unique private boolean inventoryTweaks_handleRightClick(int mouseX, int mouseY) {
         /* Get held item */
         ItemStack cursorStack = minecraft.player.inventory.getCursorStack();
@@ -383,7 +309,7 @@ public abstract class InventoryMenuScreenMixin extends Screen {
                 }
 
                 /* Begin Right-click + Drag */
-                if (cursorStack != null && rightClickPersistentStack == null && isRightClickDragStarted == false) {
+                if (rightClickPersistentStack == null && !isRightClickDragStarted) {
                     rightClickPersistentStack = cursorStack;
                     rightClickItemAmount = rightClickPersistentStack.size;
                     isRightClickDragStarted = true;
@@ -425,7 +351,7 @@ public abstract class InventoryMenuScreenMixin extends Screen {
     @Unique private void inventoryTweaks_handleRightClickDrag(ItemStack slotItemToExamine) {
         /* First slot is handled instantly in mouseClicked function */
         if (slot.id != lastRMBSlotId) {
-            if (0 == rightClickHoveredSlots.size())
+            if (rightClickHoveredSlots.isEmpty())
             {
                 /* Add slot to item distribution */
                 rightClickHoveredSlots.add(lastRMBSlot);
@@ -513,7 +439,7 @@ public abstract class InventoryMenuScreenMixin extends Screen {
             }
 
             /* Begin Left-click + Drag */
-            if (cursorStack != null && leftClickPersistentStack == null && isLeftClickDragStarted == false) {
+            if (leftClickPersistentStack == null && !isLeftClickDragStarted) {
                 leftClickPersistentStack = cursorStack;
                 leftClickItemAmount = leftClickPersistentStack.size;
                 isLeftClickDragStarted = true;
@@ -547,8 +473,7 @@ public abstract class InventoryMenuScreenMixin extends Screen {
         /* Ensure a slot was clicked */
         if (clickedSlot != null) {
             /* Get info for MouseTweaks `Left-Click + Drag` mechanics */
-            ItemStack itemInSlot = clickedSlot.getStack();
-            leftClickMouseTweaksPersistentStack = itemInSlot;
+            leftClickMouseTweaksPersistentStack = clickedSlot.getStack();
 
             /* Handle initial Left-click */
             lastLMBSlotId = clickedSlot.id;
@@ -696,22 +621,20 @@ public abstract class InventoryMenuScreenMixin extends Screen {
                     /* Distribute fewer items to slots whose max stack size will be filled */
                     do {
                         rerunLoop = false;
-                        if (0 < numberOfSlotsRemainingToFill) {
-                            itemsPerSlot = leftClickRemainingItemAmount / numberOfSlotsRemainingToFill;
+                        itemsPerSlot = leftClickRemainingItemAmount / numberOfSlotsRemainingToFill;
 
-                            if (0 != itemsPerSlot) {
-                                for (int slotsToCheckIndex = 0; slotsToCheckIndex < leftClickAmountToFill.size(); slotsToCheckIndex++) {
-                                    if (0 != leftClickAmountToFill.get(slotsToCheckIndex) && leftClickAmountToFill.get(slotsToCheckIndex) < itemsPerSlot) {
-                                        /* Just fill the slot and return */
-                                        for (int fillTheAmountIndex = 0; fillTheAmountIndex < leftClickAmountToFill.get(slotsToCheckIndex); fillTheAmountIndex++) {
-                                            this.minecraft.interactionManager.clickSlot(this.menu.networkId, leftClickHoveredSlots.get(slotsToCheckIndex).id, 1, false, this.minecraft.player);
-                                        }
-
-                                        leftClickRemainingItemAmount = leftClickRemainingItemAmount - leftClickAmountToFill.get(slotsToCheckIndex);
-                                        leftClickAmountToFill.set(slotsToCheckIndex, 0);
-                                        numberOfSlotsRemainingToFill--;
-                                        rerunLoop = true;
+                        if (0 != itemsPerSlot) {
+                            for (int slotsToCheckIndex = 0; slotsToCheckIndex < leftClickAmountToFill.size(); slotsToCheckIndex++) {
+                                if (0 != leftClickAmountToFill.get(slotsToCheckIndex) && leftClickAmountToFill.get(slotsToCheckIndex) < itemsPerSlot) {
+                                    /* Just fill the slot and return */
+                                    for (int fillTheAmountIndex = 0; fillTheAmountIndex < leftClickAmountToFill.get(slotsToCheckIndex); fillTheAmountIndex++) {
+                                        this.minecraft.interactionManager.clickSlot(this.menu.networkId, leftClickHoveredSlots.get(slotsToCheckIndex).id, 1, false, this.minecraft.player);
                                     }
+
+                                    leftClickRemainingItemAmount = leftClickRemainingItemAmount - leftClickAmountToFill.get(slotsToCheckIndex);
+                                    leftClickAmountToFill.set(slotsToCheckIndex, 0);
+                                    numberOfSlotsRemainingToFill--;
+                                    rerunLoop = true;
                                 }
                             }
                         }

@@ -1,16 +1,16 @@
 package me.kimovoid.betaqol.mixin.feature.keybinding;
 
+import io.github.crazysmc.thrkbs.CustomKeyBinding;
+import me.kimovoid.betaqol.BetaQOL;
+import me.kimovoid.betaqol.feature.keybinding.KeybindHandler;
 import net.minecraft.client.options.GameOptions;
 import net.minecraft.client.options.KeyBinding;
 import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.Arrays;
 
 @Mixin(GameOptions.class)
 public class GameOptionsMixin {
@@ -20,22 +20,8 @@ public class GameOptionsMixin {
     /* Used for registering keys */
     @Inject(method = "load", at = @At(value = "HEAD"))
     private void preLoadOptions(CallbackInfo ci) {
-        this.registerKeybinding("key.playerlist", Keyboard.KEY_TAB);
-    }
-
-    @Unique
-    private void registerKeybinding(String name, int keyCode) {
-        this.keyBindings = append(
-                this.keyBindings,
-                new KeyBinding(name, keyCode)
-        );
-    }
-
-    @Unique
-    private <T> T[] append(T[] array, T obj) {
-        int length = array.length;
-        array = Arrays.copyOf(array, length + 1);
-        array[length] = obj;
-        return array;
+        KeybindHandler handler = BetaQOL.INSTANCE.keybinds;
+        this.keyBindings = handler.registerKeybinding(this.keyBindings, new KeyBinding("key.playerlist", Keyboard.KEY_TAB));
+        this.keyBindings = handler.registerKeybinding(this.keyBindings, new CustomKeyBinding("key.debug.chunkBorders", Keyboard.KEY_G, "key.categories.debug"));
     }
 }

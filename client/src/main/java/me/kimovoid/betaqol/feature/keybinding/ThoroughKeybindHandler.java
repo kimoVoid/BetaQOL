@@ -1,4 +1,4 @@
-package me.kimovoid.betaqol.feature.keybind;
+package me.kimovoid.betaqol.feature.keybinding;
 
 import io.github.crazysmc.thrkbs.CustomKeyBinding;
 

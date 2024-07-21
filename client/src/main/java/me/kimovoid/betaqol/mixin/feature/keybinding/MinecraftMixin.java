@@ -1,5 +1,7 @@
 package me.kimovoid.betaqol.mixin.feature.keybinding;
 
+import me.kimovoid.betaqol.BetaQOL;
+import me.kimovoid.betaqol.feature.keybinding.KeybindHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import org.lwjgl.input.Keyboard;
@@ -26,10 +28,10 @@ public class MinecraftMixin {
             return;
         }
 
-        /*
-        if (Keyboard.getEventKey() == BetaQOL.INSTANCE.labelToggle.keyCode) {
-            BetaQOL.CONFIG.alwaysShowLabel = !BetaQOL.CONFIG.alwaysShowLabel;
+        KeybindHandler keybinding = BetaQOL.INSTANCE.keybinds;
+        if (Keyboard.getEventKey() == keybinding.getKeyByName("key.debug.chunkBorders")
+                && (Keyboard.isKeyDown(keybinding.getKeyFromCode(Keyboard.KEY_F3)))) {
+            BetaQOL.INSTANCE.getChunkBorderRenderer().toggleVisibility();
         }
-         */
     }
 }

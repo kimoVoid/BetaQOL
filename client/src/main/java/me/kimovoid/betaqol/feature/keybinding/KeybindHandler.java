@@ -1,8 +1,7 @@
-package me.kimovoid.betaqol.feature.keybind;
+package me.kimovoid.betaqol.feature.keybinding;
 
 import me.kimovoid.betaqol.BetaQOL;
 import net.minecraft.client.options.KeyBinding;
-import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Unique;
 
 import java.util.Arrays;
@@ -20,5 +19,12 @@ public class KeybindHandler {
             if (key.name.equals(name)) code = key.keyCode;
         }
         return code;
+    }
+
+    public KeyBinding[] registerKeybinding(KeyBinding[] arr, KeyBinding key) {
+        int length = arr.length;
+        arr = Arrays.copyOf(arr, length + 1);
+        arr[length] = key;
+        return arr;
     }
 }

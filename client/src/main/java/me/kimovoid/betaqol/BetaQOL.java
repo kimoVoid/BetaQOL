@@ -1,8 +1,9 @@
 package me.kimovoid.betaqol;
 
 import me.kimovoid.betaqol.config.Config;
-import me.kimovoid.betaqol.feature.keybind.KeybindHandler;
-import me.kimovoid.betaqol.feature.keybind.ThoroughKeybindHandler;
+import me.kimovoid.betaqol.feature.chunkborders.ChunkBorderRenderer;
+import me.kimovoid.betaqol.feature.keybinding.KeybindHandler;
+import me.kimovoid.betaqol.feature.keybinding.ThoroughKeybindHandler;
 import me.kimovoid.betaqol.feature.networking.PlayerInfoListener;
 import me.kimovoid.betaqol.feature.networking.PlayerInfoPayload;
 import net.fabricmc.loader.api.FabricLoader;
@@ -26,6 +27,7 @@ public class BetaQOL implements ModInitializer {
 	public static Minecraft mc;
 	public KeybindHandler keybinds;
 	public LinkedHashMap<String, Integer> tabPlayers = new LinkedHashMap<>();
+	public final ChunkBorderRenderer chunkBorderRenderer = new ChunkBorderRenderer();
 
 	@Override
 	public void init() {
@@ -52,5 +54,9 @@ public class BetaQOL implements ModInitializer {
 		LoggerConfig loggerConfig = conf.getLoggerConfig(LogManager.ROOT_LOGGER_NAME);
 		loggerConfig.setLevel(Level.INFO);
 		context.updateLoggers();
+	}
+
+	public ChunkBorderRenderer getChunkBorderRenderer() {
+		return this.chunkBorderRenderer;
 	}
 }
