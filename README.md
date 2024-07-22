@@ -10,7 +10,7 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
   - Uses AxolotlClient config UI
 - Auth fix (use current auth server)
 - Skin/cape patch & 1.8 layers backport (ported from [MojangFix](https://modrinth.com/mod/mojangfix))
-- Resources patch (betacraft proxy)
+- Resources patch (BetaCraft proxy)
 - Mouse position fix on fullscreen
 - Quit button re-added
 - Enhanced F3 screen
@@ -48,6 +48,12 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
     - Server MOTD can translate colors with the '&' format
 - Crash slab fix
 - Texture packs button in-game
+- Added ability to copy screenshots to clipboard
+- Added chunk borders (F3 + G, configurable with Thorough Keybindings mod)
+  - Doesn't work with OptiFine at the moment :/
+- Fixed leggings not rendering correctly while riding a vehicle
+- Added scrolling in chat
+  - Ported from [HudTweaks](https://github.com/telvarost/HudTweaks-StationAPI)
 
 ## Server features/fixes
 - Auth fix (online-mode support)
