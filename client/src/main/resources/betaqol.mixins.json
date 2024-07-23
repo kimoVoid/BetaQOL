@@ -6,6 +6,7 @@
   "mixins": [
     "access.ScreenInvoker",
     "access.TextFieldWidgetAccessor",
+    "feature.alwaysplaymusic.SoundEngineMixin",
     "feature.chat.ChatScreenMixin",
     "feature.chat.GameGuiMixin",
     "feature.chat.SleepingChatScreenMixin",

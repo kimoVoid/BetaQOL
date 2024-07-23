@@ -124,6 +124,11 @@ public class Config {
             true
     );
 
+    public final BooleanOption alwaysPlayMusic = new BooleanOption(
+            "always_play_music",
+            false
+    );
+
     public Config init() {
         OptionCategory root = OptionCategory.create("betaqol");
         OptionCategory inventory = OptionCategory.create("inventory");
@@ -154,7 +159,8 @@ public class Config {
 
         gameplay.add(deathScreenMsg,
                 enableMpClickMining,
-                texturePackButton);
+                texturePackButton,
+                alwaysPlayMusic);
 
         inventory.add(mouse);
         root.add(inventory);
