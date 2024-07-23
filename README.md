@@ -54,6 +54,7 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
 - Fixed leggings not rendering correctly while riding a vehicle
 - Added scrolling in chat
   - Ported from [HudTweaks](https://github.com/telvarost/HudTweaks-StationAPI)
+- "Always play music" option, similar to Legacy Console Edition
 
 ## Server features/fixes
 - Auth fix (online-mode support)
