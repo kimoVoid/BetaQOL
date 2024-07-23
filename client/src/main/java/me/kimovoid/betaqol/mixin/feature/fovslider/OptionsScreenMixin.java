@@ -20,11 +20,10 @@ public abstract class OptionsScreenMixin extends Screen {
 
     @Inject(method = "init", at = @At("TAIL"))
     private void addFovButton(CallbackInfo ci) {
-        int y = FabricLoader.getInstance().isModLoaded("sound-categories") ? 0 : 24 * (5 >> 1);
         this.buttons.add(new FOVOptionSlider(
                 69,
                 this.width / 2 - 155 + 160,
-                this.height / 6 + y,
+                this.height / 6 + 24 * (5 >> 1),
                 FOVOption.getLocalizedFov(),
                 FOVOption.fov));
     }
