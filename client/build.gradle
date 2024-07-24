@@ -14,3 +14,7 @@ dependencies {
 
     modImplementation files('libs/thorough-keybindings-1.2.0+b1.4-b1.7.jar')
 }
+
+loom {
+    accessWidenerPath = file("src/main/resources/betaqol.accesswidener")
+}

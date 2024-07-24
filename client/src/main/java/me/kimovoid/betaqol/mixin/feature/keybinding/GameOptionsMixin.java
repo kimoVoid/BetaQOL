@@ -23,5 +23,6 @@ public class GameOptionsMixin {
         KeybindHandler handler = BetaQOL.INSTANCE.keybinds;
         this.keyBindings = handler.registerKeybinding(this.keyBindings, new KeyBinding("key.playerlist", Keyboard.KEY_TAB));
         this.keyBindings = handler.registerKeybinding(this.keyBindings, new CustomKeyBinding("key.debug.chunkBorders", Keyboard.KEY_G, "key.categories.debug"));
+        this.keyBindings = handler.registerKeybinding(this.keyBindings, new CustomKeyBinding("key.debug.itemDurability", Keyboard.KEY_H, "key.categories.debug"));
     }
 }

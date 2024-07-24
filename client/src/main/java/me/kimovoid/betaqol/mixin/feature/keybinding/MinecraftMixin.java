@@ -1,6 +1,7 @@
 package me.kimovoid.betaqol.mixin.feature.keybinding;
 
 import me.kimovoid.betaqol.BetaQOL;
+import me.kimovoid.betaqol.feature.itemdurability.ItemDurability;
 import me.kimovoid.betaqol.feature.keybinding.KeybindHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
@@ -29,9 +30,17 @@ public class MinecraftMixin {
         }
 
         KeybindHandler keybinding = BetaQOL.INSTANCE.keybinds;
+
+        /* F3 + G (chunk borders) */
         if (Keyboard.getEventKey() == keybinding.getKeyFromCode(Keyboard.KEY_G)
                 && (Keyboard.isKeyDown(keybinding.getKeyFromCode(Keyboard.KEY_F3)))) {
             BetaQOL.INSTANCE.getChunkBorderRenderer().toggleVisibility();
+        }
+
+        /* F3 + H (durability) */
+        if (Keyboard.getEventKey() == keybinding.getKeyFromCode(Keyboard.KEY_H)
+                && (Keyboard.isKeyDown(keybinding.getKeyFromCode(Keyboard.KEY_F3)))) {
+            ItemDurability.debugItemDurability = !ItemDurability.debugItemDurability;
         }
     }
 }

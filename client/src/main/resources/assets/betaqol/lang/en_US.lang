@@ -69,3 +69,4 @@ tile.doubleSlab.cobble.name=Double Cobblestone Slab
 
 # Keybinding
 key.debug.chunkBorders=Chunk Borders
+key.debug.itemDurability=Item Durability

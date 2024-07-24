@@ -3,19 +3,15 @@
 	"id": "betaqol",
 	"version": "${version}",
 	"name": "Beta QOL",
-	"description": "Various tweaks and fixes for b1.7.3 clients",
+	"description": "Various tweaks and fixes for b1.7.3 servers",
 	"authors": [
 		"kimoVoid"
 	],
 	"license": "MIT",
-	"icon": "assets/betaqol/icon.png",
-	"environment": "*",
+	"environment": "server",
 	"entrypoints": {
 		"init": [
 			"me.kimovoid.betaqol.BetaQOL"
-		],
-		"modmenu": [
-			"me.kimovoid.betaqol.config.ConfigModMenu"
 		]
 	},
 	"mixins": [

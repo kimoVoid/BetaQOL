@@ -22,6 +22,8 @@
     "feature.fovslider.OptionsScreenMixin",
     "feature.invtweaks.InventoryMenuScreenMixin",
     "feature.invtweaks.PlayerEntityMixin",
+    "feature.itemdurability.GameOptionsMixin",
+    "feature.itemdurability.InventoryMenuScreenMixin",
     "feature.keybinding.GameOptionsMixin",
     "feature.keybinding.MinecraftMixin",
     "feature.misc.ConnectionMixin",
