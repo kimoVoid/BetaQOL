@@ -2,6 +2,7 @@ package me.kimovoid.betaqol.feature.gui.multiplayer;
 
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import me.kimovoid.betaqol.BetaQOL;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.ListWidget;
 import net.minecraft.locale.LanguageManager;
 import org.lwjgl.opengl.GL11;
@@ -116,7 +117,7 @@ public class MultiplayerServerListWidget extends ListWidget {
             }
 
             GL11.glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
-            BetaQOL.mc.textureManager.bind(BetaQOL.mc.textureManager.load("/assets/betaqol/tablist/icons.png"));
+            Minecraft.INSTANCE.textureManager.bind(Minecraft.INSTANCE.textureManager.load("/assets/betaqol/tablist/icons.png"));
 
             int shiftX = 0;
             int shiftY;
@@ -134,7 +135,7 @@ public class MultiplayerServerListWidget extends ListWidget {
                 tooltipText = "Polling...";
             }
 
-            BetaQOL.mc.gui.drawTexture(x + 205, y, shiftX * 10, 176 + shiftY * 8, 10, 8);
+            Minecraft.INSTANCE.gui.drawTexture(x + 205, y, shiftX * 10, 176 + shiftY * 8, 10, 8);
             if (this.mouseX >= x + 205 - 4 && this.mouseY >= y - 4 && this.mouseX <= x + 205 + 10 + 4 && this.mouseY <= y + 8 + 4) {
                 parent.tooltipText = tooltipText;
             }

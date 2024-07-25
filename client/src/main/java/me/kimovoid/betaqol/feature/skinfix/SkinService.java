@@ -3,6 +3,7 @@ package me.kimovoid.betaqol.feature.skinfix;
 import com.github.steveice10.mc.auth.data.GameProfile;
 import me.kimovoid.betaqol.BetaQOL;
 import me.kimovoid.betaqol.feature.skinfix.interfaces.PlayerEntityAccessor;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.living.player.PlayerEntity;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -38,7 +39,7 @@ public class SkinService {
         accessor.setTextureModel(playerProfile.getModel());
         player.skin = playerProfile.getSkinUrl();
         player.cloak = player.cape = playerProfile.getCapeUrl();
-        BetaQOL.mc.worldRenderer.onEntityAdded(player);
+        Minecraft.INSTANCE.worldRenderer.onEntityAdded(player);
     }
 
     private boolean updatePlayer(PlayerEntity player) {

@@ -1,6 +1,7 @@
 package me.kimovoid.betaqol.mixin.feature.deathscreen;
 
 import me.kimovoid.betaqol.BetaQOL;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.DeathScreen;
 import net.minecraft.client.render.TextRenderer;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,7 +19,7 @@ public class DeathScreenMixin {
             )
     )
     private void replaceDeathMessage(DeathScreen instance, TextRenderer textRenderer, String text, int x, int y, int color) {
-        String msg = BetaQOL.CONFIG.deathScreenMsg.get().replace("{score}", "" + BetaQOL.mc.player.getScore());
+        String msg = BetaQOL.CONFIG.deathScreenMsg.get().replace("{score}", "" + Minecraft.INSTANCE.player.getScore());
         instance.drawCenteredString(textRenderer, msg, x, y, color);
     }
 }

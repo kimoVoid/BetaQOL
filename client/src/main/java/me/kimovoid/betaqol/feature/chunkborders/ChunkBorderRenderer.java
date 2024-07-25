@@ -2,6 +2,7 @@ package me.kimovoid.betaqol.feature.chunkborders;
 
 import com.mojang.blaze3d.vertex.BufferBuilder;
 import me.kimovoid.betaqol.BetaQOL;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.living.player.InputPlayerEntity;
 import org.lwjgl.opengl.GL11;
 
@@ -21,7 +22,7 @@ public class ChunkBorderRenderer {
             return;
         }
 
-        final InputPlayerEntity player = BetaQOL.mc.player;
+        final InputPlayerEntity player = Minecraft.INSTANCE.player;
         final double dX = player.prevX + (player.x - player.prevX) * partialTicks;
         final double dY = player.prevY + (player.y - player.prevY) * partialTicks;
         final double dZ = player.prevZ + (player.z - player.prevZ) * partialTicks;

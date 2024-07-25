@@ -1,6 +1,5 @@
 package me.kimovoid.betaqol.mixin.feature.keybinding;
 
-import io.github.crazysmc.thrkbs.CustomKeyBinding;
 import me.kimovoid.betaqol.BetaQOL;
 import me.kimovoid.betaqol.feature.keybinding.KeybindHandler;
 import net.minecraft.client.options.GameOptions;
@@ -21,8 +20,8 @@ public class GameOptionsMixin {
     @Inject(method = "load", at = @At(value = "HEAD"))
     private void preLoadOptions(CallbackInfo ci) {
         KeybindHandler handler = BetaQOL.INSTANCE.keybinds;
-        this.keyBindings = handler.registerKeybinding(this.keyBindings, new KeyBinding("key.playerlist", Keyboard.KEY_TAB));
-        this.keyBindings = handler.registerKeybinding(this.keyBindings, new CustomKeyBinding("key.debug.chunkBorders", Keyboard.KEY_G, "key.categories.debug"));
-        this.keyBindings = handler.registerKeybinding(this.keyBindings, new CustomKeyBinding("key.debug.itemDurability", Keyboard.KEY_H, "key.categories.debug"));
+        this.keyBindings = handler.registerKeybinding(this.keyBindings, "key.playerlist", Keyboard.KEY_TAB, "");
+        this.keyBindings = handler.registerKeybinding(this.keyBindings, "key.debug.chunkBorders", Keyboard.KEY_G, "key.categories.debug");
+        this.keyBindings = handler.registerKeybinding(this.keyBindings, "key.debug.itemDurability", Keyboard.KEY_H, "key.categories.debug");
     }
 }

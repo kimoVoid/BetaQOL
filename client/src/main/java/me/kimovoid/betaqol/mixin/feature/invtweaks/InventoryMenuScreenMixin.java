@@ -1,6 +1,7 @@
 package me.kimovoid.betaqol.mixin.feature.invtweaks;
 
 import me.kimovoid.betaqol.BetaQOL;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.menu.InventoryMenuScreen;
 import net.minecraft.inventory.menu.InventoryMenu;
@@ -763,7 +764,7 @@ public abstract class InventoryMenuScreenMixin extends Screen {
         }
 
         if (BetaQOL.CONFIG.dropKeyInv.get()) {
-            if (keyCode == BetaQOL.mc.options.dropKey.keyCode) {
+            if (keyCode == Minecraft.INSTANCE.options.dropKey.keyCode) {
                 if (this.minecraft.player.inventory.getCursorStack() != null) {
                     return;
                 }

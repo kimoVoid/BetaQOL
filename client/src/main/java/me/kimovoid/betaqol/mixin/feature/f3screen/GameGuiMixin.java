@@ -147,7 +147,6 @@ public class GameGuiMixin extends GuiElement {
                 this.minecraft.player.chunkX,
                 this.minecraft.player.chunkZ
         ), 2, 164 + shift, 9);
-        this.renderText("Speed: " + BetaQOL.mc.player.input.movementForward, 2, 174 + shift, 9);
     }
 
     @Unique
@@ -166,10 +165,10 @@ public class GameGuiMixin extends GuiElement {
     @Unique
     private void renderText(String text, int x, int y, int plateHeight) {
         if (BetaQOL.CONFIG.modernF3.get()) {
-            this.fill(x - 1, y - 1, x + BetaQOL.mc.textRenderer.getWidth(text), y + plateHeight, -1873784752);
-            BetaQOL.mc.textRenderer.draw(text, x, y, 0xFFFFFF);
+            this.fill(x - 1, y - 1, x + Minecraft.INSTANCE.textRenderer.getWidth(text), y + plateHeight, -1873784752);
+            Minecraft.INSTANCE.textRenderer.draw(text, x, y, 0xFFFFFF);
         } else {
-            BetaQOL.mc.textRenderer.drawWithShadow(text, x, y, 0xFFFFFF);
+            Minecraft.INSTANCE.textRenderer.drawWithShadow(text, x, y, 0xFFFFFF);
         }
     }
 

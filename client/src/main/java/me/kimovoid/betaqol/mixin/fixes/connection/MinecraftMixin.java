@@ -1,6 +1,5 @@
 package me.kimovoid.betaqol.mixin.fixes.connection;
 
-import me.kimovoid.betaqol.BetaQOL;
 import net.minecraft.client.Minecraft;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,8 +18,8 @@ public class MinecraftMixin {
             )
     )
     private void tickNetwork(CallbackInfo ci) {
-        if (BetaQOL.mc.isMultiplayer()) {
-            BetaQOL.mc.getNetworkHandler().tick();
+        if (Minecraft.INSTANCE.isMultiplayer()) {
+            Minecraft.INSTANCE.getNetworkHandler().tick();
         }
     }
 }

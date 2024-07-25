@@ -24,7 +24,7 @@ public class BetaQOL implements ModInitializer {
 	public static BetaQOL INSTANCE;
 	public static Config CONFIG;
 	public static final Logger LOGGER = LogManager.getLogger("BetaQOL");
-	public static Minecraft mc;
+
 	public KeybindHandler keybinds;
 	public LinkedHashMap<String, Integer> tabPlayers = new LinkedHashMap<>();
 	public final ChunkBorderRenderer chunkBorderRenderer = new ChunkBorderRenderer();
