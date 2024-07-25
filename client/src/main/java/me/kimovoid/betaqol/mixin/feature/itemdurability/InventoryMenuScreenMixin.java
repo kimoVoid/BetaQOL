@@ -34,7 +34,7 @@ public abstract class InventoryMenuScreenMixin extends Screen {
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/inventory/menu/InventoryMenuScreen;fillGradient(IIIIII)V", ordinal = 1))
     private void removeBackground(InventoryMenuScreen instance, int x, int y, int x2, int y2, int col, int col2) {
-        if (!ItemDurability.debugItemDurability) {
+        if (!ItemDurability.debugItemDurability || !this.hoveredSlot.hasStack()) {
             instance.fillGradient(x, y, x2, y2, col, col2);
         }
     }
@@ -46,7 +46,7 @@ public abstract class InventoryMenuScreenMixin extends Screen {
             )
     )
     private void replaceTooltip(TextRenderer instance, String str, int x, int y, int color) {
-        if (!ItemDurability.debugItemDurability) {
+        if (!ItemDurability.debugItemDurability || !this.hoveredSlot.hasStack()) {
             instance.drawWithShadow(str, x, y, color);
             return;
         }
