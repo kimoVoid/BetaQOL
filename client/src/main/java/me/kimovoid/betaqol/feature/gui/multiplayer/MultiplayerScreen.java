@@ -13,12 +13,14 @@ import net.minecraft.locale.LanguageManager;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtIo;
 import net.minecraft.network.packet.Packet;
+import org.lwjgl.input.Keyboard;
 
 import java.io.*;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.nio.file.Files;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -162,6 +164,28 @@ public class MultiplayerScreen extends Screen {
         super.render(mouseX, mouseY, delta);
         if (this.tooltipText != null) {
             this.drawTooltip(this.tooltipText, mouseX, mouseY);
+        }
+
+        /* Keybindings */
+        if (Keyboard.next() && Keyboard.getEventKeyState()) {
+            if (Keyboard.getEventKey() == Keyboard.KEY_F5) {
+                this.minecraft.openScreen(new MultiplayerScreen(this.parent));
+            }
+
+            /* Move servers with SHIFT + (UP / DOWN) */
+            if (Keyboard.isKeyDown(BetaQOL.INSTANCE.keybinds.getKeyFromCode(Keyboard.KEY_LSHIFT))&& this.selectedServer != null) {
+                int key = Keyboard.getEventKey();
+                if (key != Keyboard.KEY_UP && key != Keyboard.KEY_DOWN) {
+                    return;
+                }
+
+                int i = this.serversList.indexOf(this.selectedServer);
+                int pos = key == Keyboard.KEY_UP ? -1 : 1;
+                if (pos == -1 && i > 0 || pos == 1 && i+pos < this.serversList.size()) {
+                    Collections.swap(this.serversList, i, i+pos);
+                    this.saveServers();
+                }
+            }
         }
     }
 
