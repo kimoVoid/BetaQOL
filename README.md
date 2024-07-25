@@ -41,6 +41,7 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
   - Ported from [MojangFix](https://modrinth.com/mod/mojangfix)
   - Ability to save servers
   - IP address can be hidden
+  - Move servers around with SHIFT + (UP / DOWN)
   - Servers can be pinged
     - Needs a server-side mod
     - Uses BetaTweaks/mcb1.8-1.6 format
