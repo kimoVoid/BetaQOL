@@ -165,26 +165,26 @@ public class MultiplayerScreen extends Screen {
         if (this.tooltipText != null) {
             this.drawTooltip(this.tooltipText, mouseX, mouseY);
         }
+    }
 
-        /* Keybindings */
-        if (Keyboard.next() && Keyboard.getEventKeyState()) {
-            if (Keyboard.getEventKey() == Keyboard.KEY_F5) {
-                this.minecraft.openScreen(new MultiplayerScreen(this.parent));
-            }
+    @Override
+    protected void keyPressed(char chr, int key) {
+        super.keyPressed(chr, key);
 
-            /* Move servers with SHIFT + (UP / DOWN) */
-            if (Keyboard.isKeyDown(BetaQOL.INSTANCE.keybinds.getKeyFromCode(Keyboard.KEY_LSHIFT))&& this.selectedServer != null) {
-                int key = Keyboard.getEventKey();
-                if (key != Keyboard.KEY_UP && key != Keyboard.KEY_DOWN) {
-                    return;
-                }
+        /* Refresh */
+        if (key == Keyboard.KEY_F5) {
+            this.minecraft.openScreen(new MultiplayerScreen(this.parent));
+        }
 
-                int i = this.serversList.indexOf(this.selectedServer);
-                int pos = key == Keyboard.KEY_UP ? -1 : 1;
-                if (pos == -1 && i > 0 || pos == 1 && i+pos < this.serversList.size()) {
-                    Collections.swap(this.serversList, i, i+pos);
-                    this.saveServers();
-                }
+        /* Move servers with SHIFT + (UP/DOWN) */
+        if ((key == Keyboard.KEY_UP || key == Keyboard.KEY_DOWN)
+                && Keyboard.isKeyDown(BetaQOL.INSTANCE.keybinds.getKeyFromCode(Keyboard.KEY_LSHIFT))
+                && this.selectedServer != null) {
+            int i = this.serversList.indexOf(this.selectedServer);
+            int pos = key == Keyboard.KEY_UP ? -1 : 1;
+            if (pos == -1 && i > 0 || pos == 1 && i+pos < this.serversList.size()) {
+                Collections.swap(this.serversList, i, i+pos);
+                this.saveServers();
             }
         }
     }
