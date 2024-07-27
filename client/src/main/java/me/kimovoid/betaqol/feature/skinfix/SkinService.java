@@ -26,7 +26,7 @@ public class SkinService {
     }
 
     private final ConcurrentMap<String, ReentrantLock> locks = new ConcurrentHashMap<>();
-    private final Map<String, PlayerProfile> profiles = new HashMap<>();
+    public final Map<String, PlayerProfile> profiles = new HashMap<>();
 
     private static GameProfile.TextureModel getTextureModelForUUID(UUID uuid) {
         return (uuid.hashCode() & 1) != 0 ? GameProfile.TextureModel.SLIM : GameProfile.TextureModel.NORMAL;

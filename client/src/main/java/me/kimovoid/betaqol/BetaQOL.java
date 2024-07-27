@@ -7,7 +7,6 @@ import me.kimovoid.betaqol.feature.keybinding.ThoroughKeybindHandler;
 import me.kimovoid.betaqol.feature.networking.PlayerInfoListener;
 import me.kimovoid.betaqol.feature.networking.PlayerInfoPayload;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.client.Minecraft;
 import net.ornithemc.osl.entrypoints.api.ModInitializer;
 import net.ornithemc.osl.networking.api.client.ClientPlayNetworking;
 import org.apache.logging.log4j.Level;

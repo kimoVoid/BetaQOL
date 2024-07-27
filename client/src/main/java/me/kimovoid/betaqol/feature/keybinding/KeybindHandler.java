@@ -23,6 +23,9 @@ public class KeybindHandler {
     }
 
     public KeyBinding[] registerKeybinding(KeyBinding[] arr, String name, int keyCode, String category) {
+        if (category.isEmpty()) {
+            return arr; // Only add category keybindings with Thorough Keybindings mod
+        }
         int length = arr.length;
         arr = Arrays.copyOf(arr, length + 1);
         arr[length] = new KeyBinding(name, keyCode);

@@ -53,6 +53,7 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
 - Added more debug keybindings (Configurable with Thorough Keybindings mod)
   - `F3 + G` - Show chunk borders (not working with OptiFine at the moment)
   - `F3 + H` - Show item ID, meta and durability in tooltips
+  - `F3 + R` - Reload skins
 - Fixed leggings not rendering correctly while riding a vehicle
 - Added scrolling in chat
   - Ported from [HudTweaks](https://github.com/telvarost/HudTweaks-StationAPI)

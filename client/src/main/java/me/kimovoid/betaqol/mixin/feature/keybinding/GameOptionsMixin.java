@@ -23,5 +23,6 @@ public class GameOptionsMixin {
         this.keyBindings = handler.registerKeybinding(this.keyBindings, "key.playerlist", Keyboard.KEY_TAB, "");
         this.keyBindings = handler.registerKeybinding(this.keyBindings, "key.debug.chunkBorders", Keyboard.KEY_G, "key.categories.debug");
         this.keyBindings = handler.registerKeybinding(this.keyBindings, "key.debug.itemDurability", Keyboard.KEY_H, "key.categories.debug");
+        this.keyBindings = handler.registerKeybinding(this.keyBindings, "key.debug.reloadSkins", Keyboard.KEY_R, "key.categories.debug");
     }
 }

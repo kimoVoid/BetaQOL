@@ -1,7 +1,6 @@
 package me.kimovoid.betaqol.feature.chunkborders;
 
 import com.mojang.blaze3d.vertex.BufferBuilder;
-import me.kimovoid.betaqol.BetaQOL;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.living.player.InputPlayerEntity;
 import org.lwjgl.opengl.GL11;
@@ -13,8 +12,9 @@ import org.lwjgl.opengl.GL11;
 public class ChunkBorderRenderer {
     private boolean shouldRender = false;
 
-    public void toggleVisibility() {
+    public boolean toggleVisibility() {
         this.shouldRender = !this.shouldRender;
+        return this.shouldRender;
     }
 
     public void render(final float partialTicks) {

@@ -14,13 +14,9 @@ public class ThoroughKeybindHandler extends KeybindHandler {
 
     @Override
     public KeyBinding[] registerKeybinding(KeyBinding[] arr, String name, int keyCode, String category) {
-        if (category.isEmpty()) {
-            return super.registerKeybinding(arr, name, keyCode, category);
-        }
-
         int length = arr.length;
         arr = Arrays.copyOf(arr, length + 1);
-        arr[length] = new CustomKeyBinding(name, keyCode, category);
+        arr[length] = category.isEmpty() ? new KeyBinding(name, keyCode) : new CustomKeyBinding(name, keyCode, category);
         return arr;
     }
 }
