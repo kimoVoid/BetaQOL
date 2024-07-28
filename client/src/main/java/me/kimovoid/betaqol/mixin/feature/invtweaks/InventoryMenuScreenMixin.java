@@ -1,6 +1,7 @@
 package me.kimovoid.betaqol.mixin.feature.invtweaks;
 
 import me.kimovoid.betaqol.BetaQOL;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.menu.InventoryMenuScreen;
@@ -137,7 +138,6 @@ public abstract class InventoryMenuScreenMixin extends Screen {
                 /* Handle if a button was clicked */
                 super.mouseClicked(mouseX, mouseY, button);
                 ci.cancel();
-                return;
             }
         }
     }
@@ -145,6 +145,13 @@ public abstract class InventoryMenuScreenMixin extends Screen {
     @Inject(method = "mouseReleased", at = @At("RETURN"))
     private void inventoryTweaks_mouseReleasedOrSlotChanged(int mouseX, int mouseY, int button, CallbackInfo ci) {
         slot = this.getHoveredSlot(mouseX, mouseY);
+
+        /* Clear dragging variables */
+        if (button == 0) {
+            inventoryTweaks_resetLeftClickDragVariables();
+        } else if (button == 1) {
+            inventoryTweaks_resetRightClickDragVariables();
+        }
 
         /* Do nothing if mouse is not over a slot */
         if (slot == null)
@@ -739,10 +746,9 @@ public abstract class InventoryMenuScreenMixin extends Screen {
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/inventory/menu/InventoryMenuScreen;isMouseOverSlot(Lnet/minecraft/inventory/slot/InventorySlot;II)Z"))
     private boolean inventoryTweaks_isMouseOverSlot(InventoryMenuScreen guiContainer, InventorySlot slot, int x, int y) {
         if (BetaQOL.CONFIG.dragGraphics.get()) {
-            return (  (drawingHoveredSlot = rightClickHoveredSlots.contains(slot))
+            return ((drawingHoveredSlot = rightClickHoveredSlots.contains(slot))
                     || (drawingHoveredSlot = leftClickHoveredSlots.contains(slot))
-                    || isMouseOverSlot(slot, x, y)
-            );
+                    || isMouseOverSlot(slot, x, y));
         } else {
             return isMouseOverSlot(slot, x, y);
         }
@@ -751,7 +757,13 @@ public abstract class InventoryMenuScreenMixin extends Screen {
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screen/inventory/menu/InventoryMenuScreen;fillGradient(IIIIII)V", ordinal = 0))
     private void inventoryTweaks_fillGradient(InventoryMenuScreen instance, int startX, int startY, int endX, int endY, int colorStart, int colorEnd) {
         if (BetaQOL.CONFIG.dragGraphics.get() && this.drawingHoveredSlot) {
-            this.fillGradient(startX, startY, endX, endY, 0x20ffffff, 0x20ffffff);
+            if (FabricLoader.getInstance().isModLoaded("optifabric")) { // why is this incompatible with optifine??
+                this.fillGradient(startX, startY, endX, endY, 0x20ffffff, 0x20ffffff);
+            } else {
+                GL11.glEnable(2896);
+                GL11.glEnable(2929);
+                this.fillGradient(startX, startY, endX, endY, -2130706433, -2130706433);
+            }
         } else {
             this.fillGradient(startX, startY, endX, endY, colorStart, colorEnd);
         }
