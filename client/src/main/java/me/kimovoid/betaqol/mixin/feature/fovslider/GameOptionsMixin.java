@@ -26,7 +26,7 @@ public abstract class GameOptionsMixin {
     }
 
     @Inject(method = "save", at = @At(value = "INVOKE", target = "Ljava/io/PrintWriter;close()V"), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void clientsideEssentials_saveOptions(CallbackInfo ci, PrintWriter printWriter) {
+    private void saveFov(CallbackInfo ci, PrintWriter printWriter) {
         printWriter.println("fov:" + FOVOption.fov);
     }
 }

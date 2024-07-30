@@ -41,7 +41,7 @@ public class GameRendererMixin {
 
         /* Handle OF zoom if it is installed */
         int zoomCode = BetaQOL.INSTANCE.keybinds.getKeyByName("Zoom");
-        if (zoomCode != -1 && Keyboard.isKeyDown(zoomCode)) {
+        if (zoomCode != -1 && Keyboard.isKeyDown(zoomCode) && this.minecraft.screen == null) {
             if (!this.zooming) {
                 this.zooming = true;
                 this.minecraft.options.smoothCamera = true;
