@@ -38,7 +38,9 @@ public class SkinService {
         PlayerEntityAccessor accessor = (PlayerEntityAccessor) player;
         accessor.setTextureModel(playerProfile.getModel());
         player.skin = playerProfile.getSkinUrl();
-        player.cloak = player.cape = playerProfile.getCapeUrl();
+        if (!this.hasOfCape(player)) {
+            player.cloak = player.cape = playerProfile.getCapeUrl();
+        }
         Minecraft.INSTANCE.worldRenderer.onEntityAdded(player);
     }
 
@@ -98,5 +100,10 @@ public class SkinService {
         } finally {
             lock.unlock();
         }
+    }
+
+    public boolean hasOfCape(PlayerEntity player) {
+        return (player.cloak != null && player.cloak.contains("optifine.net/capes/"))
+                || (player.cape != null && player.cape.contains("optifine.net/capes/"));
     }
 }
