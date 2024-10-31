@@ -1,4 +1,4 @@
-package me.kimovoid.betaqol.mixin;
+package me.kimovoid.betaqol.mixin.fixes.connection;
 
 import me.kimovoid.betaqol.interfaces.IListenThread;
 import me.kimovoid.betaqol.mixin.access.ListenThreadAccessor;

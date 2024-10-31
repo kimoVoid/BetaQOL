@@ -1,4 +1,4 @@
-package me.kimovoid.betaqol.mixin;
+package me.kimovoid.betaqol.mixin.feature.instantbreak;
 
 import me.kimovoid.betaqol.BetaQOL;
 import net.minecraft.entity.living.player.PlayerEntity;

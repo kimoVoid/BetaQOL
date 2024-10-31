@@ -1,4 +1,4 @@
-package me.kimovoid.betaqol.mixin;
+package me.kimovoid.betaqol.mixin.command;
 
 import me.kimovoid.betaqol.BetaQOL;
 import me.kimovoid.betaqol.command.*;

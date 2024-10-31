@@ -1,4 +1,4 @@
-package me.kimovoid.betaqol.mixin;
+package me.kimovoid.betaqol.mixin.fixes.connection;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.Constant;

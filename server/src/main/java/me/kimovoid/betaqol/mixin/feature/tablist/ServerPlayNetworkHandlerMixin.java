@@ -1,4 +1,4 @@
-package me.kimovoid.betaqol.mixin;
+package me.kimovoid.betaqol.mixin.feature.tablist;
 
 import me.kimovoid.betaqol.BetaQOL;
 import me.kimovoid.betaqol.interfaces.IServerPlayNetworkHandler;
@@ -18,8 +18,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-
-import java.util.logging.LogManager;
 
 @Mixin(ServerPlayNetworkHandler.class)
 public abstract class ServerPlayNetworkHandlerMixin implements CommandSource, IServerPlayNetworkHandler {
@@ -42,18 +40,6 @@ public abstract class ServerPlayNetworkHandlerMixin implements CommandSource, IS
 	)
 	private void redirect(Connection connection, PacketHandler handler) {
 		if (connection != null) connection.setListener(handler);
-	}
-
-	@Inject(method = "runCommand", at = @At("HEAD"), cancellable = true)
-	private void onCommand(String cmd, CallbackInfo ci) {
-		String commandName = cmd.toLowerCase().substring(1).split(" ", 2)[0];
-		if (BetaQOL.commandsByName.containsKey(commandName)
-				&& !BetaQOL.opCommands.contains(commandName)
-				&& !this.server.playerManager.isOp(this.player.name)) {
-			server.addCommand(cmd.substring(1), this);
-			LogManager.getLogManager().getLogger("Minecraft").info(this.player.name + " issued server command: " + cmd.substring(1));
-			ci.cancel();
-		}
 	}
 
 	@Inject(method = "tick", at = @At("HEAD"))

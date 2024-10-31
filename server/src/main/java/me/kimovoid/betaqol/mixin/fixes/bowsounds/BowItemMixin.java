@@ -1,4 +1,4 @@
-package me.kimovoid.betaqol.mixin;
+package me.kimovoid.betaqol.mixin.fixes.bowsounds;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.living.player.PlayerEntity;

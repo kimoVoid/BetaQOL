@@ -1,4 +1,4 @@
-package me.kimovoid.betaqol.mixin;
+package me.kimovoid.betaqol.mixin.feature.tablist;
 
 import me.kimovoid.betaqol.BetaQOL;
 import net.minecraft.network.packet.KeepAlivePacket;
@@ -6,9 +6,7 @@ import net.minecraft.network.packet.LoginPacket;
 import net.minecraft.server.network.handler.ServerLoginNetworkHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(ServerLoginNetworkHandler.class)
@@ -25,13 +23,5 @@ public class ServerLoginNetworkHandlerMixin {
     public void injectLogin(LoginPacket packet, CallbackInfo ci) {
         BetaQOL.server.playerManager.sendPacket(packet.username, new KeepAlivePacket());
         BetaQOL.sendPlayerInfo(packet.username, true, 0);
-    }
-
-    @ModifyConstant(
-            method = "tick()V",
-            constant = @Constant(intValue = 600)
-    )
-    private int setLoginTimeout(int old) {
-        return 600 * 50;
     }
 }
