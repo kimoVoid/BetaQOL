@@ -1,4 +1,4 @@
-package me.kimovoid.betaqol.mixin.feature.tablist;
+package me.kimovoid.betaqol.mixin.feature.ping;
 
 import me.kimovoid.betaqol.BetaQOL;
 import me.kimovoid.betaqol.interfaces.IServerPlayNetworkHandler;
@@ -23,7 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class ServerPlayNetworkHandlerMixin implements CommandSource, IServerPlayNetworkHandler {
 
 	@Shadow private ServerPlayerEntity player;
-	@Shadow private MinecraftServer server;
 	@Shadow public Connection connection;
 	@Unique private int currentTick;
 	@Unique private long keepAliveTimeSent;
@@ -52,12 +51,12 @@ public abstract class ServerPlayNetworkHandlerMixin implements CommandSource, IS
 			this.initialPlayerInfo = true;
 		}
 
-		if (this.lastPlayerInfoPacket >= 10000) {
+		if (this.lastPlayerInfoPacket >= 60) {
 			BetaQOL.sendPlayerInfo(this.player.name, true, ((IServerPlayerEntity)this.player).getPing());
 			this.lastPlayerInfoPacket = 0;
 		}
 
-		if (this.currentTick >= 1000) {
+		if (this.currentTick >= 20) {
 			this.currentTick = 0;
 			if (!this.receivedKeepAlive) {
 				return;

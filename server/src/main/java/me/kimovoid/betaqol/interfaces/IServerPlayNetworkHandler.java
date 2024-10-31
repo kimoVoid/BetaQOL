@@ -4,5 +4,5 @@ import net.minecraft.network.packet.KeepAlivePacket;
 
 public interface IServerPlayNetworkHandler {
 
-    public void handleKeepAlive(KeepAlivePacket packet);
+    void handleKeepAlive(KeepAlivePacket packet);
 }

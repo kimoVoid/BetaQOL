@@ -3,10 +3,10 @@ package me.kimovoid.betaqol.mixin.fixes.connection;
 import me.kimovoid.betaqol.BetaQOL;
 import me.kimovoid.betaqol.interfaces.IListenThread;
 import me.kimovoid.betaqol.interfaces.IServerPlayNetworkHandler;
+import me.kimovoid.betaqol.networking.ServerPingPacket;
 import net.minecraft.network.Connection;
 import net.minecraft.network.PacketHandler;
 import net.minecraft.network.packet.KeepAlivePacket;
-import net.minecraft.network.packet.Packet;
 import net.minecraft.server.network.handler.ServerPlayNetworkHandler;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.List;
 
 @Mixin(Connection.class)
 public class ConnectionMixin {
@@ -23,20 +24,20 @@ public class ConnectionMixin {
 
     @Shadow private boolean open;
 
-    @Redirect(
-            method = "tick()V",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/network/packet/Packet;handle(Lnet/minecraft/network/PacketHandler;)V"
-            )
-    )
-    public void handlePacket(Packet packet, PacketHandler handler) {
-        if (packet instanceof KeepAlivePacket && handler instanceof ServerPlayNetworkHandler) {
-            ServerPlayNetworkHandler networkHandler = (ServerPlayNetworkHandler) handler;
-            ((IServerPlayNetworkHandler)networkHandler).handleKeepAlive((KeepAlivePacket) packet);
-            return;
+    @Shadow private PacketHandler listener;
+
+    @Redirect(method = "read", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z", remap = false))
+    private boolean doAsyncPackets(List list, Object obj) {
+        if (obj instanceof KeepAlivePacket) {
+            ServerPlayNetworkHandler networkHandler = (ServerPlayNetworkHandler) this.listener;
+            ((IServerPlayNetworkHandler)networkHandler).handleKeepAlive((KeepAlivePacket) obj);
+            return false;
         }
-        packet.handle(handler);
+        if (obj instanceof ServerPingPacket) {
+            ((ServerPingPacket)obj).handle(this.listener);
+            return false;
+        }
+        return list.add(obj);
     }
 
     @Inject(method = "<init>", at = @At(value = "INVOKE", target = "Ljava/net/Socket;setSoTimeout(I)V"))
@@ -51,10 +52,5 @@ public class ConnectionMixin {
         if (open) {
             ((IListenThread) BetaQOL.server.connections).close(socket);
         }
-    }
-
-    @ModifyConstant(method = "tick", constant = @Constant(intValue = 1200))
-    private int setTimeoutTime(int time) {
-        return time * 50;
     }
 }

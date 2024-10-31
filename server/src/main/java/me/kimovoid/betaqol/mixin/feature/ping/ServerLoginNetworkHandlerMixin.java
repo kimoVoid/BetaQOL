@@ -1,4 +1,4 @@
-package me.kimovoid.betaqol.mixin.feature.tablist;
+package me.kimovoid.betaqol.mixin.feature.ping;
 
 import me.kimovoid.betaqol.BetaQOL;
 import net.minecraft.network.packet.KeepAlivePacket;
