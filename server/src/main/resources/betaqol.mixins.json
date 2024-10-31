@@ -4,6 +4,7 @@
   "package": "me.kimovoid.betaqol.mixin",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
+    "BowItemMixin",
     "CommandHandlerMixin",
     "Connection$3Mixin",
     "Connection$4Mixin",
@@ -15,6 +16,7 @@
     "ServerLoginNetworkHandlerMixin",
     "ServerPlayerEntityMixin",
     "ServerPlayNetworkHandlerMixin",
+    "SkeletonEntityMixin",
     "WorldMixin",
     "access.ConnectionAccessor",
     "access.ListenThreadAccessor",
