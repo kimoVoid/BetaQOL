@@ -82,6 +82,9 @@ public class GameGuiMixin extends GuiElement {
             )
     )
     public void renderModernizedF3(CallbackInfo ci) {
+        if (!BetaQOL.CONFIG.modernF3.get()) {
+            return;
+        }
         DebugScreen.INSTANCE.renderLeftSideDebug(this.minecraft);
         DebugScreen.INSTANCE.renderRightSideDebug(this.minecraft);
     }
