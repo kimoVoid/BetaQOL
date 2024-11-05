@@ -5,8 +5,7 @@ gameplay=Gameplay Tweaks
 
 # Root configs
 always_show_label=Always show label
-modern_F3=Modern F3 screen
-extended_F3=Extended F3 screen
+modern_F3=Modern debug screen
 disable_F3_graph=Disable debug graph
 front_F5=Allow front perspective
 clipboard_screenshots=Screenshots to clipboard

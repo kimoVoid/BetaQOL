@@ -11,8 +11,11 @@ dependencies {
 
     include(implementation("com.github.GeyserMC:MCAuthLib:d9d773e5d50327c33898c65cd545a4f6ef3ba1b5"))
     modImplementation "com.terraformersmc:modmenu:0.2.1+mcb1.7.3"
-
     modImplementation files('libs/thorough-keybindings-1.2.0+b1.4-b1.7.jar')
+
+    implementation include('com.github.oshi:oshi-core:6.6.5')
+    implementation include('net.java.dev.jna:jna:5.15.0')
+    implementation include('net.java.dev.jna:jna-platform:5.15.0')
 }
 
 loom {

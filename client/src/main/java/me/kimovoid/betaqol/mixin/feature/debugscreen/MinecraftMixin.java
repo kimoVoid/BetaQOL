@@ -1,4 +1,4 @@
-package me.kimovoid.betaqol.mixin.feature.f3screen;
+package me.kimovoid.betaqol.mixin.feature.debugscreen;
 
 import me.kimovoid.betaqol.BetaQOL;
 import net.minecraft.client.Minecraft;

@@ -2,6 +2,7 @@ package me.kimovoid.betaqol;
 
 import me.kimovoid.betaqol.config.Config;
 import me.kimovoid.betaqol.feature.chunkborders.ChunkBorderRenderer;
+import me.kimovoid.betaqol.feature.debugscreen.DebugScreen;
 import me.kimovoid.betaqol.feature.keybinding.KeybindHandler;
 import me.kimovoid.betaqol.feature.keybinding.ThoroughKeybindHandler;
 import me.kimovoid.betaqol.feature.networking.PlayerInfoListener;
@@ -42,6 +43,8 @@ public class BetaQOL implements ModInitializer {
 			this.keybinds = new ThoroughKeybindHandler();
 			LOGGER.info("Found thorough keybindings mod!");
 		}
+
+		DebugScreen.INSTANCE.init();
 
 		/* Networking */
 		ClientPlayNetworking.registerListener("BetaQOL|PlayerInfo", PlayerInfoPayload::new, new PlayerInfoListener());

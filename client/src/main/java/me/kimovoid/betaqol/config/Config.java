@@ -21,11 +21,6 @@ public class Config {
             true
     );
 
-    public final BooleanOption extendedF3 = new BooleanOption(
-            "extended_F3",
-            true
-    );
-
     public final BooleanOption disableChart = new BooleanOption(
             "disable_F3_graph",
             true
@@ -137,7 +132,6 @@ public class Config {
 
         root.add(showLabel,
                 modernF3,
-                extendedF3,
                 disableChart,
                 frontPerspective,
                 screenshotToClipboard);
