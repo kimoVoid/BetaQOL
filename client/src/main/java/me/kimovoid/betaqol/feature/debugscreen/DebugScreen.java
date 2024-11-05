@@ -57,7 +57,7 @@ public class DebugScreen {
         lines.add("");
         lines.add(String.format("XYZ: %.3f / %.3f / %.3f", mc.player.x, mc.player.y, mc.player.z));
         lines.add(String.format("Block: %s %s %s", x, y, z));
-        lines.add("Facing: " + facing);
+        lines.add(String.format("Facing: %s (%.1f / %.1f)", facing, this.wrapDegrees(mc.player.yaw), this.wrapDegrees(mc.player.pitch)));
         lines.add("Chunk: " + String.format("%s, %s [%s, %s]", chunkX, chunkZ, x & 15, z & 15));
         lines.add("");
         lines.add("Light: " + mc.world.getLight(x, y, z));
@@ -134,5 +134,15 @@ public class DebugScreen {
         }
         Minecraft.INSTANCE.gui.fillGradient(x - 1, y - 1, x + Minecraft.INSTANCE.textRenderer.getWidth(text), y + 8, -1873784752, -1873784752);
         Minecraft.INSTANCE.textRenderer.draw(text, x, y, 0xE0E0E0);
+    }
+
+    private float wrapDegrees(float degrees) {
+        if ((degrees %= 360.0f) >= 180.0f) {
+            degrees -= 360.0f;
+        }
+        if (degrees < -180.0f) {
+            degrees += 360.0f;
+        }
+        return degrees;
     }
 }
