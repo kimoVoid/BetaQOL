@@ -17,6 +17,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.List;
 
+@SuppressWarnings("unchecked")
 @Mixin(Connection.class)
 public class ConnectionMixin {
 

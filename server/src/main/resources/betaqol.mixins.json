@@ -15,8 +15,8 @@
     "feature.deathmessages.ServerPlayerEntityMixin",
     "feature.instantbreak.InteractionManagerMixin",
     "feature.oneplayersleep.WorldMixin",
-    "feature.ping.ServerPlayerEntityMixin",
     "feature.ping.ServerLoginNetworkHandlerMixin",
+    "feature.ping.ServerPlayerEntityMixin",
     "feature.ping.ServerPlayNetworkHandlerMixin",
     "feature.tps.MinecraftServerMixin",
     "fixes.auth.ServerLoginNetworkHandler$1Mixin",
@@ -26,6 +26,7 @@
     "fixes.connection.Connection$4Mixin",
     "fixes.connection.ConnectionMixin",
     "fixes.connection.ListenThreadMixin",
+    "fixes.ghast.GhastEntityMixin",
     "fixes.rain.WorldMixin",
     "misc.MinecraftServerMixin"
   ],
