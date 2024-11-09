@@ -28,7 +28,6 @@
     "feature.keybinding.MinecraftMixin",
     "feature.misc.ConnectionMixin",
     "feature.misc.ScreenMixin",
-    "feature.misc.TitleScreenMixin",
     "feature.mpclickmining.MultiplayerInteractionManagerMixin",
     "feature.multiplayer.ReturnToMainMenuMixin",
     "feature.multiplayer.TitleScreenMixin",
