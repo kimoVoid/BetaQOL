@@ -1,5 +1,6 @@
 package me.kimovoid.betaqol.feature.debugscreen;
 
+import me.kimovoid.betaqol.BetaQOL;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.render.TextRenderer;
 import net.minecraft.client.render.Window;
@@ -62,7 +63,7 @@ public class DebugScreen {
         lines.add("");
         lines.add("Light: " + mc.world.getLight(x, y, z));
         lines.add("Biome: " + (biome == null ? "Unknown" : biome));
-        lines.add("Seed: " + mc.world.getSeed());
+        lines.add("Seed: " + (BetaQOL.CONFIG.modernF3HideSeed.get() ? "[Hidden]" : mc.world.getSeed()));
         lines.add("Day: " + time);
         lines.add("Time: " + String.format("%02d:%02d:%02d", h, m, s));
         lines.add("Slime: " + this.isSlimeChunk(mc.world.getSeed(), mc.player.chunkX, mc.player.chunkZ));

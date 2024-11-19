@@ -6,6 +6,7 @@ gameplay=Gameplay Tweaks
 # Root configs
 always_show_label=Always show label
 modern_F3=Modern debug screen
+modern_F3_hide_seed=Hide seed in debug screen
 disable_F3_graph=Disable debug graph
 front_F5=Allow front perspective
 clipboard_screenshots=Screenshots to clipboard

@@ -21,6 +21,11 @@ public class Config {
             true
     );
 
+    public final BooleanOption modernF3HideSeed = new BooleanOption(
+            "modern_F3_hide_seed",
+            false
+    );
+
     public final BooleanOption disableChart = new BooleanOption(
             "disable_F3_graph",
             true
@@ -132,6 +137,7 @@ public class Config {
 
         root.add(showLabel,
                 modernF3,
+                modernF3HideSeed,
                 disableChart,
                 frontPerspective,
                 screenshotToClipboard);
