@@ -1,3 +1,4 @@
+![icon.png](client%2Fsrc%2Fmain%2Fresources%2Fassets%2Fbetaqol%2Ficon.png)
 # Beta QOL Mod
 This is a quality of life mod for Beta 1.7.3 using Ornithe!
 <br>It aims to keep the game faithful to vanilla while also fixing some of the inconveniences that most people face when playing this version.
