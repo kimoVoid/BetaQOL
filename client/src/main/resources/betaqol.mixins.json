@@ -32,7 +32,7 @@
     "feature.multiplayer.ReturnToMainMenuMixin",
     "feature.multiplayer.TitleScreenMixin",
     "feature.tablist.GameGuiMixin",
-    "feature.tablist.MultiplayerWorldMixin",
+    "feature.tablist.ConnectScreenMixin",
     "feature.tpbutton.OptionsScreenMixin",
     "fixes.auth.ClientNetworkHandlerMixin",
     "fixes.auth.SessionMixin",

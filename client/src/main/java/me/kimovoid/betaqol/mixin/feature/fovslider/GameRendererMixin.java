@@ -1,5 +1,6 @@
 package me.kimovoid.betaqol.mixin.feature.fovslider;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import me.kimovoid.betaqol.BetaQOL;
 import me.kimovoid.betaqol.feature.fov.FOVOption;
 import net.minecraft.block.material.Material;
@@ -66,8 +67,8 @@ public class GameRendererMixin {
         return getFovMultiplier(f, false);
     }
 
-    @Redirect(method = "setupCamera", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;getFov(F)F"))
-    public float redirectToCustomFov(GameRenderer instance, float value) {
+    @ModifyExpressionValue(method = "setupCamera", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/render/GameRenderer;getFov(F)F"))
+    public float redirectToCustomFov(float value) {
         return getFovMultiplier(value);
     }
 
