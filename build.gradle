@@ -60,16 +60,9 @@ def configure(project) {
 
 	project.dependencies {
 		minecraft "com.mojang:minecraft:${project.rootProject.minecraft_version}"
-		/*
-		mappings project.loom.layered {
-			mappings "net.ornithemc:feather:${project.rootProject.minecraft_version}-${project.environment}+build.${project.feather_build}:v2"
-			addLayer project.ploceus.nestedMappings() // remove this line if not using nests
-		}
-		nests "net.ornithemc:nests:${project.rootProject.minecraft_version}-${project.environment}+build.${project.nests_build}" // remove this line if not
-		 */
 
 		mappings project.ploceus.featherMappings(project.feather_build)
-		nests project.ploceus.nests(project.nests_build) // remove this line if not using nests
+		nests project.ploceus.nests(project.nests_build)
 
 		exceptions project.ploceus.raven('1')
 		signatures project.ploceus.sparrow('1')
@@ -105,27 +98,18 @@ def configure(project) {
 	}
 
 	project.java {
-		// Still required by IDEs such as Eclipse and Visual Studio Code
 		sourceCompatibility = JavaVersion.VERSION_1_8
 		targetCompatibility = JavaVersion.VERSION_1_8
 
-		// Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task if it is present.
-		// If you remove this line, sources will not be generated.
 		withSourcesJar()
-
-		// If this mod is going to be a library, then it should also generate Javadocs in order to aid with development.
-		// Uncomment this line to generate them.
-		// withJavadocJar()
 	}
 
-	// If you plan to use a different file for the license, don't forget to change the file name here!
 	project.jar {
 		from('LICENSE') {
 			rename { "${it}_${project.base.archivesName.get()}" }
 		}
 	}
 
-	// Configure the maven publication
 	project.publishing {
 		publications {
 			mavenJava(MavenPublication) {
@@ -133,12 +117,15 @@ def configure(project) {
 			}
 		}
 
-		// See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
 		repositories {
-			// Add repositories to publish to here.
-			// Notice: This block does NOT have the same function as the block in the top level.
-			// The repositories here will be used for publishing your artifact, not for
-			// retrieving dependencies.
+			maven {
+				name = "repositoryReleases"
+				url = System.getenv().RELEASES_URL
+				credentials(PasswordCredentials)
+				authentication {
+					basic(BasicAuthentication)
+				}
+			}
 		}
 	}
 }
