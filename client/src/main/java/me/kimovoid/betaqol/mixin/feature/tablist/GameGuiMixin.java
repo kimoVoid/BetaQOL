@@ -57,16 +57,17 @@ public abstract class GameGuiMixin extends GuiElement {
             if (stringWidth > rowWidth) rowWidth = stringWidth;
         }
 
-        int size = players.size();
+        int playerCount;
+        int size = playerCount = players.size();
         int columns = 1;
         while (size > 20) {
-            size = (size + ++columns - 1) / columns;
+            size = (playerCount + ++columns - 1) / columns;
         }
         int x = (scaled.getWidth() - columns * rowWidth) / 2;
         int y = 10;
         this.fill(x - 1, y - 1, x + rowWidth * columns, y + 9 * size, Integer.MIN_VALUE);
 
-        for (int i = 0; i < players.size(); ++i) {
+        for (int i = 0; i < playerCount; ++i) {
             int n2 = x + i % columns * rowWidth;
             int n = y + i / columns * 9;
             this.fill(n2, n, n2 + rowWidth - 1, n + 8, 0x20FFFFFF);
