@@ -1,7 +1,5 @@
 package me.kimovoid.betaqol.feature.skinfix;
 
-import com.github.steveice10.mc.auth.data.GameProfile;
-
 import java.time.Instant;
 
 /*
@@ -12,17 +10,17 @@ import java.time.Instant;
 public class PlayerProfile {
     private String skinUrl;
     private String capeUrl;
-    private GameProfile.TextureModel model;
+    private boolean slim;
     private Instant lastFetched = Instant.now();
 
-    public PlayerProfile(String skinUrl, String capeUrl, GameProfile.TextureModel model) {
+    public PlayerProfile(String skinUrl, String capeUrl, boolean slim) {
         this.skinUrl = skinUrl;
         this.capeUrl = capeUrl;
-        this.model = model;
+        this.slim = slim;
     }
 
-    public GameProfile.TextureModel getModel() {
-        return this.model;
+    public boolean isSlim() {
+        return this.slim;
     }
 
     public String getSkinUrl() {

@@ -1,10 +1,10 @@
 package me.kimovoid.betaqol.feature.skinfix;
 
-import com.github.steveice10.mc.auth.data.GameProfile;
 import me.kimovoid.betaqol.BetaQOL;
 import me.kimovoid.betaqol.feature.skinfix.interfaces.PlayerEntityAccessor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.living.player.PlayerEntity;
+
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.*;
@@ -28,15 +28,15 @@ public class SkinService {
     private final ConcurrentMap<String, ReentrantLock> locks = new ConcurrentHashMap<>();
     public final Map<String, PlayerProfile> profiles = new HashMap<>();
 
-    private static GameProfile.TextureModel getTextureModelForUUID(UUID uuid) {
-        return (uuid.hashCode() & 1) != 0 ? GameProfile.TextureModel.SLIM : GameProfile.TextureModel.NORMAL;
+    private boolean isSlim(UUID uuid) {
+        return (uuid.hashCode() & 1) != 0;
     }
 
     private void updatePlayer(PlayerEntity player, PlayerProfile playerProfile) {
         if (playerProfile == null) return;
 
         PlayerEntityAccessor accessor = (PlayerEntityAccessor) player;
-        accessor.setTextureModel(playerProfile.getModel());
+        accessor.setSlim(playerProfile.isSlim());
         player.skin = playerProfile.getSkinUrl();
         if (!this.hasOfCape(player)) {
             player.cloak = player.cape = playerProfile.getCapeUrl();
@@ -57,8 +57,8 @@ public class SkinService {
     private void initOffline(PlayerEntity player) {
         UUID uuid = UUID.nameUUIDFromBytes(("OfflinePlayer:" + player.name).getBytes(StandardCharsets.UTF_8));
         PlayerEntityAccessor accessor = (PlayerEntityAccessor) player;
-        final GameProfile.TextureModel model = getTextureModelForUUID(uuid);
-        accessor.setTextureModel(model);
+        final boolean slim = isSlim(uuid);
+        accessor.setSlim(slim);
     }
 
     public void init(PlayerEntity player) {
@@ -93,6 +93,7 @@ public class SkinService {
                 prof = new ProfileProvider().getProfile(name).get();
             } catch (Exception e) {
                 BetaQOL.LOGGER.warn("Lookup for profile {} failed!", name);
+                BetaQOL.LOGGER.warn(e.getMessage());
                 return;
             }
 

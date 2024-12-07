@@ -9,7 +9,8 @@ dependencies {
     implementation include('io.github.axolotlclient.AxolotlClient-config:AxolotlClientConfig-common:3.0.0-beta.45')
     modImplementation include('io.github.axolotlclient.extra:AxolotlClient-config:0.0.1-beta.6+b1.7.3')
 
-    include(implementation("com.github.GeyserMC:MCAuthLib:d9d773e5d50327c33898c65cd545a4f6ef3ba1b5"))
+    implementation include('net.lenni0451.commons:httpclient:1.6.1')
+
     modImplementation "com.terraformersmc:modmenu:0.2.1+mcb1.7.3"
     modImplementation files('libs/thorough-keybindings-1.2.0+b1.4-b1.7.jar')
 

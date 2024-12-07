@@ -46,7 +46,7 @@ public class WorldRendererMixin {
         if (currentEntity instanceof PlayerEntity) {
             PlayerEntityAccessor playerEntityAccessor = (PlayerEntityAccessor) currentEntity;
             SkinImageProcessorAccessor skinImageProcessorAccessor = (SkinImageProcessorAccessor) processor;
-            skinImageProcessorAccessor.setTextureModel(playerEntityAccessor.getTextureModel());
+            skinImageProcessorAccessor.setSlim(playerEntityAccessor.isSlim());
         }
         return processor;
     }

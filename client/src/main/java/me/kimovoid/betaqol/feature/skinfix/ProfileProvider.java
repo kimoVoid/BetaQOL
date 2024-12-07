@@ -1,12 +1,10 @@
 package me.kimovoid.betaqol.feature.skinfix;
 
-import com.github.steveice10.mc.auth.data.GameProfile;
-import com.github.steveice10.mc.auth.exception.request.RequestException;
-import com.github.steveice10.mc.auth.util.HTTP;
-import me.kimovoid.betaqol.BetaQOL;
+import com.google.gson.Gson;
+import net.lenni0451.commons.httpclient.HttpClient;
+import net.lenni0451.commons.httpclient.executor.ExecutorType;
 
-import java.net.Proxy;
-import java.net.URI;
+import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
@@ -14,37 +12,42 @@ public class ProfileProvider {
 
     public Future<PlayerProfile> getProfile(String username) {
         try {
-            UUIDResponse uuidresponse = HTTP.makeRequest(Proxy.NO_PROXY, URI.create("https://api.minetools.eu/uuid/" + username), null, UUIDResponse.class);
-            if (uuidresponse.id == null) { // failsafe, use mojang api
-                uuidresponse = HTTP.makeRequest(Proxy.NO_PROXY, URI.create("https://api.mojang.com/users/profiles/minecraft/" + username), null, UUIDResponse.class);
+            HttpClient httpClient = new HttpClient(ExecutorType.AUTO);
+            UUIDResponse uuidresponse = this.getRequest(httpClient, "https://api.minetools.eu/uuid/" + username, UUIDResponse.class);
+            if (uuidresponse.id.equals("null")) { // failsafe, use mojang api
+                uuidresponse = this.getRequest(httpClient, "https://api.mojang.com/users/profiles/minecraft/" + username, UUIDResponse.class);
             }
 
-            Response mtresponse = HTTP.makeRequest(Proxy.NO_PROXY, URI.create("https://api.minetools.eu/profile/" + uuidresponse.id), null, Response.class);
-            GameProfile.TextureModel model = GameProfile.TextureModel.NORMAL;
+            Response mtresponse = this.getRequest(httpClient, "https://api.minetools.eu/profile/" + uuidresponse.id, Response.class);
+            boolean slim = false;
             try {
                 if (mtresponse.decoded.textures.SKIN.metadata.model.equals("slim")) {
-                    model = GameProfile.TextureModel.SLIM;
+                    slim = true;
                 }
             } catch (Exception ignored) {}
 
             /* Some profiles don't have a skin or cape */
-            String skin = processUrl(mtresponse, false);
-            String cape = processUrl(mtresponse, true);
+            String skin = processProfile(mtresponse, false);
+            String cape = processProfile(mtresponse, true);
 
             PlayerProfile profile = new PlayerProfile(
                     skin,
                     cape,
-                    model);
+                    slim);
 
             return CompletableFuture.completedFuture(profile);
-        } catch (RequestException e) {
+        } catch (Exception e) {
             CompletableFuture<PlayerProfile> future = new CompletableFuture<>();
             future.completeExceptionally(e);
             return future;
         }
     }
 
-    private String processUrl(Response response, boolean cape) {
+    public <T> T getRequest(HttpClient httpClient, String URL, Class<T> classOfT) throws IOException {
+        return new Gson().fromJson(httpClient.get(URL).execute().getContentAsString(), classOfT);
+    }
+
+    private String processProfile(Response response, boolean cape) {
         try {
             if (cape) return response.decoded.textures.CAPE.url;
             else return response.decoded.textures.SKIN.url;

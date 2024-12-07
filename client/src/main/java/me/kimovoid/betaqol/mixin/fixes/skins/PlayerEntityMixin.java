@@ -1,6 +1,5 @@
 package me.kimovoid.betaqol.mixin.fixes.skins;
 
-import com.github.steveice10.mc.auth.data.GameProfile;
 import me.kimovoid.betaqol.feature.skinfix.interfaces.PlayerEntityAccessor;
 import me.kimovoid.betaqol.feature.skinfix.SkinService;
 import net.minecraft.entity.living.LivingEntity;
@@ -20,7 +19,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEntityAccessor {
 
     @Unique
-    private GameProfile.TextureModel textureModel;
+    private boolean slim;
 
     public PlayerEntityMixin(World world) {
         super(world);
@@ -33,17 +32,17 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
 
     @Redirect(method = "<init>", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/living/player/PlayerEntity;texture:Ljava/lang/String;"))
     private void redirectTexture(PlayerEntity instance, String value) {
-        this.setTextureModel(GameProfile.TextureModel.NORMAL);
+        this.setSlim(false);
     }
 
     @Unique
-    public GameProfile.TextureModel getTextureModel() {
-        return this.textureModel;
+    public boolean isSlim() {
+        return this.slim;
     }
 
     @Unique
-    public void setTextureModel(GameProfile.TextureModel textureModel) {
-        this.textureModel = textureModel;
-        this.texture = textureModel == GameProfile.TextureModel.NORMAL ? SkinService.STEVE_TEXTURE : SkinService.ALEX_TEXTURE;
+    public void setSlim(boolean slim) {
+        this.slim = slim;
+        this.texture = slim ? SkinService.ALEX_TEXTURE : SkinService.STEVE_TEXTURE;
     }
 }

@@ -38,13 +38,6 @@ def configure(project) {
 	project.repositories {
 		jcenter()
 		maven {
-			name = "Jitpack"
-			url = "https://jitpack.io/"
-			content {
-				includeGroup("com.github.GeyserMC")
-			}
-		}
-		maven {
 			url "https://libraries.minecraft.net/"
 		}
 		mavenCentral()

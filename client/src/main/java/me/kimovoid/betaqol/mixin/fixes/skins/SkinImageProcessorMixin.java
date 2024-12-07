@@ -1,6 +1,5 @@
 package me.kimovoid.betaqol.mixin.fixes.skins;
 
-import com.github.steveice10.mc.auth.data.GameProfile;
 import me.kimovoid.betaqol.feature.skinfix.interfaces.SkinImageProcessorAccessor;
 import net.minecraft.client.render.texture.SkinImageProcessor;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,7 +25,7 @@ import java.awt.image.WritableRaster;
 @Mixin(SkinImageProcessor.class)
 public class SkinImageProcessorMixin implements SkinImageProcessorAccessor {
 
-    private GameProfile.TextureModel textureModel;
+    private boolean slim;
 
     @ModifyConstant(method = "process", constant = @Constant(intValue = 32, ordinal = 0))
     private int getImageHeight(int def) {
@@ -46,16 +45,14 @@ public class SkinImageProcessorMixin implements SkinImageProcessorAccessor {
                 this.flipArea(graphics, parsedImage, 16 + i * 32, 0, 8, 8);
             }
 
-            boolean isSlim = textureModel == GameProfile.TextureModel.SLIM;
-
             for (int i = 1; i <= 2; ++i) {
                 this.flipArea(graphics, parsedImage, 8, i * 16, 4, 4);
                 this.flipArea(graphics, parsedImage, 28, i * 16, 8, 4);
-                this.flipArea(graphics, parsedImage, isSlim ? 47 : 48, i * 16, isSlim ? 3 : 4, 4);
+                this.flipArea(graphics, parsedImage, this.slim ? 47 : 48, i * 16, this.slim ? 3 : 4, 4);
             }
 
             for (int i = 0; i < 4; ++i) {
-                boolean isSlimArm = isSlim && i >= 2;
+                boolean isSlimArm = this.slim && i >= 2;
                 this.flipArea(graphics, parsedImage, (isSlimArm ? 7 : 8) + i * 16, 48, isSlimArm ? 3 : 4, 4);
             }
         }
@@ -77,7 +74,7 @@ public class SkinImageProcessorMixin implements SkinImageProcessorAccessor {
     }
 
     @Override
-    public void setTextureModel(GameProfile.TextureModel textureModel) {
-        this.textureModel = textureModel;
+    public void setSlim(boolean slim) {
+        this.slim = slim;
     }
 }
