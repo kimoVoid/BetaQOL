@@ -1,7 +1,10 @@
 package me.kimovoid.betaqol.feature.skinfix;
 
 import me.kimovoid.betaqol.BetaQOL;
-import me.kimovoid.betaqol.feature.skinfix.interfaces.PlayerEntityAccessor;
+import me.kimovoid.betaqol.feature.skinfix.mixininterface.PlayerEntityAccessor;
+import me.kimovoid.betaqol.feature.skinfix.provider.BedrockProfileProvider;
+import me.kimovoid.betaqol.feature.skinfix.provider.JavaProfileProvider;
+import me.kimovoid.betaqol.feature.skinfix.provider.ProfileProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.living.player.PlayerEntity;
 
@@ -90,10 +93,10 @@ public class SkinService {
             PlayerProfile prof;
 
             try {
-                prof = new ProfileProvider().getProfile(name).get();
+                ProfileProvider provider = name.startsWith(".") ? new BedrockProfileProvider() : new JavaProfileProvider();
+                prof = provider.getProfile(name).get();
             } catch (Exception e) {
                 BetaQOL.LOGGER.warn("Lookup for profile {} failed!", name);
-                //BetaQOL.LOGGER.warn(e.getMessage());
                 return;
             }
 

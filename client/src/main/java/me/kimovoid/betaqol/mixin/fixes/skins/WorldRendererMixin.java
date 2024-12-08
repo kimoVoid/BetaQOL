@@ -1,7 +1,7 @@
 package me.kimovoid.betaqol.mixin.fixes.skins;
 
-import me.kimovoid.betaqol.feature.skinfix.interfaces.PlayerEntityAccessor;
-import me.kimovoid.betaqol.feature.skinfix.interfaces.SkinImageProcessorAccessor;
+import me.kimovoid.betaqol.feature.skinfix.mixininterface.PlayerEntityAccessor;
+import me.kimovoid.betaqol.feature.skinfix.mixininterface.SkinImageProcessorAccessor;
 import me.kimovoid.betaqol.feature.skinfix.CapeImageProcessor;
 import net.minecraft.client.entity.living.player.InputPlayerEntity;
 import net.minecraft.client.render.texture.HttpImageProcessor;

@@ -1,6 +1,6 @@
 package me.kimovoid.betaqol.mixin.fixes.skins;
 
-import me.kimovoid.betaqol.feature.skinfix.interfaces.SkinImageProcessorAccessor;
+import me.kimovoid.betaqol.feature.skinfix.mixininterface.SkinImageProcessorAccessor;
 import net.minecraft.client.render.texture.SkinImageProcessor;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

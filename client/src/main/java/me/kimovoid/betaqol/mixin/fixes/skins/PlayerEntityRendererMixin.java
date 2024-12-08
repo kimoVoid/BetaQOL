@@ -1,6 +1,6 @@
 package me.kimovoid.betaqol.mixin.fixes.skins;
 
-import me.kimovoid.betaqol.feature.skinfix.interfaces.PlayerEntityRendererAccessor;
+import me.kimovoid.betaqol.feature.skinfix.mixininterface.PlayerEntityRendererAccessor;
 import me.kimovoid.betaqol.feature.skinfix.PlayerEntityModel;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;

@@ -1,4 +1,4 @@
-package me.kimovoid.betaqol.feature.skinfix.interfaces;
+package me.kimovoid.betaqol.feature.skinfix.mixininterface;
 
 /**
  * This is a port of MojangFix for Babric.

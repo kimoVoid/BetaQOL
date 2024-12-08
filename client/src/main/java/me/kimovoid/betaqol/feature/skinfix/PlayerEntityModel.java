@@ -1,6 +1,6 @@
 package me.kimovoid.betaqol.feature.skinfix;
 
-import me.kimovoid.betaqol.feature.skinfix.interfaces.ModelPartAccessor;
+import me.kimovoid.betaqol.feature.skinfix.mixininterface.ModelPartAccessor;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.HumanoidModel;
 

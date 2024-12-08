@@ -1,6 +1,7 @@
-package me.kimovoid.betaqol.feature.skinfix;
+package me.kimovoid.betaqol.feature.skinfix.provider;
 
 import com.google.gson.Gson;
+import me.kimovoid.betaqol.feature.skinfix.PlayerProfile;
 import net.lenni0451.commons.httpclient.HttpClient;
 import net.lenni0451.commons.httpclient.executor.ExecutorType;
 
@@ -8,7 +9,7 @@ import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
-public class ProfileProvider {
+public class JavaProfileProvider implements ProfileProvider {
 
     public Future<PlayerProfile> getProfile(String username) {
         try {
@@ -43,11 +44,11 @@ public class ProfileProvider {
         }
     }
 
-    public <T> T getRequest(HttpClient httpClient, String URL, Class<T> classOfT) throws IOException {
+    private <T> T getRequest(HttpClient httpClient, String URL, Class<T> classOfT) throws IOException {
         return new Gson().fromJson(httpClient.get(URL).execute().getContentAsString(), classOfT);
     }
 
-    private String processProfile(Response response, boolean cape) {
+    private String processProfile(JavaProfileProvider.Response response, boolean cape) {
         try {
             if (cape) return response.decoded.textures.CAPE.url;
             else return response.decoded.textures.SKIN.url;
