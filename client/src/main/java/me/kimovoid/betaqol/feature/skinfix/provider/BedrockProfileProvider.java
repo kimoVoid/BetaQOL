@@ -1,11 +1,9 @@
 package me.kimovoid.betaqol.feature.skinfix.provider;
 
 import com.google.gson.Gson;
-import me.kimovoid.betaqol.BetaQOL;
 import me.kimovoid.betaqol.feature.skinfix.PlayerProfile;
 import net.lenni0451.commons.httpclient.HttpClient;
 import net.lenni0451.commons.httpclient.executor.ExecutorType;
-import net.lenni0451.commons.httpclient.model.HttpHeader;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -15,15 +13,14 @@ public class BedrockProfileProvider implements ProfileProvider {
 
     public Future<PlayerProfile> getProfile(String username) {
         try {
-            //BetaQOL.LOGGER.info("Trying to fetch bedrock player {}...", username.substring(1));
             HttpClient httpClient = new HttpClient(ExecutorType.AUTO);
-            Response resp = this.getRequest(httpClient, "https://mcprofile.io/api/v1/bedrock/gamertag/" + username.substring(1), Response.class);
+            XUIDResponse xuidResp = this.getRequest(httpClient, "https://api.geysermc.org/v2/xbox/xuid/" + username.substring(1), XUIDResponse.class);
+            Response resp = this.getRequest(httpClient, "https://api.geysermc.org/v2/skin/" + xuidResp.xuid, Response.class);
 
-            String skin = resp.skin;
             PlayerProfile profile = new PlayerProfile(
-                    skin,
+                    "https://textures.minecraft.net/texture/" + resp.texture_id,
                     null,
-                    false);
+                    resp.is_steve.equals("false"));
 
             return CompletableFuture.completedFuture(profile);
         } catch (Exception e) {
@@ -34,17 +31,15 @@ public class BedrockProfileProvider implements ProfileProvider {
     }
 
     private <T> T getRequest(HttpClient httpClient, String URL, Class<T> classOfT) throws IOException {
-        return new Gson().fromJson(httpClient
-                        .get(URL)
-                        .appendHeader(new HttpHeader(
-                                "x-api-key",
-                                "b2f2f684-750c-49db-8a1c-e28e59df6fec"
-                        )).execute()
-                        .getContentAsString(),
-                classOfT);
+        return new Gson().fromJson(httpClient.get(URL).execute().getContentAsString(), classOfT);
     }
 
     private static class Response {
-        private String skin;
+        private String is_steve;
+        private String texture_id;
+    }
+
+    private static class XUIDResponse {
+        private String xuid;
     }
 }
