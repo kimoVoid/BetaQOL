@@ -7,6 +7,11 @@
 	"authors": [
 		"kimoVoid"
 	],
+	"contact": {
+		"homepage": "https://github.com/kimoVoid/BetaQOL",
+		"sources": "https://github.com/kimoVoid/BetaQOL",
+		"issues": "https://github.com/kimoVoid/BetaQOL/issues"
+	},
 	"license": "MIT",
 	"icon": "assets/betaqol/icon.png",
 	"environment": "client",
