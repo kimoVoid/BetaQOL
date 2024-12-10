@@ -34,6 +34,7 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
 - Removed "Unlicensed copy" timer - one less error in the console
 - Backported front-facing perspective mode (F5)
 - Fixed entity jitter on multiplayer
+- Fixed world jitter at long distances (such as the far lands)
 - Added chat history
   - Can be navigated with up arrow and down arrow keys just like in modern MC
 - Tablist backport
