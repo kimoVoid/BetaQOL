@@ -61,7 +61,7 @@ public class MinecraftMixin {
                     if (!(e instanceof PlayerEntity)) continue;
                     PlayerEntity p = ((PlayerEntity)e);
                     p.skin = null;
-                    if (!SkinService.getInstance().hasOfCape(p)) {
+                    if (SkinService.getInstance().hasVanillaCape(p)) {
                         p.cape = p.cloak = null;
                     }
                     SkinService.getInstance().init(p);
