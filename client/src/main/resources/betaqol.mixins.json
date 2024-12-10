@@ -31,8 +31,8 @@
     "feature.mpclickmining.MultiplayerInteractionManagerMixin",
     "feature.multiplayer.ReturnToMainMenuMixin",
     "feature.multiplayer.TitleScreenMixin",
-    "feature.tablist.GameGuiMixin",
     "feature.tablist.ConnectScreenMixin",
+    "feature.tablist.GameGuiMixin",
     "feature.tpbutton.OptionsScreenMixin",
     "fixes.auth.ClientNetworkHandlerMixin",
     "fixes.auth.SessionMixin",
@@ -56,7 +56,8 @@
     "fixes.skins.PlayerEntityRendererMixin",
     "fixes.skins.RemotePlayerEntityMixin",
     "fixes.skins.SkinImageProcessorMixin",
-    "fixes.skins.WorldRendererMixin"
+    "fixes.skins.WorldRendererMixin",
+    "fixes.worldjitter.RenderChunkStorageMixin"
   ],
   "server": [
   ],
