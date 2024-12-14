@@ -35,7 +35,7 @@ public class ChatScreenMixin extends Screen {
     private void onInit(CallbackInfo ci) {
         textField = new TextFieldWidget(this, textRenderer, 2, height - 14, width - 2, height - 2, "");
         textField.setFocused(true);
-        textField.setMaxLength(1000);
+        textField.setMaxLength(100);
         chatHistoryPosition = 0;
     }
 
@@ -93,6 +93,15 @@ public class ChatScreenMixin extends Screen {
 
     @Inject(method = "keyPressed", at = @At("TAIL"))
     private void onKeyPressedTail(char character, int keyCode, CallbackInfo ci) {
+        /* Scuffed clipboard code :( */
+        if (character == 22) {
+            String clipboard = Screen.getClipboard();
+            for (char c : clipboard.toCharArray()) {
+                textField.keyPressed(c, keyCode);
+            }
+            return;
+        }
+
         textField.keyPressed(character, keyCode);
     }
 }
