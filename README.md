@@ -35,9 +35,11 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
 - Backported front-facing perspective mode (F5)
 - Fixed entity jitter on multiplayer
 - Fixed world jitter at long distances (such as the far lands)
-- Added chat history
-  - Can be navigated with up arrow and down arrow keys just like in modern MC
-- Tablist backport
+- Chat improvements
+  - Unlimited chat history option
+  - Chat history can be navigated with up arrow and down arrow keys
+  - Ability to CTRL+V in chat
+- Player list backport
   - Uses custom server-to-client packets, not required by vanilla clients
 - Updated multiplayer screen
   - Ported from [MojangFix](https://modrinth.com/mod/mojangfix)

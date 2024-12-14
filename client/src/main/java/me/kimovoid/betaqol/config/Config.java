@@ -41,6 +41,11 @@ public class Config {
             false
     );
 
+    public final BooleanOption unlimitedChatHistory = new BooleanOption(
+            "unlimited_chat_history",
+            true
+    );
+
     /* Inventory Tweaks configs */
     public final BooleanOption dragGraphics = new BooleanOption(
             "drag_graphics",
@@ -140,7 +145,8 @@ public class Config {
                 modernF3HideSeed,
                 disableChart,
                 frontPerspective,
-                screenshotToClipboard);
+                screenshotToClipboard,
+                unlimitedChatHistory);
 
         inventory.add(dragGraphics,
                 leftClickDrag,

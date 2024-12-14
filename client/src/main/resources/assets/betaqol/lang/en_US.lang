@@ -10,6 +10,7 @@ modern_F3_hide_seed=Hide seed in debug screen
 disable_F3_graph=Disable debug graph
 front_F5=Allow front perspective
 clipboard_screenshots=Screenshots to clipboard
+unlimited_chat_history=Unlimited Chat History
 
 # Inventory configs
 dragging=Inventory drag

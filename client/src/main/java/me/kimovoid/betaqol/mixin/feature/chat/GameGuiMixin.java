@@ -1,5 +1,6 @@
 package me.kimovoid.betaqol.mixin.feature.chat;
 
+import me.kimovoid.betaqol.BetaQOL;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ChatMessage;
 import net.minecraft.client.gui.GameGui;
@@ -62,5 +63,20 @@ public class GameGuiMixin {
     )
     private Object chatOffset(List<ChatMessage> instance, int i) {
         return instance.get(i + this.chatOffset);
+    }
+
+    @Inject(
+            method = "addChatMessage",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Ljava/util/List;add(ILjava/lang/Object;)V",
+                    shift = At.Shift.AFTER
+            ),
+            cancellable = true
+    )
+    private void removeChatHistoryLimit(CallbackInfo ci) {
+        if (BetaQOL.CONFIG.unlimitedChatHistory.get()) {
+            ci.cancel();
+        }
     }
 }
