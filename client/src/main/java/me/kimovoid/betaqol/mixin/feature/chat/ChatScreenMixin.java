@@ -1,5 +1,6 @@
 package me.kimovoid.betaqol.mixin.feature.chat;
 
+import me.kimovoid.betaqol.feature.gui.chat.ChatScreenVariables;
 import me.kimovoid.betaqol.mixin.access.TextFieldWidgetAccessor;
 import net.minecraft.client.gui.screen.ChatScreen;
 import net.minecraft.client.gui.screen.Screen;
@@ -33,9 +34,9 @@ public class ChatScreenMixin extends Screen {
 
     @Inject(method = "init", at = @At("RETURN"))
     private void onInit(CallbackInfo ci) {
-        textField = new TextFieldWidget(this, textRenderer, 2, height - 14, width - 2, height - 2, "");
+        textField = new TextFieldWidget(this, textRenderer, 2, height - 14, width - 2, height - 2, initialMessage);
         textField.setFocused(true);
-        textField.setMaxLength(100);
+        textField.setMaxLength(chatMessageLength);
         chatHistoryPosition = 0;
     }
 
