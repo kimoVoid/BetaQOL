@@ -8,7 +8,8 @@ import me.kimovoid.betaqol.feature.keybinding.ThoroughKeybindHandler;
 import me.kimovoid.betaqol.feature.networking.PlayerInfoListener;
 import me.kimovoid.betaqol.feature.networking.PlayerInfoPayload;
 import net.fabricmc.loader.api.FabricLoader;
-import net.ornithemc.osl.entrypoints.api.ModInitializer;
+import net.ornithemc.osl.entrypoints.api.client.ClientModInitializer;
+import net.ornithemc.osl.lifecycle.api.MinecraftEvents;
 import net.ornithemc.osl.networking.api.client.ClientPlayNetworking;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -19,7 +20,7 @@ import org.apache.logging.log4j.core.config.LoggerConfig;
 
 import java.util.LinkedHashMap;
 
-public class BetaQOL implements ModInitializer {
+public class BetaQOL implements ClientModInitializer {
 
 	public static BetaQOL INSTANCE;
 	public static Config CONFIG;
@@ -30,7 +31,7 @@ public class BetaQOL implements ModInitializer {
 	public final ChunkBorderRenderer chunkBorderRenderer = new ChunkBorderRenderer();
 
 	@Override
-	public void init() {
+	public void initClient() {
 		this.fixLogger();
 		INSTANCE = this;
 		LOGGER.info("Hello from Beta QOL! :)");
@@ -48,6 +49,9 @@ public class BetaQOL implements ModInitializer {
 
 		/* Networking */
 		ClientPlayNetworking.registerListener("BetaQOL|PlayerInfo", PlayerInfoPayload::new, new PlayerInfoListener());
+
+		/* Events */
+		MinecraftEvents.READY_WORLD.register(mc -> this.tabPlayers.clear());
 	}
 
 	private void fixLogger() {
@@ -60,5 +64,16 @@ public class BetaQOL implements ModInitializer {
 
 	public ChunkBorderRenderer getChunkBorderRenderer() {
 		return this.chunkBorderRenderer;
+	}
+
+	public String getMcVersion() {
+		return FabricLoader
+				.getInstance()
+				.getModContainer("minecraft")
+				.get()
+				.getMetadata()
+				.getVersion()
+				.getFriendlyString()
+				.replace("1.0.0-beta", "1");
 	}
 }

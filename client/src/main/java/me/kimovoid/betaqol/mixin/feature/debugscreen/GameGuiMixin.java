@@ -31,7 +31,7 @@ public class GameGuiMixin extends GuiElement {
     )
     public void alwaysRenderLabel(CallbackInfo ci) {
         if (!this.minecraft.options.debugProfilerEnabled && BetaQOL.CONFIG.showLabel.get()) {
-            this.minecraft.textRenderer.drawWithShadow("Minecraft Beta 1.7.3", 2, 2, 0xFFFFFF);
+            this.minecraft.textRenderer.drawWithShadow(String.format("Minecraft Beta %s", BetaQOL.INSTANCE.getMcVersion()), 2, 2, 0xFFFFFF);
         }
     }
 

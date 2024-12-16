@@ -16,7 +16,7 @@
 	"icon": "assets/betaqol/icon.png",
 	"environment": "client",
 	"entrypoints": {
-		"init": [
+		"client-init": [
 			"me.kimovoid.betaqol.BetaQOL"
 		],
 		"modmenu": [
@@ -30,6 +30,7 @@
 	"depends": {
 		"fabricloader": ">=0.14.21",
 		"minecraft": ">=1.0.0-beta.6 <=1.0.0-beta.7.3",
-		"osl-entrypoints": ">=0.4.0"
+		"osl-entrypoints": ">=0.4.0",
+		"osl-branding": ">=0.3.0"
 	}
 }

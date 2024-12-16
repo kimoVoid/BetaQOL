@@ -8,6 +8,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.locale.LanguageManager;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.HitResult;
+import net.ornithemc.osl.branding.api.BrandingContext;
+import net.ornithemc.osl.branding.impl.BrandingPatchImpl;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 import oshi.SystemInfo;
@@ -49,7 +51,8 @@ public class DebugScreen {
 
         /* Add lines */
         List<String> lines = new ArrayList<>();
-        lines.add("Minecraft Beta 1.7.3 (b1.7.3/fabric/QOL)");
+        String version = BetaQOL.INSTANCE.getMcVersion();
+        lines.add(String.format("Minecraft Beta %s (b%s%s)", version, version, BrandingPatchImpl.apply(BrandingContext.TITLE_SCREEN, "")));
         lines.add(mc.fpsDebugString);
         lines.add(mc.getChunkDebugInfo());
         lines.add(mc.getEntityDebugInfo());
