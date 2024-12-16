@@ -6,6 +6,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.menu.InventoryMenuScreen;
 import net.minecraft.inventory.menu.InventoryMenu;
+import net.minecraft.inventory.slot.CraftingResultSlot;
 import net.minecraft.inventory.slot.InventorySlot;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.input.Keyboard;
@@ -31,56 +32,28 @@ import static java.lang.Math.abs;
  */
 @Mixin(InventoryMenuScreen.class)
 public abstract class InventoryMenuScreenMixin extends Screen {
-    @Shadow
-    protected abstract InventorySlot getHoveredSlot(int x, int y);
 
-    @Shadow
-    public InventoryMenu menu;
-
-    @Shadow
-    protected abstract boolean isMouseOverSlot(InventorySlot slot, int x, int Y);
+    @Shadow protected abstract InventorySlot getHoveredSlot(int x, int y);
+    @Shadow public InventoryMenu menu;
+    @Shadow protected abstract boolean isMouseOverSlot(InventorySlot slot, int x, int Y);
 
     @Unique private InventorySlot slot;
-
     @Unique InventorySlot lastRMBSlot = null;
-
     @Unique InventorySlot lastLMBSlot = null;
-
     @Unique int lastRMBSlotId = -1;
-
     @Unique int lastLMBSlotId = -1;
-
-    @Unique
-    private ItemStack leftClickMouseTweaksPersistentStack = null;
-
-    @Unique
-    private ItemStack leftClickPersistentStack = null;
-
-    @Unique
-    private ItemStack rightClickPersistentStack = null;
-
-    @Unique
-    private boolean isLeftClickDragMouseTweaksStarted = false;
-
-    @Unique
-    private boolean isLeftClickDragStarted = false;
-
-    @Unique
-    private boolean isRightClickDragStarted = false;
-
-    @Unique
-    private final List<InventorySlot> leftClickHoveredSlots = new ArrayList<>();
-
+    @Unique private ItemStack leftClickMouseTweaksPersistentStack = null;
+    @Unique private ItemStack leftClickPersistentStack = null;
+    @Unique private ItemStack rightClickPersistentStack = null;
+    @Unique private boolean isLeftClickDragMouseTweaksStarted = false;
+    @Unique private boolean isLeftClickDragStarted = false;
+    @Unique private boolean isRightClickDragStarted = false;
+    @Unique private final List<InventorySlot> leftClickHoveredSlots = new ArrayList<>();
     @Unique final List<InventorySlot> rightClickHoveredSlots = new ArrayList<>();
-
     @Unique Integer leftClickItemAmount;
-
     @Unique Integer rightClickItemAmount;
-
     @Unique final List<Integer> leftClickExistingAmount = new ArrayList<>();
-
     @Unique final List<Integer> rightClickExistingAmount = new ArrayList<>();
-
     @Unique List<Integer> leftClickAmountToFillPersistent = new ArrayList<>();
 
     @Inject(method = "mouseClicked", at = @At("HEAD"), cancellable = true)
@@ -89,6 +62,19 @@ public abstract class InventoryMenuScreenMixin extends Screen {
 
         /* Check if client is on a server */
         boolean isClientOnServer = minecraft.isMultiplayer();
+        InventorySlot clickedSlot = this.getHoveredSlot(mouseX, mouseY);
+
+        /* Craft maximum possible amount */
+        if (clickedSlot instanceof CraftingResultSlot
+                && clickedSlot.hasStack()
+                && BetaQOL.CONFIG.craftAll.get()) {
+            int stackSize = clickedSlot.getStack().getMaxSize();
+            for (int i = 0; i < stackSize; i++) {
+                this.minecraft.interactionManager.clickSlot(this.menu.networkId, clickedSlot.id, button, true, this.minecraft.player);
+            }
+            ci.cancel();
+            return;
+        }
 
         /* Right-click */
         if (button == 1) {
@@ -122,7 +108,7 @@ public abstract class InventoryMenuScreenMixin extends Screen {
 
                 /* Handle Left-click */
                 ItemStack cursorStack = minecraft.player.inventory.getCursorStack();
-                InventorySlot clickedSlot = this.getHoveredSlot(mouseX, mouseY);
+
                 if (cursorStack != null) {
                     if (BetaQOL.CONFIG.leftClickDrag.get()) {
                         exitFunction = inventoryTweaks_handleLeftClickWithItem(cursorStack, clickedSlot, isClientOnServer);
@@ -384,8 +370,7 @@ public abstract class InventoryMenuScreenMixin extends Screen {
         }
     }
 
-    @Unique private boolean inventoryTweaks_cancelRightClickDrag(boolean isClientOnServer)
-    {
+    @Unique private boolean inventoryTweaks_cancelRightClickDrag(boolean isClientOnServer) {
         /* Cancel Right-click + Drag */
         if (isRightClickDragStarted) {
             if (rightClickHoveredSlots.size() > 1) {
@@ -412,8 +397,7 @@ public abstract class InventoryMenuScreenMixin extends Screen {
         return false;
     }
 
-    @Unique private void inventoryTweaks_resetRightClickDragVariables()
-    {
+    @Unique private void inventoryTweaks_resetRightClickDragVariables() {
         rightClickExistingAmount.clear();
         rightClickHoveredSlots.clear();
         rightClickPersistentStack = null;
@@ -556,8 +540,7 @@ public abstract class InventoryMenuScreenMixin extends Screen {
         }
     }
 
-    @Unique private boolean inventoryTweaks_handleLeftClickDrag()
-    {
+    @Unique private boolean inventoryTweaks_handleLeftClickDrag() {
         /* Do nothing if slot has already been added to Left-click + Drag logic */
         if (!leftClickHoveredSlots.contains(slot)) {
             ItemStack slotItemToExamine = slot.getStack();
@@ -686,8 +669,7 @@ public abstract class InventoryMenuScreenMixin extends Screen {
         return false;
     }
 
-    @Unique private boolean inventoryTweaks_cancelLeftClickDrag(boolean isClientOnServer)
-    {
+    @Unique private boolean inventoryTweaks_cancelLeftClickDrag(boolean isClientOnServer) {
         /* Cancel Left-click + Drag */
         if (isLeftClickDragStarted) {
             if (leftClickHoveredSlots.size() > 1) {

@@ -81,6 +81,11 @@ public class Config {
             "hotkey_swap",
             true
     );
+
+    public final BooleanOption craftAll = new BooleanOption(
+            "craft_all",
+            true
+    );
     
     /* Mouse Tweaks configs */
     public final BooleanOption shiftClickAnyLMB = new BooleanOption(
@@ -154,7 +159,8 @@ public class Config {
                 preferShiftRMB,
                 dropKeyInv,
                 ctrlDropStack,
-                hotkeySwap);
+                hotkeySwap,
+                craftAll);
 
         mouse.add(shiftClickAnyLMB,
                 tweakLMBShiftClick,
