@@ -5,7 +5,10 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.menu.InventoryMenuScreen;
+import net.minecraft.inventory.CraftingInventory;
+import net.minecraft.inventory.menu.CraftingTableMenu;
 import net.minecraft.inventory.menu.InventoryMenu;
+import net.minecraft.inventory.menu.PlayerMenu;
 import net.minecraft.inventory.slot.CraftingResultSlot;
 import net.minecraft.inventory.slot.InventorySlot;
 import net.minecraft.item.ItemStack;
@@ -65,10 +68,25 @@ public abstract class InventoryMenuScreenMixin extends Screen {
         InventorySlot clickedSlot = this.getHoveredSlot(mouseX, mouseY);
 
         /* Craft maximum possible amount */
-        if (clickedSlot instanceof CraftingResultSlot
+        if ((Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
+                && clickedSlot instanceof CraftingResultSlot
                 && clickedSlot.hasStack()
                 && BetaQOL.CONFIG.craftAll.get()) {
-            int stackSize = clickedSlot.getStack().getMaxSize();
+
+            int stackSize = 0;
+            if (this.menu instanceof CraftingTableMenu || this.menu instanceof PlayerMenu) {
+                CraftingInventory inv = this.menu instanceof CraftingTableMenu
+                        ? ((CraftingTableMenu)this.menu).craftingTable
+                        : ((PlayerMenu)this.menu).craftingInventory;
+                for (int i = 0; i < inv.getSize(); i++) {
+                    /* Find the maximum amount the player can craft */
+                    if (inv.getStack(i) == null) continue;
+                    if (inv.getStack(i).size > stackSize) {
+                        stackSize = inv.getStack(i).size;
+                    }
+                }
+            }
+
             for (int i = 0; i < stackSize; i++) {
                 this.minecraft.interactionManager.clickSlot(this.menu.networkId, clickedSlot.id, button, true, this.minecraft.player);
             }
