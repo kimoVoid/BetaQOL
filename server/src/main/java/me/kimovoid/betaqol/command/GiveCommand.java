@@ -67,7 +67,7 @@ public class GiveCommand extends Command {
                     data = 0;
                 }
 
-                this.sendSuccess(player.name, String.format("Giving %s %s x %s",
+                this.sendSuccess(source.getSourceName(), String.format("Giving %s %s x %s",
                         player.name, amount, Item.BY_ID[id].getDisplayName() + (data > 0 ? ":" + data : "")));
                 dropItem(player, new ItemStack(id, amount, data));
             } catch (NumberFormatException var11) {
@@ -97,7 +97,6 @@ public class GiveCommand extends Command {
             player.world.addEntity(var3);
         }
     }
-
 
     public static int nameToItemId(String n) {
         String name = n.replace("_", "");
