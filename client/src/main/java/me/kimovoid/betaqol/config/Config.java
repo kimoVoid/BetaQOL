@@ -81,13 +81,18 @@ public class Config {
             "hotkey_swap",
             true
     );
-
+    
+    /* Mouse Tweaks configs */
     public final BooleanOption craftAll = new BooleanOption(
             "craft_all",
             true
     );
-    
-    /* Mouse Tweaks configs */
+
+    public final BooleanOption shiftEquipArmor = new BooleanOption(
+            "shift_equip_armor",
+            true
+    );
+
     public final BooleanOption shiftClickAnyLMB = new BooleanOption(
             "shift_click_any_lmb",
             true
@@ -159,10 +164,11 @@ public class Config {
                 preferShiftRMB,
                 dropKeyInv,
                 ctrlDropStack,
-                hotkeySwap,
-                craftAll);
+                hotkeySwap);
 
-        mouse.add(shiftClickAnyLMB,
+        mouse.add(craftAll,
+                shiftEquipArmor,
+                shiftClickAnyLMB,
                 tweakLMBShiftClick,
                 tweakRMB,
                 tweakLMBPickUp,

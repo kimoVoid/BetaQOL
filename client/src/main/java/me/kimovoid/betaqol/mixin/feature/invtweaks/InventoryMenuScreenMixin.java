@@ -6,8 +6,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.inventory.menu.InventoryMenuScreen;
 import net.minecraft.inventory.menu.InventoryMenu;
+import net.minecraft.inventory.menu.PlayerMenu;
 import net.minecraft.inventory.slot.CraftingResultSlot;
 import net.minecraft.inventory.slot.InventorySlot;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ItemStack;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
@@ -62,9 +64,9 @@ public abstract class InventoryMenuScreenMixin extends Screen {
 
         /* Check if client is on a server */
         boolean isClientOnServer = minecraft.isMultiplayer();
-        InventorySlot clickedSlot = this.getHoveredSlot(mouseX, mouseY);
 
         /* Craft maximum possible amount */
+        InventorySlot clickedSlot = this.getHoveredSlot(mouseX, mouseY);
         if ((Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
                 && clickedSlot instanceof CraftingResultSlot
                 && clickedSlot.hasStack()
@@ -75,6 +77,22 @@ public abstract class InventoryMenuScreenMixin extends Screen {
             }
             ci.cancel();
             return;
+        }
+
+        /* Equip armor */
+        if ((Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT))
+                && this.menu instanceof PlayerMenu
+                && clickedSlot != null
+                && clickedSlot.hasStack()
+                && clickedSlot.getStack().getItem() instanceof ArmorItem
+                && BetaQOL.CONFIG.shiftEquipArmor.get()) {
+            int armorSlot = ((ArmorItem)clickedSlot.getStack().getItem()).slot + 5;
+            if (!this.menu.getSlot(armorSlot).hasStack()) {
+                this.minecraft.interactionManager.clickSlot(this.menu.networkId, clickedSlot.id, button, false, this.minecraft.player);
+                this.minecraft.interactionManager.clickSlot(this.menu.networkId, armorSlot, button, false, this.minecraft.player);
+                ci.cancel();
+                return;
+            }
         }
 
         /* Right-click */

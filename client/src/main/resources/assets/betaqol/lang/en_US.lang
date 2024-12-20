@@ -20,9 +20,10 @@ prefer_shift_rmb=Prefer shift-right-click
 drop_key_inv=Drop key in inventories
 drop_stack_key=CTRL key to drop stack
 hotkey_swap=Hotkey swapping
-craft_all=Craft maximum amount
 
 # Mouse configs
+craft_all=Craft maximum amount
+shift_equip_armor=Shift-click armor to equip
 shift_click_any_lmb=Shift-left-click any items
 tweak_shift_lmb=Shift-left-click + drag items
 tweak_rmb=Shift-right-click + drag items
