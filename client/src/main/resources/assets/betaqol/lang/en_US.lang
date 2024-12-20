@@ -10,7 +10,7 @@ modern_F3_hide_seed=Hide seed in debug screen
 disable_F3_graph=Disable debug graph
 front_F5=Allow front perspective
 clipboard_screenshots=Screenshots to clipboard
-unlimited_chat_history=Unlimited Chat History
+unlimited_chat_history=Unlimited chat history
 
 # Inventory configs
 dragging=Inventory drag
@@ -20,7 +20,7 @@ prefer_shift_rmb=Prefer shift-right-click
 drop_key_inv=Drop key in inventories
 drop_stack_key=CTRL key to drop stack
 hotkey_swap=Hotkey swapping
-craft_all=Craft Maximum Amount
+craft_all=Craft maximum amount
 
 # Mouse configs
 shift_click_any_lmb=Shift-left-click any items
