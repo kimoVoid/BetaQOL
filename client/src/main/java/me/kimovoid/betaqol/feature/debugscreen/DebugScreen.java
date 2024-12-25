@@ -8,6 +8,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.locale.LanguageManager;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.HitResult;
+import net.minecraft.world.LightType;
 import net.ornithemc.osl.branding.api.BrandingContext;
 import net.ornithemc.osl.branding.impl.BrandingPatchImpl;
 import org.lwjgl.opengl.Display;
@@ -64,7 +65,7 @@ public class DebugScreen {
         lines.add(String.format("Facing: %s (%.1f / %.1f)", facing, this.wrapDegrees(mc.player.yaw), this.wrapDegrees(mc.player.pitch)));
         lines.add("Chunk: " + String.format("%s, %s [%s, %s]", chunkX, chunkZ, x & 15, z & 15));
         lines.add("");
-        lines.add("Light: " + mc.world.getLight(x, y, z));
+        lines.add(String.format("Light: %s (bl: %s, sky: %s)", mc.world.getLight(x, y, z), mc.world.getLight(LightType.BLOCK, x, y, z), mc.world.getLight(LightType.SKY, x, y, z)));
         lines.add("Biome: " + (biome == null ? "Unknown" : biome));
         lines.add("Seed: " + (BetaQOL.CONFIG.modernF3HideSeed.get() ? "[Hidden]" : mc.world.getSeed()));
         lines.add("Day: " + time);
