@@ -22,7 +22,6 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
 - Connection improvements
   - TCPNoDelay enabled
   - Removed unnecessary delays (about 300ms improvement)
-- Packets can be read/sent outside of tick method, making it faster
 - KeepAlive packet is sent back to the server, allowing servers to measure your ping
 - Ability to click-mine in multiplayer
 - [InventoryTweaks](https://modrinth.com/mod/inventorytweaks) port
@@ -68,10 +67,9 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
 - Connection improvements
   - TCPNoDelay enabled
   - Removed unnecessary delays (about 300ms improvement)
-- Packets can be read/sent outside of tick method, making it faster
 - Server can read KeepAlive packets
   - This can be used to measure player ping
-- Tablist support (Beta QOL client mod compatibility)
+- Player list support (Beta QOL client mod compatibility)
 - Added new commands & simple command interface
   - `/clear` - Clears your inventory
   - `/debug (option)` - Debug info about the server/world
@@ -94,6 +92,8 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
 - Allows one-player sleep
   - Can be enabled in server.properties with `one-player-sleep=true`
   - Doesn't remove nightmares feature for the players who sleep
+- Spawn protection configuration
+  - Can be changed in server.properties with `spawn-protection=(value)`
 - Fixes weather timer bugs
   - Rain timer would reset when players sleep, even if it isn't raining
   - The Nether would override the overworld's rain timer
