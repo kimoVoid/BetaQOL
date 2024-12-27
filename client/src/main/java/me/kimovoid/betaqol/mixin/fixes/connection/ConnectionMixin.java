@@ -27,7 +27,7 @@ public abstract class ConnectionMixin {
     }
 
     @Redirect(method = "read", at = @At(value = "INVOKE", target = "Ljava/util/List;add(Ljava/lang/Object;)Z"))
-    private boolean instantReadPing(List<Packet> queue, Object p) {
+    private boolean instantReadPackets(List<Packet> queue, Object p) {
         if (p instanceof PingHostPacket) {
             this.send(new PingHostPacket());
             return true;
