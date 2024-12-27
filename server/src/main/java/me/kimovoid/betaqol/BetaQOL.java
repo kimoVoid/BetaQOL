@@ -30,6 +30,7 @@ public class BetaQOL implements ServerModInitializer {
 	public static final Map<String, ICommand> commandsByName = new HashMap<>();
 	public static List<String> opCommands = new ArrayList<>();
 
+	public BetaQOLServerProperties properties;
 	public RconServer rcon;
 	public List<String> instantBreak = new ArrayList<>();
 
@@ -43,7 +44,8 @@ public class BetaQOL implements ServerModInitializer {
 		MinecraftEvents.PREPARE_WORLD.register(server -> {
 			SERVER = server;
 			PacketInvoker.register(254, false, true, ServerPingPacket.class);
-			if (server.properties.getBoolean("enable-rcon", false)) {
+			this.properties = new BetaQOLServerProperties(server);
+			if (this.properties.rconEnabled) {
 				server.sendMessage("Starting remote control listener");
 				BetaQOL.INSTANCE.rcon = new RconServer(server);
 				BetaQOL.INSTANCE.rcon.start();

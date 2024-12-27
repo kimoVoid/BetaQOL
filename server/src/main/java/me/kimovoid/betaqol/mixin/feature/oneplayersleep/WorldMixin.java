@@ -19,7 +19,7 @@ public class WorldMixin {
 
 	@Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;canSkipNight()Z"))
 	public boolean doOnePlayerSleep(World instance) {
-		if (BetaQOL.SERVER.properties.getBoolean("one-player-sleep", false)) {
+		if (BetaQOL.INSTANCE.properties.onePlayerSleep) {
 			for (PlayerEntity pl : this.players) {
 				if (pl.isSleptEnough()) {
 					return true;
@@ -39,7 +39,7 @@ public class WorldMixin {
 			), index = 1
 	)
 	private List<PlayerEntity> getSleepingList(List<PlayerEntity> oldList) {
-		if (!BetaQOL.SERVER.properties.getBoolean("one-player-sleep", false)) {
+		if (!BetaQOL.INSTANCE.properties.onePlayerSleep) {
 			return oldList;
 		}
 

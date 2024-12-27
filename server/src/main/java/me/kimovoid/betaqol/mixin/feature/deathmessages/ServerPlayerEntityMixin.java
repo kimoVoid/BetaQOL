@@ -32,7 +32,7 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 		BetaQOL.SERVER.playerManager.sendPacket(new ChatMessagePacket(msg));
 		BetaQOL.SERVER.sendMessage(msg);
 
-		if (BetaQOL.SERVER.properties.getBoolean("death-coordinates", false)) {
+		if (BetaQOL.INSTANCE.properties.deathCoordinates) {
 			BetaQOL.SERVER.playerManager.sendMessageToPlayer(
 					this.name,
 					String.format("Death coordinates: %.1f, %.1f, %.1f", this.x, this.y, this.z)
