@@ -25,18 +25,18 @@ public class PingCommand extends Command {
 
     @Override
     public void run(CommandSource source, String[] args) {
-        if (args.length < 1 && BetaQOL.server.playerManager.get(source.getSourceName()) == null)
+        if (args.length < 1 && BetaQOL.SERVER.playerManager.get(source.getSourceName()) == null)
             throw new IncorrectUsageException(String.format("%s. Sender must be a player.", getUsage(source)));
 
         ServerPlayerEntity target;
 
         if (args.length < 1) {
-            target = BetaQOL.server.playerManager.get(source.getSourceName());
+            target = BetaQOL.SERVER.playerManager.get(source.getSourceName());
         } else {
-            if (BetaQOL.server.playerManager.get(args[0]) == null)
+            if (BetaQOL.SERVER.playerManager.get(args[0]) == null)
                 throw new IncorrectUsageException(String.format("%s. Player %s is not online.", getUsage(source), args[0]));
 
-            target = BetaQOL.server.playerManager.get(args[0]);
+            target = BetaQOL.SERVER.playerManager.get(args[0]);
         }
 
         int ping = ((IServerPlayerEntity)target).getPing();

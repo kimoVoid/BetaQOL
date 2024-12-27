@@ -22,7 +22,7 @@ public class ClearCommand extends Command {
 			throw new CommandException("Sender must be a player");
 		}
 
-		ServerPlayerEntity p = BetaQOL.server.playerManager.get(source.getSourceName());
+		ServerPlayerEntity p = BetaQOL.SERVER.playerManager.get(source.getSourceName());
 		int items = 0;
 
 		for(int i = 0; i < p.inventory.inventorySlots.length; ++i) {

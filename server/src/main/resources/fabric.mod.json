@@ -10,7 +10,7 @@
 	"license": "MIT",
 	"environment": "server",
 	"entrypoints": {
-		"init": [
+		"server-init": [
 			"me.kimovoid.betaqol.BetaQOL"
 		]
 	},

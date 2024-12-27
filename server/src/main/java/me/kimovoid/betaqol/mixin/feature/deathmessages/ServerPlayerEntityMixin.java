@@ -29,11 +29,11 @@ public abstract class ServerPlayerEntityMixin extends PlayerEntity {
 			msg = this.name + " was slain by " + entityName;
 		}
 
-		BetaQOL.server.playerManager.sendPacket(new ChatMessagePacket(msg));
-		BetaQOL.server.sendMessage(msg);
+		BetaQOL.SERVER.playerManager.sendPacket(new ChatMessagePacket(msg));
+		BetaQOL.SERVER.sendMessage(msg);
 
-		if (BetaQOL.server.properties.getBoolean("death-coordinates", false)) {
-			BetaQOL.server.playerManager.sendMessageToPlayer(
+		if (BetaQOL.SERVER.properties.getBoolean("death-coordinates", false)) {
+			BetaQOL.SERVER.playerManager.sendMessageToPlayer(
 					this.name,
 					String.format("Death coordinates: %.1f, %.1f, %.1f", this.x, this.y, this.z)
 			);

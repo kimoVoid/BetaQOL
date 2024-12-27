@@ -23,7 +23,7 @@ public class IbCommand extends Command {
 			throw new CommandException("This command can only be used by players");
 		}
 
-		ServerPlayerEntity player = BetaQOL.server.playerManager.get(source.getSourceName());
+		ServerPlayerEntity player = BetaQOL.SERVER.playerManager.get(source.getSourceName());
 		if (BetaQOL.INSTANCE.instantBreak.contains(player.name)) {
 			BetaQOL.INSTANCE.instantBreak.remove(player.name);
 			sendSuccess(player.name, "No longer mining blocks instantly");

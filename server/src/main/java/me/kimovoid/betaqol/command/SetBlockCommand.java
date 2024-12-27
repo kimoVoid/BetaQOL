@@ -26,7 +26,7 @@ public class SetBlockCommand extends Command {
 			throw new CommandException("Sender must be a player");
 		}
 
-		ServerPlayerEntity player = BetaQOL.server.playerManager.get(source.getSourceName());
+		ServerPlayerEntity player = BetaQOL.SERVER.playerManager.get(source.getSourceName());
 
 		if (args.length >= 4) {
 			int x = MathHelper.floor(parseCoordinate(player.x, args[0]));

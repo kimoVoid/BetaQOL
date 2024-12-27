@@ -21,7 +21,7 @@ public class ServerLoginNetworkHandlerMixin {
             )
     )
     public void injectLogin(LoginPacket packet, CallbackInfo ci) {
-        BetaQOL.server.playerManager.sendPacket(packet.username, new KeepAlivePacket());
+        BetaQOL.SERVER.playerManager.sendPacket(packet.username, new KeepAlivePacket());
         BetaQOL.sendPlayerInfo(packet.username, true, 0);
     }
 }

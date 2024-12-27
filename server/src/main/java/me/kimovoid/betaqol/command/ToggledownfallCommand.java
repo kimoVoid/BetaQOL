@@ -19,7 +19,7 @@ public class ToggledownfallCommand extends Command {
 	@Override
 	public void run(CommandSource source, String[] args) {
 		sendSuccess(source.getSourceName(), "Toggled downfall");
-		((WorldAccessor) BetaQOL.server.getWorld(0)).getData().setRainTime(1);
-		((WorldAccessor) BetaQOL.server.getWorld(0)).getData().setThunderTime(1);
+		((WorldAccessor) BetaQOL.SERVER.getWorld(0)).getData().setRainTime(1);
+		((WorldAccessor) BetaQOL.SERVER.getWorld(0)).getData().setThunderTime(1);
 	}
 }

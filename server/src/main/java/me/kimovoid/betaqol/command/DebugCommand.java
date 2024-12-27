@@ -3,6 +3,7 @@ package me.kimovoid.betaqol.command;
 import me.kimovoid.betaqol.BetaQOL;
 import me.kimovoid.betaqol.command.exception.IncorrectUsageException;
 import me.kimovoid.betaqol.mixin.access.WorldAccessor;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.command.source.CommandSource;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldData;
@@ -33,7 +34,7 @@ public class DebugCommand extends Command {
 		}
 
 		String type = args[0].toLowerCase();
-		World world = BetaQOL.server.getWorld(0);
+		World world = BetaQOL.SERVER.getWorld(0);
 		WorldData data = ((WorldAccessor)world).getData();
 
 		switch (type) {
@@ -48,7 +49,7 @@ public class DebugCommand extends Command {
 				source.sendMessage("spawn: " + data.getSpawnX() + ", " + data.getSpawnY() + ", " + data.getSpawnZ());
 				break;
 			case "version":
-				source.sendMessage("MC version: " + BetaQOL.INSTANCE.mcVersion);
+				source.sendMessage("MC version: " + FabricLoader.getInstance().getModContainer("minecraft").get().getMetadata().getVersion().getFriendlyString());
 				source.sendMessage("world version: " + data.getVersion());
 				break;
 			case "day":

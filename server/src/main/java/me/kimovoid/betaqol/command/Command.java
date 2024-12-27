@@ -77,8 +77,8 @@ public abstract class Command implements ICommand {
 
 	public void sendSuccess(String player, String message) {
 		String msg = player + ": " + message;
-		BetaQOL.server.playerManager.sendMessage("§7(" + msg + ")");
-		BetaQOL.server.sendMessage(msg);
+		BetaQOL.SERVER.playerManager.sendMessage("§7(" + msg + ")");
+		BetaQOL.SERVER.sendMessage(msg);
 	}
 
 	public static double parseCoordinate(double c, String s) {

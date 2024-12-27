@@ -22,9 +22,9 @@ public class ServerPingPacket extends Packet {
 
     @Override
     public void handle(PacketHandler handler) {
-        ServerProperties props = BetaQOL.server.properties;
+        ServerProperties props = BetaQOL.SERVER.properties;
         String s = props.getString("motd", "A Minecraft Ornithe Server")
-                + "§" + BetaQOL.server.playerManager.players.size()
+                + "§" + BetaQOL.SERVER.playerManager.players.size()
                 + "§" + props.getInt("max-players", 20);
         ServerLoginNetworkHandler nh = (ServerLoginNetworkHandler)handler;
 

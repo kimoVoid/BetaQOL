@@ -30,7 +30,7 @@ public class SummonCommand extends Command {
 			throw new CommandException("Sender must be a player");
 		}
 
-		ServerPlayerEntity p = BetaQOL.server.playerManager.get(source.getSourceName());
+		ServerPlayerEntity p = BetaQOL.SERVER.playerManager.get(source.getSourceName());
 
 		double x = p.x;
 		double y = p.y;

@@ -26,7 +26,7 @@ public class StatusCommand extends Command {
 
 	@Override
 	public void run(CommandSource source, String[] args) {
-		double mspt = this.round(2, this.average(((IMinecraftServer) BetaQOL.server).getTickTimes()) * 1.0E-6D);
+		double mspt = this.round(2, this.average(((IMinecraftServer) BetaQOL.SERVER).getTickTimes()) * 1.0E-6D);
 		double tps = this.round(2, 1000.0D / mspt);
 
 		if (tps > 20.0D) {

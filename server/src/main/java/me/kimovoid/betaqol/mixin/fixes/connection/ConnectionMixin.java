@@ -51,7 +51,7 @@ public class ConnectionMixin {
     @Inject(method = "disconnect", at = @At("HEAD"))
     public void removeAddress(CallbackInfo ci) {
         if (open) {
-            ((IListenThread) BetaQOL.server.connections).close(socket);
+            ((IListenThread) BetaQOL.SERVER.connections).close(socket);
         }
     }
 }

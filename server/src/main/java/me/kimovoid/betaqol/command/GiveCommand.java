@@ -31,7 +31,7 @@ public class GiveCommand extends Command {
             throw new IncorrectUsageException(getUsage(source));
         }
 
-        ServerPlayerEntity player = BetaQOL.server.playerManager.get(args[0]);
+        ServerPlayerEntity player = BetaQOL.SERVER.playerManager.get(args[0]);
         if (player != null) {
             try {
                 int id;

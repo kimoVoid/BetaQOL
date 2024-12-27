@@ -28,13 +28,13 @@ public class TellrawCommand extends Command {
 		String message = String.join(" ", args).split(" ", 2)[1];
 
 		if (args[0].equalsIgnoreCase("@a")) {
-			for (Object pl : BetaQOL.server.playerManager.players) {
+			for (Object pl : BetaQOL.SERVER.playerManager.players) {
 				((ServerPlayerEntity)pl).networkHandler.sendPacket(new ChatMessagePacket(message));
 			}
 			return;
 		}
 
-		ServerPlayerEntity p = BetaQOL.server.playerManager.get(args[0]);
+		ServerPlayerEntity p = BetaQOL.SERVER.playerManager.get(args[0]);
 		if (p == null) {
 			throw new CommandException(String.format("'%s' is not online", args[0]));
 		}

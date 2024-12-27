@@ -27,8 +27,7 @@
     "fixes.connection.ConnectionMixin",
     "fixes.connection.ListenThreadMixin",
     "fixes.ghast.GhastEntityMixin",
-    "fixes.rain.WorldMixin",
-    "misc.MinecraftServerMixin"
+    "fixes.rain.WorldMixin"
   ],
   "injectors": {
     "defaultRequire": 1
