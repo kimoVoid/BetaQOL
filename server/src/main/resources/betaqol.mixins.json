@@ -27,6 +27,7 @@
     "fixes.connection.Connection$4Mixin",
     "fixes.connection.ConnectionMixin",
     "fixes.connection.ListenThreadMixin",
+    "fixes.disconnectspam.ServerLoginNetworkHandlerMixin",
     "fixes.ghast.GhastEntityMixin",
     "fixes.rain.WorldMixin"
   ],
