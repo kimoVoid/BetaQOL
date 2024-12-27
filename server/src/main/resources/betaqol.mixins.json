@@ -18,6 +18,7 @@
     "feature.ping.ServerLoginNetworkHandlerMixin",
     "feature.ping.ServerPlayerEntityMixin",
     "feature.ping.ServerPlayNetworkHandlerMixin",
+    "feature.spawnprotection.ServerPlayNetworkHandlerMixin",
     "feature.tps.MinecraftServerMixin",
     "fixes.auth.ServerLoginNetworkHandler$1Mixin",
     "fixes.bowsounds.BowItemMixin",
