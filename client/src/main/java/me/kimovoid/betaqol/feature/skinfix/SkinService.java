@@ -3,7 +3,8 @@ package me.kimovoid.betaqol.feature.skinfix;
 import me.kimovoid.betaqol.BetaQOL;
 import me.kimovoid.betaqol.feature.skinfix.mixininterface.PlayerEntityAccessor;
 import me.kimovoid.betaqol.feature.skinfix.provider.BedrockProfileProvider;
-import me.kimovoid.betaqol.feature.skinfix.provider.JavaProfileProvider;
+import me.kimovoid.betaqol.feature.skinfix.provider.MinetoolsProfileProvider;
+import me.kimovoid.betaqol.feature.skinfix.provider.MojangProfileProvider;
 import me.kimovoid.betaqol.feature.skinfix.provider.ProfileProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.living.player.PlayerEntity;
@@ -90,14 +91,29 @@ public class SkinService {
         try {
             if (profiles.containsKey(name)) return;
 
-            PlayerProfile prof;
+            PlayerProfile prof = null;
 
-            try {
-                ProfileProvider provider = name.startsWith(".") ? new BedrockProfileProvider() : new JavaProfileProvider();
-                prof = provider.getProfile(name).get();
-            } catch (Exception e) {
-                BetaQOL.LOGGER.warn("Lookup for profile {} failed!", name);
-                return;
+            /* Bedrock provider */
+            if (name.startsWith(".")) {
+                try {
+                    BedrockProfileProvider provider = new BedrockProfileProvider();
+                    prof = provider.getProfile(name).get();
+                } catch (Exception ignored) {
+                    BetaQOL.LOGGER.warn("Failed to fetch bedrock profile {}", name);
+                }
+            }
+
+            /* Default providers */
+            else {
+                ProfileProvider[] javaProviders = new ProfileProvider[]{new MojangProfileProvider(), new MinetoolsProfileProvider()};
+                for (ProfileProvider provider : javaProviders) {
+                    try {
+                        prof = provider.getProfile(name).get();
+                        break;
+                    } catch (Exception ignored) {
+                        BetaQOL.LOGGER.warn("Failed to fetch profile {} with provider {}", name, provider.getClass().getSimpleName());
+                    }
+                }
             }
 
             this.profiles.put(name, prof);

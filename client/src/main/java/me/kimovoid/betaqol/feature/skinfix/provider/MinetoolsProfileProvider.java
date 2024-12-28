@@ -9,17 +9,14 @@ import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Future;
 
-public class JavaProfileProvider implements ProfileProvider {
+public class MinetoolsProfileProvider implements ProfileProvider {
 
     public Future<PlayerProfile> getProfile(String username) {
         try {
             HttpClient httpClient = new HttpClient(ExecutorType.AUTO);
             UUIDResponse uuidresponse = this.getRequest(httpClient, "https://api.minetools.eu/uuid/" + username, UUIDResponse.class);
-            if (uuidresponse.id.equals("null")) { // failsafe, use mojang api
-                uuidresponse = this.getRequest(httpClient, "https://api.mojang.com/users/profiles/minecraft/" + username, UUIDResponse.class);
-            }
-
             Response mtresponse = this.getRequest(httpClient, "https://api.minetools.eu/profile/" + uuidresponse.id, Response.class);
+
             boolean slim = false;
             try {
                 if (mtresponse.decoded.textures.SKIN.metadata.model.equals("slim")) {
@@ -48,7 +45,7 @@ public class JavaProfileProvider implements ProfileProvider {
         return new Gson().fromJson(httpClient.get(URL).execute().getContentAsString(), classOfT);
     }
 
-    private String processProfile(JavaProfileProvider.Response response, boolean cape) {
+    private String processProfile(MinetoolsProfileProvider.Response response, boolean cape) {
         try {
             if (cape) return response.decoded.textures.CAPE.url;
             else return response.decoded.textures.SKIN.url;
