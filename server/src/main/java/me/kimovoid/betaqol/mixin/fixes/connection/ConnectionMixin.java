@@ -34,10 +34,12 @@ public class ConnectionMixin {
             ((IServerPlayNetworkHandler)networkHandler).handleKeepAlive((KeepAlivePacket) obj);
             return false;
         }
+        /*
         if (obj instanceof ServerPingPacket) {
             ((ServerPingPacket)obj).handle(this.listener);
             return false;
         }
+         */
         return list.add(obj);
     }
 

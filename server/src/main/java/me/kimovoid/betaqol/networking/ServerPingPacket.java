@@ -27,7 +27,7 @@ public class ServerPingPacket extends Packet {
                 + "§" + BetaQOL.SERVER.playerManager.players.size()
                 + "§" + props.getInt("max-players", 20);
         ServerLoginNetworkHandler nh = (ServerLoginNetworkHandler)handler;
-
+        if (nh.connection == null) return;
         nh.connection.send(new DisconnectPacket(s));
         nh.connection.close();
         nh.disconnected = true;
