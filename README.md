@@ -61,6 +61,7 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
 - Added scrolling in chat
   - Ported from [HudTweaks](https://github.com/telvarost/HudTweaks-StationAPI)
 - "Always play music" option, similar to Legacy Console Edition
+- Fixed not being able to hear player and entity footsteps on multiplayer
 
 ## Server features/fixes
 - Auth fix (online-mode support)
