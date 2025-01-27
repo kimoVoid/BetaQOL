@@ -41,6 +41,7 @@
     "fixes.connection.ConnectionMixin",
     "fixes.crashslab.ItemStackMixin",
     "fixes.entityjitter.EntityMixin",
+    "fixes.ghosttnt.TntBlockMixin",
     "fixes.haspaidcheck.MinecraftMixin",
     "fixes.leggingsriding.PlayerEntityRendererMixin",
     "fixes.mouseposition.MouseMixin",
