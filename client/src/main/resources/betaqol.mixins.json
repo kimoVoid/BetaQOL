@@ -45,6 +45,8 @@
     "fixes.haspaidcheck.MinecraftMixin",
     "fixes.leggingsriding.PlayerEntityRendererMixin",
     "fixes.mouseposition.MouseMixin",
+    "fixes.mpfootsteps.EntityMixin",
+    "fixes.mpfootsteps.RemotePlayerEntityMixin",
     "fixes.quitbutton.MinecraftAppletMixin",
     "fixes.resources.ResourceDownloadThreadMixin",
     "fixes.skins.EntityRenderDispatcherMixin",
