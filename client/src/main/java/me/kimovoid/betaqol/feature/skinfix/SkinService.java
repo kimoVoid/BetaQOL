@@ -1,6 +1,7 @@
 package me.kimovoid.betaqol.feature.skinfix;
 
 import me.kimovoid.betaqol.BetaQOL;
+import me.kimovoid.betaqol.event.BetaQOLEvents;
 import me.kimovoid.betaqol.feature.skinfix.mixininterface.PlayerEntityAccessor;
 import me.kimovoid.betaqol.feature.skinfix.provider.BedrockProfileProvider;
 import me.kimovoid.betaqol.feature.skinfix.provider.MinetoolsProfileProvider;
@@ -39,12 +40,25 @@ public class SkinService {
     private void updatePlayer(PlayerEntity player, PlayerProfile playerProfile) {
         if (playerProfile == null) return;
 
+        String skin = playerProfile.getSkinUrl();
+        String cape = playerProfile.getCapeUrl();
+        boolean slim = playerProfile.isSlim();
+
+        /* Events system so other mods can customize skins/capes */
+        BetaQOLEvents.LoadSkinEvent event = new BetaQOLEvents.LoadSkinEvent(player, skin, cape, slim);
+        BetaQOLEvents.LOAD_SKIN.invoker().accept(event);
+
+        skin = event.getSkinUrl();
+        cape = event.getCapeUrl();
+        slim = event.isSlim();
+
         PlayerEntityAccessor accessor = (PlayerEntityAccessor) player;
-        accessor.setSlim(playerProfile.isSlim());
-        player.skin = playerProfile.getSkinUrl();
+        accessor.setSlim(slim);
+        player.skin = skin;
         if (player.cloak == null || player.cape == null) {
-            player.cloak = player.cape = playerProfile.getCapeUrl();
+            player.cloak = player.cape = cape;
         }
+
         Minecraft.INSTANCE.worldRenderer.onEntityAdded(player);
     }
 

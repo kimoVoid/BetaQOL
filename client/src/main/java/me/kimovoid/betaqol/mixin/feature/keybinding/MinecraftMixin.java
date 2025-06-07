@@ -1,6 +1,7 @@
 package me.kimovoid.betaqol.mixin.feature.keybinding;
 
 import me.kimovoid.betaqol.BetaQOL;
+import me.kimovoid.betaqol.event.BetaQOLEvents;
 import me.kimovoid.betaqol.feature.itemdurability.ItemDurability;
 import me.kimovoid.betaqol.feature.keybinding.KeybindHandler;
 import me.kimovoid.betaqol.feature.skinfix.SkinService;
@@ -64,7 +65,9 @@ public class MinecraftMixin {
                     if (SkinService.getInstance().hasVanillaCape(p)) {
                         p.cape = p.cloak = null;
                     }
+
                     SkinService.getInstance().init(p);
+                    BetaQOLEvents.RELOAD_SKIN.invoker().accept(p);
                 }
             }
         }
