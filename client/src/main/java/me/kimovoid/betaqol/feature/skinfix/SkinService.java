@@ -3,11 +3,13 @@ package me.kimovoid.betaqol.feature.skinfix;
 import me.kimovoid.betaqol.BetaQOL;
 import me.kimovoid.betaqol.event.BetaQOLEvents;
 import me.kimovoid.betaqol.feature.skinfix.mixininterface.PlayerEntityAccessor;
+import me.kimovoid.betaqol.feature.skinfix.model.ModernPlayerEntityRenderer;
 import me.kimovoid.betaqol.feature.skinfix.provider.BedrockProfileProvider;
 import me.kimovoid.betaqol.feature.skinfix.provider.MinetoolsProfileProvider;
 import me.kimovoid.betaqol.feature.skinfix.provider.MojangProfileProvider;
 import me.kimovoid.betaqol.feature.skinfix.provider.ProfileProvider;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.render.entity.EntityRenderDispatcher;
 import net.minecraft.entity.living.player.PlayerEntity;
 
 import java.nio.charset.StandardCharsets;
@@ -15,20 +17,14 @@ import java.util.*;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
-/**
- * This is a port of MojangFix for Babric.
- * All credits to js6pak and everyone involved in that project.
- * <a href="https://github.com/js6pak/mojangfix">View here</a>
- */
 public class SkinService {
+
     public static final String STEVE_TEXTURE = "/assets/betaqol/mob/steve.png";
     public static final String ALEX_TEXTURE = "/assets/betaqol/mob/alex.png";
+    public static final ModernPlayerEntityRenderer STEVE_MODEL = new ModernPlayerEntityRenderer(EntityRenderDispatcher.INSTANCE, false);
+    public static final ModernPlayerEntityRenderer ALEX_MODEL = new ModernPlayerEntityRenderer(EntityRenderDispatcher.INSTANCE, true);
 
-    private static final SkinService INSTANCE = new SkinService();
-
-    public static SkinService getInstance() {
-        return INSTANCE;
-    }
+    public static final SkinService INSTANCE = new SkinService();
 
     private final ConcurrentMap<String, ReentrantLock> locks = new ConcurrentHashMap<>();
     public final Map<String, PlayerProfile> profiles = new HashMap<>();
@@ -122,7 +118,7 @@ public class SkinService {
                 ProfileProvider[] javaProviders = new ProfileProvider[]{new MojangProfileProvider(), new MinetoolsProfileProvider()};
                 for (ProfileProvider provider : javaProviders) {
                     try {
-                        prof = provider.getProfile(name).get();
+                        prof = provider.getProfile("kimoVoid").get();
                         break;
                     } catch (Exception ignored) {
                         BetaQOL.LOGGER.warn("Failed to fetch profile {} with provider {}", name, provider.getClass().getSimpleName());

@@ -5,11 +5,6 @@ import net.minecraft.client.render.texture.HttpImageProcessor;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-/**
- * This is a port of MojangFix for Babric.
- * All credits to js6pak and everyone involved in that project.
- * <a href="https://github.com/js6pak/mojangfix">View here</a>
- */
 public class CapeImageProcessor implements HttpImageProcessor {
 
     @Override

@@ -2,8 +2,11 @@ package me.kimovoid.betaqol.feature.skinfix.provider;
 
 import com.google.gson.Gson;
 import me.kimovoid.betaqol.feature.skinfix.PlayerProfile;
-import net.lenni0451.commons.httpclient.HttpClient;
-import net.lenni0451.commons.httpclient.executor.ExecutorType;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -13,7 +16,7 @@ public class MinetoolsProfileProvider implements ProfileProvider {
 
     public Future<PlayerProfile> getProfile(String username) {
         try {
-            HttpClient httpClient = new HttpClient(ExecutorType.AUTO);
+            CloseableHttpClient httpClient = HttpClients.createDefault();
             UUIDResponse uuidresponse = this.getRequest(httpClient, "https://api.minetools.eu/uuid/" + username, UUIDResponse.class);
             Response mtresponse = this.getRequest(httpClient, "https://api.minetools.eu/profile/" + uuidresponse.id, Response.class);
 
@@ -42,7 +45,8 @@ public class MinetoolsProfileProvider implements ProfileProvider {
     }
 
     private <T> T getRequest(HttpClient httpClient, String URL, Class<T> classOfT) throws IOException {
-        return new Gson().fromJson(httpClient.get(URL).execute().getContentAsString(), classOfT);
+        String response = EntityUtils.toString(httpClient.execute(new HttpGet(URL)).getEntity());
+        return new Gson().fromJson(response, classOfT);
     }
 
     private String processProfile(MinetoolsProfileProvider.Response response, boolean cape) {

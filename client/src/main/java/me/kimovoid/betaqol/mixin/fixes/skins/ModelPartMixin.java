@@ -9,28 +9,20 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-/**
- * This is a port of MojangFix for Babric.
- * All credits to js6pak and everyone involved in that project.
- * <a href="https://github.com/js6pak/mojangfix">View here</a>
- */
 @Mixin(ModelPart.class)
 public abstract class ModelPartMixin implements ModelPartAccessor {
 
-    @Unique
-    private int textureWidth = 64;
-
-    @Unique
-    private int textureHeight = 32;
+    @Unique private int textureWidth = 64;
+    @Unique private int textureHeight = 32;
 
     @Redirect(method = "addBox(FFFIIIF)V", at = @At(value = "NEW", target = "([Lnet/minecraft/client/render/model/Vertex;IIII)Lnet/minecraft/client/render/model/Quad;"))
-    private Quad redirectQuad(Vertex[] vertices, int u1, int v1, int u2, int v2) {
-        Quad quad = new Quad(vertices);
+    private Quad redirectQuad(Vertex[] vertexs, int i, int j, int k, int l) {
+        Quad quad = new Quad(vertexs);
 
-        vertices[0] = vertices[0].withTextureCoords((float) u2 / textureWidth, (float) v1 / textureHeight);
-        vertices[1] = vertices[1].withTextureCoords((float) u1 / textureWidth, (float) v1 / textureHeight);
-        vertices[2] = vertices[2].withTextureCoords((float) u1 / textureWidth, (float) v2 / textureHeight);
-        vertices[3] = vertices[3].withTextureCoords((float) u2 / textureWidth, (float) v2 / textureHeight);
+        vertexs[0] = vertexs[0].withTextureCoords((float) k / textureWidth, (float) j / textureHeight);
+        vertexs[1] = vertexs[1].withTextureCoords((float) i / textureWidth, (float) j / textureHeight);
+        vertexs[2] = vertexs[2].withTextureCoords((float) i / textureWidth, (float) l / textureHeight);
+        vertexs[3] = vertexs[3].withTextureCoords((float) k / textureWidth, (float) l / textureHeight);
 
         return quad;
     }

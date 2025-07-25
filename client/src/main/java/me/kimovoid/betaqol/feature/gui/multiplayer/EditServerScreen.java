@@ -7,11 +7,6 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 import net.minecraft.locale.LanguageManager;
 import org.lwjgl.input.Keyboard;
 
-/**
- * This is a port of MojangFix for Babric.
- * All credits to js6pak and everyone involved in that project.
- * <a href="https://github.com/js6pak/mojangfix">View here</a>
- */
 public class EditServerScreen extends Screen {
     private final ServerData server;
     private ButtonWidget button;

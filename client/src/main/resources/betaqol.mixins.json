@@ -54,7 +54,6 @@
     "fixes.skins.InputPlayerEntityMixin",
     "fixes.skins.ModelPartMixin",
     "fixes.skins.PlayerEntityMixin",
-    "fixes.skins.PlayerEntityRendererMixin",
     "fixes.skins.RemotePlayerEntityMixin",
     "fixes.skins.SkinImageProcessorMixin",
     "fixes.skins.WorldRendererMixin",

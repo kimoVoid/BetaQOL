@@ -1,80 +1,62 @@
 package me.kimovoid.betaqol.mixin.fixes.skins;
 
-import me.kimovoid.betaqol.feature.skinfix.mixininterface.SkinImageProcessorAccessor;
 import net.minecraft.client.render.texture.SkinImageProcessor;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+import org.spongepowered.asm.mixin.Overwrite;
+import org.spongepowered.asm.mixin.Shadow;
 
-import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
-import java.awt.image.ColorModel;
-import java.awt.image.WritableRaster;
+import java.awt.image.DataBufferInt;
 
-/**
- * This is a port of MojangFix for Babric.
- * All credits to js6pak and everyone involved in that project.
- * <a href="https://github.com/js6pak/mojangfix">View here</a>
- */
 @Mixin(SkinImageProcessor.class)
-public class SkinImageProcessorMixin implements SkinImageProcessorAccessor {
+public abstract class SkinImageProcessorMixin {
 
-    private boolean slim;
+    @Shadow private int width;
+    @Shadow private int height;
+    @Shadow private int[] data;
+    @Shadow protected abstract void setOpaque(int uMin, int vMin, int uMax, int vMax);
+    @Shadow protected abstract void setTransparent(int uMin, int vMin, int uMax, int vMax);
 
-    @ModifyConstant(method = "process", constant = @Constant(intValue = 32, ordinal = 0))
-    private int getImageHeight(int def) {
-        return 64;
-    }
-
-    @Inject(method = "process", at = @At(value = "INVOKE", target = "Ljava/awt/Graphics;dispose()V"), locals = LocalCapture.CAPTURE_FAILHARD)
-    private void onSkinGraphics(BufferedImage bufferedImage, CallbackInfoReturnable<BufferedImage> cir, BufferedImage parsedImage, Graphics g) {
-        if (g instanceof Graphics2D) {
-            Graphics2D graphics = (Graphics2D) g;
-            if (bufferedImage.getHeight() == 32) {
-                graphics.drawImage(bufferedImage.getSubimage(0, 16, 16, 16), 16, 48, 16, 16, null);
-                graphics.drawImage(bufferedImage.getSubimage(40, 16, 16, 16), 32, 48, 16, 16, null);
-            }
-
-            for (int i = 0; i < 2; ++i) {
-                this.flipArea(graphics, parsedImage, 16 + i * 32, 0, 8, 8);
-            }
-
-            for (int i = 1; i <= 2; ++i) {
-                this.flipArea(graphics, parsedImage, 8, i * 16, 4, 4);
-                this.flipArea(graphics, parsedImage, 28, i * 16, 8, 4);
-                this.flipArea(graphics, parsedImage, this.slim ? 47 : 48, i * 16, this.slim ? 3 : 4, 4);
-            }
-
-            for (int i = 0; i < 4; ++i) {
-                boolean isSlimArm = this.slim && i >= 2;
-                this.flipArea(graphics, parsedImage, (isSlimArm ? 7 : 8) + i * 16, 48, isSlimArm ? 3 : 4, 4);
-            }
+    /**
+     * @author kimoVoid
+     * @reason handle modern skins
+     */
+    @Overwrite
+    public BufferedImage process(BufferedImage image) {
+        if (image == null) {
+            return null;
         }
-
-    }
-
-    public BufferedImage deepCopy(BufferedImage image) {
-        ColorModel colorModel = image.getColorModel();
-        boolean isAlphaPremultiplied = colorModel.isAlphaPremultiplied();
-        WritableRaster raster = image.copyData(image.getRaster().createCompatibleWritableRaster());
-        return new BufferedImage(colorModel, raster, isAlphaPremultiplied, null);
-    }
-
-    private void flipArea(Graphics2D graphics, BufferedImage bufferedImage, int x, int y, int width, int height) {
-        BufferedImage image = this.deepCopy(bufferedImage.getSubimage(x, y, width, height));
-        graphics.setBackground(new Color(0, true));
-        graphics.clearRect(x, y, width, height);
-        graphics.drawImage(image, x, y + height, width, -height, null);
-    }
-
-    @Override
-    public void setSlim(boolean slim) {
-        this.slim = slim;
+        this.width = 64;
+        this.height = 64;
+        BufferedImage bufferedImage = new BufferedImage(this.width, this.height, 2);
+        Graphics graphics = bufferedImage.getGraphics();
+        graphics.drawImage(image, 0, 0, null);
+        if (image.getHeight() == 32) {
+            graphics.drawImage(bufferedImage, 24, 48, 20, 52, 4, 16, 8, 20, null);
+            graphics.drawImage(bufferedImage, 28, 48, 24, 52, 8, 16, 12, 20, null);
+            graphics.drawImage(bufferedImage, 20, 52, 16, 64, 8, 20, 12, 32, null);
+            graphics.drawImage(bufferedImage, 24, 52, 20, 64, 4, 20, 8, 32, null);
+            graphics.drawImage(bufferedImage, 28, 52, 24, 64, 0, 20, 4, 32, null);
+            graphics.drawImage(bufferedImage, 32, 52, 28, 64, 12, 20, 16, 32, null);
+            graphics.drawImage(bufferedImage, 40, 48, 36, 52, 44, 16, 48, 20, null);
+            graphics.drawImage(bufferedImage, 44, 48, 40, 52, 48, 16, 52, 20, null);
+            graphics.drawImage(bufferedImage, 36, 52, 32, 64, 48, 20, 52, 32, null);
+            graphics.drawImage(bufferedImage, 40, 52, 36, 64, 44, 20, 48, 32, null);
+            graphics.drawImage(bufferedImage, 44, 52, 40, 64, 40, 20, 44, 32, null);
+            graphics.drawImage(bufferedImage, 48, 52, 44, 64, 52, 20, 56, 32, null);
+        }
+        graphics.dispose();
+        this.data = ((DataBufferInt)bufferedImage.getRaster().getDataBuffer()).getData();
+        this.setOpaque(0, 0, 32, 16);
+        this.setTransparent(32, 0, 64, 32);
+        this.setOpaque(0, 16, 64, 32);
+        this.setTransparent(0, 32, 16, 48);
+        this.setTransparent(16, 32, 40, 48);
+        this.setTransparent(40, 32, 56, 48);
+        this.setTransparent(0, 48, 16, 64);
+        this.setOpaque(16, 48, 48, 64);
+        this.setTransparent(48, 48, 64, 64);
+        return bufferedImage;
     }
 }

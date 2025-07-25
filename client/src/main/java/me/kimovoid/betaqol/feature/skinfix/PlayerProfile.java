@@ -2,11 +2,6 @@ package me.kimovoid.betaqol.feature.skinfix;
 
 import java.time.Instant;
 
-/*
- * This is a port of MojangFix for Babric.
- * All credits to js6pak and everyone involved in that project.
- * https://github.com/js6pak/mojangfix
- */
 public class PlayerProfile {
     private String skinUrl;
     private String capeUrl;

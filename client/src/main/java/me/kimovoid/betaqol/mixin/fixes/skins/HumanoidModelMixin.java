@@ -1,7 +1,7 @@
 package me.kimovoid.betaqol.mixin.fixes.skins;
 
 import me.kimovoid.betaqol.feature.skinfix.mixininterface.ModelPartAccessor;
-import me.kimovoid.betaqol.feature.skinfix.PlayerEntityModel;
+import me.kimovoid.betaqol.feature.skinfix.model.ModernHumanoidModel;
 import net.minecraft.client.render.model.ModelPart;
 import net.minecraft.client.render.model.entity.HumanoidModel;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,11 +10,6 @@ import org.spongepowered.asm.mixin.injection.At.Shift;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 
-/**
- * This is a port of MojangFix for Babric.
- * All credits to js6pak and everyone involved in that project.
- * <a href="https://github.com/js6pak/mojangfix">View here</a>
- */
 @Mixin(HumanoidModel.class)
 public class HumanoidModelMixin {
 
@@ -33,7 +28,7 @@ public class HumanoidModelMixin {
         ModelPart modelPart = new ModelPart(u, v);
 
         HumanoidModel self = (HumanoidModel) (Object) this;
-        if (self instanceof PlayerEntityModel) {
+        if (self instanceof ModernHumanoidModel) {
             ((ModelPartAccessor)modelPart).setTextureHeight(64);
         }
 

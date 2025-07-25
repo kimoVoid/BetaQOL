@@ -54,7 +54,7 @@ public class MinecraftMixin {
         /* F3 + R (reload skins) */
         if (key == keybinding.getKeyFromCode(Keyboard.KEY_R) && Keyboard.isKeyDown(keybinding.getKeyFromCode(Keyboard.KEY_F3))) {
             this.addDebugMessage("Reloading skins...");
-            SkinService.getInstance().profiles.clear();
+            SkinService.INSTANCE.profiles.clear();
 
             /* World entities */
             if (Minecraft.INSTANCE.world != null) {
@@ -62,12 +62,12 @@ public class MinecraftMixin {
                     if (!(e instanceof PlayerEntity)) continue;
                     PlayerEntity p = ((PlayerEntity)e);
                     p.skin = null;
-                    if (SkinService.getInstance().hasVanillaCape(p)) {
+                    if (SkinService.INSTANCE.hasVanillaCape(p)) {
                         p.cape = p.cloak = null;
                     }
 
-                    SkinService.getInstance().init(p);
                     BetaQOLEvents.RELOAD_SKIN.invoker().accept(p);
+                    SkinService.INSTANCE.init(p);
                 }
             }
         }

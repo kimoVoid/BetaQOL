@@ -9,19 +9,15 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/**
- * This is a port of MojangFix for Babric.
- * All credits to js6pak and everyone involved in that project.
- * <a href="https://github.com/js6pak/mojangfix">View here</a>
- */
 @Mixin(RemotePlayerEntity.class)
 public abstract class RemotePlayerEntityMixin extends PlayerEntity {
-	public RemotePlayerEntityMixin(World arg) {
-		super(arg);
+
+	public RemotePlayerEntityMixin(World world) {
+		super(world);
 	}
 
 	@Inject(method = "<init>", at = @At("RETURN"))
 	private void onInit(CallbackInfo ci) {
-		SkinService.getInstance().init(this);
+		SkinService.INSTANCE.init(this);
 	}
 }

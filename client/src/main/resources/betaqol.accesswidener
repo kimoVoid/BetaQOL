@@ -1,3 +1,6 @@
 accessWidener v2 named
 accessible method net/minecraft/client/gui/GuiElement fillGradient (IIIIII)V
 accessible field net/minecraft/client/Minecraft INSTANCE Lnet/minecraft/client/Minecraft;
+accessible field net/minecraft/client/render/model/ModelPart textureU I
+accessible field net/minecraft/client/render/model/ModelPart textureV I
+accessible field net/minecraft/client/render/entity/PlayerEntityRenderer handmodel Lnet/minecraft/client/render/model/entity/HumanoidModel;

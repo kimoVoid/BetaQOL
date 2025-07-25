@@ -10,11 +10,6 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/**
- * This is a port of MojangFix for Babric.
- * All credits to js6pak and everyone involved in that project.
- * <a href="https://github.com/js6pak/mojangfix">View here</a>
- */
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEntityAccessor {
 
@@ -26,13 +21,14 @@ public abstract class PlayerEntityMixin extends LivingEntity implements PlayerEn
     }
 
     @Inject(method = "registerCloak", at = @At("HEAD"), cancellable = true)
-    private void cancelUpdateCapeUrl(CallbackInfo ci) {
+    private void cancelRegisterCloak(CallbackInfo ci) {
         ci.cancel();
     }
 
     @Redirect(method = "<init>", at = @At(value = "FIELD", target = "Lnet/minecraft/entity/living/player/PlayerEntity;texture:Ljava/lang/String;"))
     private void redirectTexture(PlayerEntity instance, String value) {
         this.setSlim(false);
+        this.texture = SkinService.STEVE_TEXTURE;
     }
 
     @Unique

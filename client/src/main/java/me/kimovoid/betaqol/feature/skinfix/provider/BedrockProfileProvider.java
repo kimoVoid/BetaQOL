@@ -2,8 +2,11 @@ package me.kimovoid.betaqol.feature.skinfix.provider;
 
 import com.google.gson.Gson;
 import me.kimovoid.betaqol.feature.skinfix.PlayerProfile;
-import net.lenni0451.commons.httpclient.HttpClient;
-import net.lenni0451.commons.httpclient.executor.ExecutorType;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
@@ -13,8 +16,8 @@ public class BedrockProfileProvider implements ProfileProvider {
 
     public Future<PlayerProfile> getProfile(String username) {
         try {
-            HttpClient httpClient = new HttpClient(ExecutorType.AUTO);
-            XUIDResponse xuidResp = this.getRequest(httpClient, "https://api.geysermc.org/v2/xbox/xuid/" + username.substring(1), XUIDResponse.class);
+            CloseableHttpClient httpClient = HttpClients.createDefault();
+            XUIDResponse xuidResp = this.getRequest(httpClient, "https://api.geysermc.org/v2/$xbox/xuid/" + username.substring(1), XUIDResponse.class);
             Response resp = this.getRequest(httpClient, "https://api.geysermc.org/v2/skin/" + xuidResp.xuid, Response.class);
 
             PlayerProfile profile = new PlayerProfile(
@@ -31,7 +34,8 @@ public class BedrockProfileProvider implements ProfileProvider {
     }
 
     private <T> T getRequest(HttpClient httpClient, String URL, Class<T> classOfT) throws IOException {
-        return new Gson().fromJson(httpClient.get(URL).execute().getContentAsString(), classOfT);
+        String response = EntityUtils.toString(httpClient.execute(new HttpGet(URL)).getEntity());
+        return new Gson().fromJson(response, classOfT);
     }
 
     private static class Response {

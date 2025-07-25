@@ -12,6 +12,6 @@ public abstract class SessionMixin {
 
     @Inject(method = "<init>", at = @At("RETURN"))
     private void onInit(String username, String sessionId, CallbackInfo ci) {
-        SkinService.getInstance().initSimple(username);
+        SkinService.INSTANCE.initSimple(username);
     }
 }

@@ -10,7 +10,7 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
   - [Mod Menu](https://modrinth.com/mod/modmenu-ornithe) support
   - Uses AxolotlClient config UI
 - Auth fix (use current auth server)
-- Skin/cape patch & 1.8 layers backport (ported from [MojangFix](https://modrinth.com/mod/mojangfix))
+- Skin/cape patch & 1.8 layers backport
 - Resources patch (BetaCraft proxy)
 - Mouse position fix on fullscreen
 - Quit button re-added
@@ -41,7 +41,6 @@ This is a quality of life mod for Beta 1.7.3 using Ornithe!
 - Player list backport
   - Uses custom server-to-client packets, not required by vanilla clients
 - Updated multiplayer screen
-  - Ported from [MojangFix](https://modrinth.com/mod/mojangfix)
   - Ability to save servers
   - IP address can be hidden
   - Move servers around with SHIFT + (UP / DOWN)
