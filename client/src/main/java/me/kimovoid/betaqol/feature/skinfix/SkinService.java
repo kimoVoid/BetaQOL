@@ -118,7 +118,7 @@ public class SkinService {
                 ProfileProvider[] javaProviders = new ProfileProvider[]{new MojangProfileProvider(), new MinetoolsProfileProvider()};
                 for (ProfileProvider provider : javaProviders) {
                     try {
-                        prof = provider.getProfile("kimoVoid").get();
+                        prof = provider.getProfile(name).get();
                         break;
                     } catch (Exception ignored) {
                         BetaQOL.LOGGER.warn("Failed to fetch profile {} with provider {}", name, provider.getClass().getSimpleName());
